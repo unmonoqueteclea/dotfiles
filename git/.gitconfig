@@ -1,0 +1,25 @@
+[init]
+  defaultBranch = main
+
+[core]
+	excludesfile = /home/unmonoqueteclea/.gitignore_global
+
+[user]
+	name = unmonoqueteclea
+        email = gonzalez@bigml.com
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "ssh://git@gitlab.com/"]
+	insteadOf = https://gitlab.com/
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[github]
+	user = unmonoqueteclea
+[gitlab]
+	user = unmonoqueteclea

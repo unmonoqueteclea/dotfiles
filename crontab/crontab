@@ -1,0 +1,11 @@
+# crontab file
+# NOTE: you need to run 'make stow' every time you modify this file.
+
+# mount shared Google Drive dolder as a daemon
+# it requires rclone and a configured remote with the name 'drive'
+# --file-perms 0600 is needed so that ssh keys stored
+# in the folder have the right permissions to be used
+@reboot bash -c "rclone mount drive: ${HOME}/Drive/  --vfs-cache-mode full --file-perms 0600 --daemon"
+
+# run viruta status at 10AM, 13PM and 17PM
+0 10,13,17 * * * cd /home/unmonoqueteclea/vc/viruta/pyviruta/bin && ./run-status.sh > /dev/null 2>&1 || true
