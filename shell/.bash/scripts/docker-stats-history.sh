@@ -13,6 +13,26 @@ set -Eeuo pipefail
 trap cleanup SIGINT SIGTERM ERR EXIT
 
 # script logic
+collect() {
+    if [ "$cpu" -eq 1 ];
+    then
+	while [[ ($time -lt 0) || ($SECONDS -lt $time) ]];
+	do
+	    docker stats --no-stream |
+		grep ${container} |
+		awk  -v date="$(date +%T)" '{OFS=","};{print date, $3}'|
+		sed -e 's/%//g' >> ${file};
+	done
+    else
+	while [[ ($time -lt 0) || ($SECONDS -lt $time) ]];
+	do
+	    docker stats --no-stream |
+		grep ${container} |
+		awk -v date="$(date +%T)" '{OFS=","}{ if(index($4, "GiB")) {gsub("GiB","",$4); print date / 1000, $4} else {gsub("MiB","",$4); print date,$4}}' >> ${file};
+	done
+    fi
+}
+
 main() {
   # modified from https://www.zakariaamine.com/2019-12-04/monitoring-docker
   container=${args[0]-}
@@ -40,31 +60,18 @@ main() {
   msg "Capturing stats from container ${BLUE}${container}${NOFORMAT} to ${filetext}"
   msg "Press C-c to stop..."
   msg ""
-  if [ "$cpu" -eq 1 ];
-  then
-    while true;
-    do
-	docker stats --no-stream |
-	    grep ${container} |
-	    awk  -v date="$(date +%T)" '{OFS=","};{print date, $3}'|
-	    sed -e 's/%//g' >> ${file};
-    done
-  else
-    while true;
-    do
-	docker stats --no-stream |
-	    grep ${container} |
-	    awk -v date="$(date +%T)" '{OFS=","}{ if(index($4, "GiB")) {gsub("GiB","",$4); print date / 1000, $4} else {gsub("MiB","",$4); print date,$4}}' >> ${file};
-    done
-  fi
+  collect
 }
 
 report_results() {
-    count=$(awk  -F "," '{ count++ } END { print count }' $file)
-    avg=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
-    max_value=$(cut -d, -f 2 $file | sort -r | head -n 1)
-    min_value=$(cut -d, -f 2 $file | sort | head -n 1)
-    echo "{\"count\": " $count ", \"average\": " $avg ", \"max\": " $max_value ", \"min\": " $min_value "}"
+    if [[ !(-z "${file:-}")  ]]
+    then
+	count=$(awk  -F "," '{ count++ } END { print count }' $file)
+	avg=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
+	max_value=$(cut -d, -f 2 $file | sort -r | head -n 1)
+	min_value=$(cut -d, -f 2 $file | sort | head -n 1)
+	echo "{\"time\": " $SECONDS ", \"count\": " $count ", \"average\": " $avg ", \"max\": " $max_value ", \"min\": " $min_value "}"
+    fi
 }
 
 # find script location, so that we can create paths like this:
@@ -73,7 +80,7 @@ script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-c] [-m] [-q] container_name
+Usage: $(basename "${BASH_SOURCE[0]}") -c|-m [-h] [-v] [-q] [-t secs] container_name
 Collect docker stats values for a specific container and store them
 in a text file.
 
@@ -85,6 +92,7 @@ Available options:
 -p, --plot      Plot values after finish collection
 -m, --memory  	Collect memory usage values
 -q, --quiet     Don't show status messages
+-t, --time      Total collection seconds (default: infinite)
 EOF
   exit
 }
@@ -132,6 +140,7 @@ parse_params() {
   memory=0
   plot=0
   quite=0
+  time=-1
   
 
   while :; do
@@ -144,6 +153,9 @@ parse_params() {
     -m | --memory) memory=1 ;;
     -p | --plot) plot=1 ;;
     -q | --quiet) quiet=1 ;;
+    -t | --time)
+	time="${2-}"
+	shift ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
