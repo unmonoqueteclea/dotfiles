@@ -19,14 +19,17 @@ main() {
   file=${script_dir}/stats-${container}.csv
   gnufile=${script_dir}/stats-${container}.gnuplot
 
-  # create gnuplot file
-  touch ${gnufile}
-  if test -f "$gnufile"; then rm ${gnufile}; fi
-  echo "set datafile separator ','" >> ${gnufile}
-  echo "set xdata time # tells gnuplot the x axis is time data" >> ${gnufile}
-  echo "set timefmt \"%H:%M:%S\" # specify our time string format" >> ${gnufile}
-  echo "set format x \"%H:%M:%S\" # otherwise it will show only MM:SS" >> ${gnufile}
-  echo "plot \"${file}\" using 1:2 with lines "  >> ${gnufile}
+  if [ "$plot" -eq 1 ];
+  then
+      # create gnuplot file
+      touch ${gnufile}
+      if test -f "$gnufile"; then rm ${gnufile}; fi
+      echo "set datafile separator ','" >> ${gnufile}
+      echo "set xdata time # tells gnuplot the x axis is time data" >> ${gnufile}
+      echo "set timefmt \"%H:%M:%S\" # specify our time string format" >> ${gnufile}
+      echo "set format x \"%H:%M:%S\" # otherwise it will show only MM:SS" >> ${gnufile}
+      echo "plot \"${file}\" using 1:2 with lines "  >> ${gnufile}
+  fi
   
   if test -f "$file"; then
       msg "${RED} File ${file} already exists. It will be overwritten ${NOFORMAT}"
@@ -56,13 +59,21 @@ main() {
   fi
 }
 
+report_results() {
+    count=$(awk  -F "," '{ count++ } END { print count }' $file)
+    avg=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
+    max_value=$(cut -d, -f 2 $file | sort -r | head -n 1)
+    min_value=$(cut -d, -f 2 $file | sort | head -n 1)
+    echo "{\"count\": " $count ", \"average\": " $avg ", \"max\": " $max_value ", \"min\": " $min_value "}"
+}
+
 # find script location, so that we can create paths like this:
 # cat "$script_dir/my_file"
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-c] [-m] container_name
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-c] [-m] [-q] container_name
 Collect docker stats values for a specific container and store them
 in a text file.
 
@@ -73,6 +84,7 @@ Available options:
 -c, --cpu      	Collect CPU usage values
 -p, --plot      Plot values after finish collection
 -m, --memory  	Collect memory usage values
+-q, --quiet     Don't show status messages
 EOF
   exit
 }
@@ -90,6 +102,7 @@ cleanup() {
   then
       $(gnuplot -p ${gnufile})
   fi
+  report_results
 }
 
 setup_colors() {
@@ -118,6 +131,7 @@ parse_params() {
   cpu=0
   memory=0
   plot=0
+  quite=0
   
 
   while :; do
@@ -129,6 +143,7 @@ parse_params() {
     -c | --cpu) cpu=1 ;;
     -m | --memory) memory=1 ;;
     -p | --plot) plot=1 ;;
+    -q | --quiet) quiet=1 ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
