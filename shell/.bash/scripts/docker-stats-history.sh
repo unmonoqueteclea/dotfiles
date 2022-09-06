@@ -28,7 +28,7 @@ collect() {
 	do
 	    docker stats --no-stream |
 		grep ${container} |
-		awk -v date="$(date +%T)" '{OFS=","}{ if(index($4, "GiB")) {gsub("GiB","",$4); print date / 1000, $4} else {gsub("MiB","",$4); print date,$4}}' >> ${file};
+		awk -v date="$(date +%T)" '{OFS=","}{ if(index($4, "GiB")) {gsub("GiB","",$4); print date, $4*1000} else {gsub("MiB","",$4); print date,$4}}' >> ${file};
 	done
     fi
 }
@@ -68,8 +68,8 @@ report_results() {
     then
 	count=$(awk  -F "," '{ count++ } END { print count }' $file)
 	avg=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
-	max_value=$(cut -d, -f 2 $file | sort -r | head -n 1)
-	min_value=$(cut -d, -f 2 $file | sort | head -n 1)
+	max_value=$(cut -d, -f 2 $file | sort -g -r | head -n 1)
+	min_value=$(cut -d, -f 2 $file | sort -g | head -n 1)
 	echo "{\"time\": " $SECONDS ", \"count\": " $count ", \"average\": " $avg ", \"max\": " $max_value ", \"min\": " $min_value "}"
     fi
 }
@@ -80,7 +80,7 @@ script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") -c|-m [-h] [-v] [-q] [-t secs] container_name
+Usage: $(basename "${BASH_SOURCE[0]}") -c|-m [-h] [-v] [-V] [-q] [-t secs] container_name
 Collect docker stats values for a specific container and store them
 in a text file.
 
