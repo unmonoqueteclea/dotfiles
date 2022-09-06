@@ -16,3 +16,9 @@ export PYENV_ROOT="${DIR_VC}/pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# automatically login docker to BigML registry
+bigml_docker_login() {
+    echo $DOCKER_BIGML_PASSWORD | docker login -u $DOCKER_BIGML_USERNAME --password-stdin 
+}
+
