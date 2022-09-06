@@ -56,6 +56,9 @@
   :config
   (setq docker-container-shell-file-name shell-file-name))
 
+;; syntax highlight for dockerfiles
+(use-package dockerfile-mode)
+
 ;; Emacs integration for Kubernetes
 (use-package kubel)
 
