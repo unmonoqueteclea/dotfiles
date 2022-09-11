@@ -74,7 +74,7 @@
     (concat "ctop-" arg)))
 
 
-;; Client for Language Server Protocol (v3.14). lsp-mode aims to
+;; client for Language Server Protocol (v3.14). lsp-mode aims to
 ;; provide IDE-like experience by providing optional integration with
 ;; the most popular Emacs packages like company, flycheck and
 ;; projectile.  Additional lsp coonfiguration can be found in
@@ -99,7 +99,7 @@
         lsp-enable-symbol-highlighting t
         lsp-enable-snippet nil))
 
-;; This package contains all the higher level UI modules of lsp-mode
+;; this package contains all the higher level UI modules of lsp-mode
 ;; By default, lsp-mode automatically activates lsp-ui unless
 ;; lsp-auto-configure is set to nil.\
 ;; See https://github.com/emacs-lsp/lsp-iu
@@ -113,8 +113,8 @@
         lsp-ui-sideline-show-code-actions t
         lsp-ui-sideline-ignore-duplicate t
         lsp-ui-sideline-update-mode t)
-  ;; Add peek feature
-  ;; You may remap xref-find-{definitions,references}
+  ;; add peek feature
+  ;; you may remap xref-find-{definitions,references}
   ;; (bound to M-. M-? by default):
   (lsp-ui-peek-enable t)
   (define-key lsp-ui-mode-map
@@ -127,9 +127,15 @@
         lsp-ui-doc-position 'bottom
         lsp-ui-doc-alignment 'frame))
 
-;; Syntax highlighting for YAML files
+;; syntax highlighting for YAML files
 (use-package yaml-mode
   :init (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+
+;; CIDER is the Clojure(Script) Interactive Development Environment
+;; that Rocks!
+;; see https://docs.cider.mx/cider/index.html
+(use-package cider)
+
 
 (global-set-key (kbd "C-c w c") 'mono/docker-ctop)
 
