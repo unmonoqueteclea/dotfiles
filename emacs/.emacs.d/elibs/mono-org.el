@@ -27,7 +27,20 @@
 (require 'mono-base-package)
 (require 'mono-base-definitions)
 
-(use-package org :custom (org-modules '(org-habit)))
+
+(use-package org
+  :custom (org-modules '(org-habit))
+  :config
+  ;; configure org-crypt to encrypt some org-mode headers
+  ;; you should import your public and secret gpg key
+  ;; by doing 'gpg --import /path/to/your/gpg/key'
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
+  ;; gpg key to use for encryption
+  ;; either the Key ID or set to nil to use symmetric encryption.
+  (setq org-crypt-key "pgonzalezcarrizo@gmail.com"))
+
 (require 'org-indent)
 (require 'org-element)
 (require 'org-num)
