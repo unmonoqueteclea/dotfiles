@@ -22,9 +22,19 @@
 ;;
 
 ;;; Code:
+(require 'mono-base-package)
 
 ;; don't ask for confirmation when killing buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
+
+;; useful to fold JSON, or other kind of files
+;; I only use the keybinding <C-M-return>
+(use-package yafolding
+  :hook (prog-mode . yafolding-mode)
+  :config
+  (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
+  (define-key yafolding-mode-map (kbd "<C-M-return>") 'yafolding-toggle-element)
+  (define-key yafolding-mode-map (kbd "<C-return>") nil))
 
 (provide 'mono-buffer)
 

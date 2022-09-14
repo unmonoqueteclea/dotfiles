@@ -59,6 +59,12 @@
       ;; open links with Return key
       org-return-follows-link t)
 
+;; the combination of `restclient` and `ob-restclient` allows
+;; me to create org-mode files with some API requests
+;; Like Postman, but within emacs
+(use-package restclient)
+(use-package ob-restclient)
+
 
 (setq org-confirm-babel-evaluate nil)
 ;; org-babel: languages that we want to be able to execute
@@ -67,6 +73,7 @@
  '(
    (shell . t)
    (python . t)
+   (restclient . t)
    )
  )
 
