@@ -1,20 +1,20 @@
 # ⚙️ unmonoqueteclea's dotfiles
 
 These are the dotfiles that powers my daily work.  I use `Ubuntu
-22.04` (although sometimes I test them on `macOS`.
-
-My `GNU Emacs` configuration is also included in the repository.
+22.04` (although sometimes I test them on `macOS`. My `GNU Emacs`
+configuration is also included in the repository.
 
 ## quickstart
-
-`GNU Stow` is required to be create links to repo files from your home
-directory. To create automatically all those links, run 
+Just do:
 
 ```sh
-make stow
+cd ./bootstrap && ./bootstrap.sh
 
 ```
 
+That script will run all the needed initialization tasks, including
+installing `GNU Stow` to create links to repo files from your home
+directory.
 
 ## synced data folder
 Some of these configurations assumed a synced data folder. I use

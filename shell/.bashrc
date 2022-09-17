@@ -111,6 +111,11 @@ if ! shopt -oq posix; then
  fi
 fi
 
+# set PATH so it includes user local bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # source all files in .bash folder.
 # files with a filename starting with a dot should be sourced before,
 # as they contain variables and functions needed by the rest of

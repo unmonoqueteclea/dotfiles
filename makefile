@@ -7,5 +7,5 @@ stow:
 	stow --verbose --target=$$HOME --restow emacs/
 	stow --verbose --target=$$HOME --restow ssh/
 	stow --verbose --target=$$HOME --restow git/
-	crontab ./crontab/crontab
+	stow --verbose --target=$$HOME --restow xserver/
 
