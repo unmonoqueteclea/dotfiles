@@ -8,4 +8,5 @@ stow:
 	stow --verbose --target=$$HOME --restow ssh/
 	stow --verbose --target=$$HOME --restow git/
 	stow --verbose --target=$$HOME --restow xserver/
+	stow --verbose --target=$$HOME --restow xmonad/
 
