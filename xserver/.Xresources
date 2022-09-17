@@ -1,0 +1,24 @@
+! ~/.Xresources
+
+! X Resources are part of X Server architecture.
+!  It can be used to :
+
+!    define terminal colours
+!    configure terminal preferences
+!    set DPI, anti-aliasing, hinting and other X font settings
+!    change the Xcursor theme
+!    theme xscreensaver
+!    configure low-level X applications like: xorg-xclock, xpdf, rxvt-unicode 
+
+
+! See https://wiki.archlinux.org/title/HiDPI#X_Resources
+! GNOME ignores X settings due to its xsettings Plugin in Gnome
+! Settings Daemon, where DPI setting is hard coded.
+! 192/96 = 2x scalling factor
+Xft.dpi: 192
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
