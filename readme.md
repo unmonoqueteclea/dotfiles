@@ -20,8 +20,6 @@ directory.
 ### remap Caps Lock to Ctrl
 Add the following to `etc/default/keyboard`
 
-*TODO*: Find a way to amotate this
-
 ```sh
 XKBOPTIONS="caps:ctrl_modifier"
 ```

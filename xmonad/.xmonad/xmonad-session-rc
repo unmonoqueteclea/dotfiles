@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# this script is executed just before xmonad is started
+
+# configure x
+xrdb -merge ~/.Xdefaults &
+setxkbmap -option "caps:ctrl_modifier" &
+
+# start a window compositor. This ensures some apps paints correctly.
+xcompmgr -n &
+
+# set a wallpaper
+feh --bg-fill ~/.xmonad/wallpapers/emacs.png &
+
