@@ -1,8 +1,13 @@
 # ⚙️ unmonoqueteclea's dotfiles
 
-These are the dotfiles that powers my daily work.  I use `Ubuntu
-22.04` (although sometimes I test them on `macOS`. My `GNU Emacs`
+These are the dotfiles that powers my daily work. My `GNU Emacs`
 configuration is also included in the repository.
+
+I use `Ubuntu 22.04` with `GNOME 42` and `gdm3` as login screen
+display manager. `Wayland` is used as the default display server.
+`XWayland` provides an X server running on top of wayland for X11
+applications that does not support `Wayland` yet.
+
 
 ## quickstart
 Just do:

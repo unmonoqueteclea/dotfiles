@@ -8,7 +8,9 @@
 !    set DPI, anti-aliasing, hinting and other X font settings
 !    change the Xcursor theme
 !    theme xscreensaver
-!    configure low-level X applications like: xorg-xclock, xpdf, rxvt-unicode 
+!    configure low-level X applications like: xorg-xclock, xpdf, rxvt-unicode
+
+! IMPORTANT: GNOME with Wayland ignores ~./Xresources
 
 
 ! See https://wiki.archlinux.org/title/HiDPI#X_Resources
