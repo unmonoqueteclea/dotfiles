@@ -20,6 +20,9 @@ cd $script_dir/../ && make stow
 # configure gnome settings
 cd $script_dir && source ./gnome.sh
 
+# for ssh auth
+sudo apt-get install keychain
+
 # xmonad packages
 sudo apt-get install xmonad libghc-xmonad-dev libghc-xmonad-contrib-dev xmobar xcompmgr
 # feh is an X11 image viewer, we use it to add a wallpaper to xmonad

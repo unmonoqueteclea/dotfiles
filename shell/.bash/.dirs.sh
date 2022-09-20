@@ -6,9 +6,10 @@
 # directories
 
 # Google Drive folder is usually mounted with crontab on init.
+export DIR_SYNC="${HOME}/Drive"
 alias drive-reconnect="rclone config reconnect drive:"
-alias drive-mount="rclone mount drive: ${HOME}/Drive/  --vfs-cache-mode full --file-perms 0600 --daemon"
-alias drive-umount="sudo umount -f ${HOME}/Drive/"
+alias drive-mount="rclone mount drive: ${DIR_SYNC}/  --vfs-cache-mode full --file-perms 0600 --daemon"
+alias drive-umount="sudo umount -f ${DIR_SYNC}/"
 
 # folder that stores version-controlled projects
 export DIR_VC="${HOME}/vc"
