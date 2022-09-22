@@ -52,6 +52,7 @@
 (require 'mono-dev-tools)
 (require 'mono-dev-web)
 (require 'mono-dev-python)
+(require 'mono-blog)
 (require 'mono-tools-browser)
 (require 'mono-tools-feeds)
 (require 'mono-keyboard)
