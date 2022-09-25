@@ -37,3 +37,18 @@
 
 ;; load some default commands
 (require 'dwim-shell-commands)
+
+(defun mono/dwim-suspend ()
+  "Just suspend system."
+  (interactive)
+  (dwim-shell-command-on-marked-files
+   "Suspending system"
+   "systemctl suspend"
+   :utils "systemctl"
+   :no-progress t
+   :error-autofocus t
+   :silent-success t))
+
+
+(provide 'mono-dwim)
+;;; mono-dwim.el ends here
