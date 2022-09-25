@@ -47,6 +47,7 @@
 (require 'mono-org)
 (require 'mono-docs)
 (require 'mono-tools-terminal)
+(require 'mono-dwim)
 (require 'mono-agenda)
 (require 'mono-projects)
 (require 'mono-dev-tools)

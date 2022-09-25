@@ -50,7 +50,7 @@
 (setq org-agenda-files `(,mono-dir-agenda))
 
 (setq org-habit-graph-column 80
-      org-habit-show-habits-only-for-today t)
+      org-habit-show-habits-only-for-today nil)
 
 (setq org-agenda-overriding-header "⚡ Agenda")
 
