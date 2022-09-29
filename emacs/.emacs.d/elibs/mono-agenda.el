@@ -114,7 +114,7 @@
 	    ;; show past deadline tasks
 	    :deadline past
 	    :order 1)
-	  (:name "Today's personal tasks"
+	  (:name "Today's work tasks"
            ;; only show tasks from category work or calendar
            :discard (:not (:category ("work" "calendar")))
            ;; match items with today’s date
@@ -122,7 +122,7 @@
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "Other personal tasks")
+      ((org-agenda-overriding-header "Other work tasks")
        (org-super-agenda-groups
          ;; only show tasks from category work or calendar
 	'((:discard (:not (:category ("work" "calendar"))))
