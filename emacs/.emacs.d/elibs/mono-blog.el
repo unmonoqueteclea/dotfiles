@@ -27,27 +27,32 @@
 (require 'f)
 
 (use-package org-static-blog)
-(setq org-static-blog-publish-title "un mono que teclea")
+(setq org-static-blog-publish-title "@unmonoquetecles")
 (setq org-static-blog-publish-url "https://unmonoqueteclea.github.io")
 (setq org-static-blog-publish-directory (concat mono-dir-vc "/unmonoqueteclea.github.io"))
 (setq org-static-blog-posts-directory (concat org-static-blog-publish-directory "/posts"))
 (setq org-static-blog-drafts-directory (concat org-static-blog-publish-directory "/drafts"))
 (setq org-static-blog-enable-tags t)
+(setq org-static-blog-enable-tag-rss t)
 (setq org-export-with-toc nil)
 (setq org-export-with-section-numbers nil)
-;; This header is inserted into the <head> section of every page:
+;; this header is inserted into the <head> section of every page:
 (setq org-static-blog-page-header
-      (f-read-text (concat org-static-blog-publish-directory "/header.html") 'utf-8))
-;; This preamble is inserted at the beginning of the <body> of every page:
+       (f-read-text (concat org-static-blog-publish-directory "/public/header.html") 'utf-8))
+;; this preamble is inserted at the beginning of the <body> of every page:
 (setq org-static-blog-page-preamble
-      (f-read-text (concat org-static-blog-publish-directory "/preamble.html") 'utf-8))
-;; This postamble is inserted at the end of the <body> of every page:
+      (f-read-text (concat org-static-blog-publish-directory "/public/preamble.html") 'utf-8))
+;; this postamble is inserted at the end of the <body> of every page:
 (setq org-static-blog-page-postamble
-      (f-read-text (concat org-static-blog-publish-directory "/postamble.html") 'utf-8))
-;; This HTML code is inserted into the index page between the
+      (f-read-text (concat org-static-blog-publish-directory "/public/postamble.html") 'utf-8))
+;; this HTML code is inserted into the index page between the
 ;; preamble and the blog posts
 (setq org-static-blog-index-front-matter
-      (f-read-text (concat org-static-blog-publish-directory "/title.html") 'utf-8))
+      (f-read-text (concat org-static-blog-publish-directory "/public/title.html") 'utf-8))
+;; number of articles on the index page
+(setq org-static-blog-index-length 5)
+;; by default, show preview of posts
+(setq org-static-blog-use-preview t)
 
 (provide 'mono-blog)
 

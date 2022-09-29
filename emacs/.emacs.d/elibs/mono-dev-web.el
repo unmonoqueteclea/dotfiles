@@ -87,18 +87,13 @@
   (flycheck-add-mode 'javascript-eslint 'vue-mode)
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 
-
 ;; automatically execute eslint-fix on save
 (use-package eslint-fix
   :demand t
   :config
   (eval-after-load 'vue-mode
     '(add-hook 'vue-mode-hook
-	       (lambda () (add-hook 'after-save-hook 'eslint-fix nil t))))
-  (eval-after-load 'web-mode
-    '(add-hook 'web-mode-hook
 	       (lambda () (add-hook 'after-save-hook 'eslint-fix nil t)))))
-
 
 ;; run prettier on save
 (defun enable-minor-mode (my-pair)
