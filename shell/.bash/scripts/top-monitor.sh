@@ -43,7 +43,7 @@ collect() {
 }
 
 main() {
-  file=${script_dir}/top-stats.csv
+  file=${script_dir}/${name}
   gnufile=${script_dir}/top-stats.gnuplot
   if test -f "$file"; then
       msg "${RED} File ${file} already exists. ${NOFORMAT}"
@@ -88,7 +88,7 @@ report_results() {
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-V] [-q] [-t secs] [-T period] [--pid pid] [--user user] [--command command]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-V] [-q] [-t secs] [-T period] [--pid pid] [--user user] [--command command] [--name name]
 Collect CPU and memory % usage values from 'top' and store
 the values in a text file with the columns: time,CPU(%),memory(%)
 
@@ -104,6 +104,7 @@ Available options:
 --pid           Collect stats for a specific PID (or comma-separated list of pids)
 --user          Collect stats for a specific user
 --command       Collect stats for the specific command regex
+--name          Output file name (default "top-stats.csv")
 -q, --quiet     Don't show status messages
 -t, --time      Total collection seconds (default: infinite)
 -T, --period    Collection period in seconds (default: 1)
@@ -155,6 +156,7 @@ parse_params() {
   pid=""
   user=""
   command=""
+  name="top-stats.csv"
 
   while :; do
     case "${1-}" in
@@ -178,6 +180,9 @@ parse_params() {
 	shift ;;
      --command)
 	command="${2-}"
+	shift ;;
+     --name)
+	name="${2-}"
 	shift ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
