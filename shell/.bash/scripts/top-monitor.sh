@@ -7,39 +7,37 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 # cat "$script_dir/my_file"
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
-cpu_general() {
-    top -bn1 | grep "%Cpu(s)" | cut -d, -f 1 | tr -d '%Cpu(s): ' | tr -d ' us'
+# convert command regex into a list of PIDs
+command_to_pid() {
+    pgrep -d',' -f "${command}"
+}
+# run top command in batch mode and remove the summary,
+# apply the needed filters
+run_top() {
+    # command and pid are mutually exclusive filters
+    local _pid=$([ "${command}" == "" ] && echo "${pid}" || command_to_pid)
+    local _top='top -b -n 1'
+    local filter_pid=$([ "${_pid}" == "" ] && echo "" || echo "-p ${_pid}")
+    local filter_user=$([ "${user}" == "" ] && echo "" || echo "-u ${user}")
+    # run top and remove summary rows
+    ${_top} ${filter_pid} ${filter_user} | tail -n +8
 }
 
-cpu_pid() {
-    top -bn1 -p $pid | tail -n +8 | tr -s ' ' | cut -d ' ' -f 10
+# obtain the %CPU from top list of process
+cpu_pids() {
+    echo "${top_output}" | tr -s ' ' | awk -F " " 'BEGIN {sum=0};{ sum += $9 } END { print sum }'
 }
-
-mem_general() {
-    top -bn1 | grep "MiB Mem" | cut -d, -f 1 | tr -d 'MiB Mem : ' | tr -d ' total'
+# obtain the %MEM from top list of process
+mem_pids() {
+    echo "${top_output}" | tr -s ' ' | awk -F " " 'BEGIN {sum=0}; { sum += $10 } END { print sum }'
 }
-
-swap_general() {
-    top -bn1 | grep "MiB Swap" | cut -d, -f 1 | tr -d 'MiB Swap : ' | tr -d ' total'
-}
-
-mem_pid() {
-    top -bn1 -p $pid | tail -n +8 | tr -s ' ' | cut -d ' ' -f 11
-}
-
+# collect stats at the specified period
 collect() {
     while [[ ("$time" -lt 0) || ("$SECONDS" -lt "$time") ]];
     do
 	timenow=$(date +%T);
-	if [ ${cpu} -eq 1 ];
-	then
-	    val=$([ ${pid} -eq -1 ] && cpu_general || cpu_pid)
-	    echo "$timenow,$val" >> $file
-	else
-	    val=$([ ${pid} -eq -1 ] && mem_general || mem_pid)
-	    swap=$([ ${pid} -eq -1 ] && swap_general || echo '0')
-	    echo "$timenow,$val,$swap" >> $file
-	fi
+	top_output=$(run_top)
+	echo "$(date +%T),$(cpu_pids),$(mem_pids)" >> $file
 	sleep $period
     done
 }
@@ -47,23 +45,23 @@ collect() {
 main() {
   file=${script_dir}/top-stats.csv
   gnufile=${script_dir}/top-stats.gnuplot
+  if test -f "$file"; then
+      msg "${RED} File ${file} already exists. ${NOFORMAT}"
+      rm -i ${file}
+  fi
   if [ ${plot} -eq 1 ];
   then
       touch ${gnufile}
       if test -f "$gnufile"; then rm ${gnufile}; fi
-      echo 'set xtics font ", 3"' >> ${gnufile}
-      echo 'set ytics font ", 4"' >> ${gnufile}
-      echo 'set key font ",4"' >> ${gnufile}
+      echo 'set xtics font ", 4"' >> ${gnufile}
+      echo 'set ytics font ", 5"' >> ${gnufile}
+      echo 'set key font ",5"' >> ${gnufile}
       echo "set datafile separator ','" >> ${gnufile}
       echo "set xdata time # tells gnuplot the x axis is time data" >> ${gnufile}
       echo "set timefmt \"%H:%M:%S\" # specify our time string format" >> ${gnufile}
       echo "set format x \"%H:%M:%S\" # otherwise it will show only MM:SS" >> ${gnufile}
-      echo "plot \"${file}\" using 1:2 with lines "  >> ${gnufile}
-  fi
-  if test -f "$file"; then
-      msg "${RED} File ${file} already exists. ${NOFORMAT}"
-      msg "${RED} File will be overwritten. ${NOFORMAT}"
-      rm ${file} ;
+      echo "plot \"${file}\" using 1:2 title 'CPU %' with lines, \\"  >> ${gnufile}
+      echo "     \"${file}\" using 1:3 title 'Memory %' with lines "  >> ${gnufile}
   fi
   msg ""
   filetext="${GREEN}${file}${NOFORMAT}"
@@ -77,25 +75,35 @@ report_results() {
     if [[ !(-z "${file:-}")  ]]
     then
 	count=$(awk  -F "," '{ count++ } END { print count }' $file)
-	avg=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
-	max_value=$(cut -d, -f 2 $file | sort -g -r | head -n 1)
-	min_value=$(cut -d, -f 2 $file | sort -g | head -n 1)
-	echo "{\"time\": " $SECONDS ", \"count\": " $count ", \"average\": " $avg ", \"max\": " $max_value ", \"min\": " $min_value "}"
+	avg_cpu=$(awk  -F "," '{ total += $2; count++ } END { print total/count }' $file)
+	avg_mem=$(awk  -F "," '{ total += $3; count++ } END { print total/count }' $file)
+	max_cpu=$(cut -d, -f 2 $file | sort -g -r | head -n 1)
+	max_mem=$(cut -d, -f 3 $file | sort -g -r | head -n 1)
+	min_cpu=$(cut -d, -f 2 $file | sort -g | head -n 1)
+	min_mem=$(cut -d, -f 3 $file | sort -g | head -n 1)
+	echo "{\"time\": " $SECONDS ", \"count\": " $count ", \"average_cpu\": " $avg_cpu ", \"max_cpu\": " $max_cpu ", \"min_cpu\": " $min_cpu " \"average_mem\": " $avg_mem ", \"max_mem\": " $max_mem ", \"min_mem\": " $min_mem "}"
     fi
+    echo ""
 }
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") -c|-m [-h] [-V] [-q] [-t secs] [-T period] [-pid pid]
-Collect user CPU or free memory from 'top' and store the values in a text file.
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-V] [-q] [-t secs] [-T period] [--pid pid] [--user user] [--command command]
+Collect CPU and memory % usage values from 'top' and store
+the values in a text file with the columns: time,CPU(%),memory(%)
+
+Values of CPU can be greater than % because they are measured for a single core.
+Memory percentage doesn't take into account swap.
+
+PID, USER and COMMAND filters are mutually exclusive.
 
 Available options:
 -h, --help      Print this help and exit
 -V, --version   Show script version
--c, --cpu      	Collect user CPU usage values (in %)
 -p, --plot      Plot values after finish collection
---pid           Collect stats for a specific PID
--m, --memory  	Collect free memory values (in MB)
+--pid           Collect stats for a specific PID (or comma-separated list of pids)
+--user          Collect stats for a specific user
+--command       Collect stats for the specific command regex
 -q, --quiet     Don't show status messages
 -t, --time      Total collection seconds (default: infinite)
 -T, --period    Collection period in seconds (default: 1)
@@ -104,7 +112,7 @@ EOF
 }
 
 version() {
-    echo "$(basename "${BASH_SOURCE[0]}") 0.0.1"
+    echo "$(basename "${BASH_SOURCE[0]}") 0.1.0"
     exit
 }
 
@@ -135,18 +143,18 @@ msg() {
 die() {
   local msg=$1
   local code=${2-1} # default exit status 1
-  msg "$msg"
+  msg "${RED}${msg}${NOFORMAT}"
   exit "$code"
 }
 
 parse_params() {
-  cpu=0
-  memory=0
   plot=0
   quiet=0
   time=-1
-  pid=-1
   period=1
+  pid=""
+  user=""
+  command=""
 
   while :; do
     case "${1-}" in
@@ -154,8 +162,6 @@ parse_params() {
     -v | --verbose) set -x ;;
     -V | --version) version ;;
     --no-color) NO_COLOR=1 ;;
-    -c | --cpu) cpu=1 ;;
-    -m | --memory) memory=1 ;;
     -p | --plot) plot=1 ;;
     -q | --quiet) quiet=1;;
     -T | --period)
@@ -167,6 +173,12 @@ parse_params() {
     --pid)
 	pid="${2-}"
 	shift ;;
+    --user)
+	user="${2-}"
+	shift ;;
+     --command)
+	command="${2-}"
+	shift ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -174,13 +186,14 @@ parse_params() {
   done
 
   args=("$@")
-  [[ ${cpu} -eq 1 ]] && [[ ${memory} -eq 1 ]]  && die "Choose only one: cpu or memory"
-  [[ ${cpu} -eq 0 ]] && [[ ${memory} -eq 0 ]]  && die "Choose one flag: cpu or memory"
+  [[ ${user} != "" ]] && [[ ${command} != "" ]]  && die "Error: user, command and pid filters are mutually exclusive"
+  [[ ${user} != "" ]] && [[ ${pid} != "" ]]  && die "Error: user, command and pid filters are mutually exclusive"
+  [[ ${pid}  != "" ]] && [[ ${command} != "" ]]  && die "Error: user, command and pid filters are mutually exclusive"  
   return 0
 }
 
-parse_params "$@"
 setup_colors
+parse_params "$@"
 
 # script logic here
 main "$@"
