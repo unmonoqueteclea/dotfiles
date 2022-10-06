@@ -20,6 +20,15 @@
 ;;; Commentary:
 ;;  I use org-static-blog for blogging.
 
+;;  I handle static files (css files, images, or any other kind of
+;;  content) in an unusual way.  I place them in
+;;  'blog-static-directory', but they are moved automatically every
+;;  time we execute 'org-static-blog-publish' to the right location
+;;  where they will be consumed: 'blog-publish-static-directory'
+;;  (inside 'org-static-blog-publish-directory').  In that way, we can
+;;  always safely remove the 'org-static-blog-publish-directory'
+;;  folder, and re-generate all the blog files.
+
 ;;; Code:
 
 (require 'mono-base-package)
@@ -27,32 +36,58 @@
 (require 'f)
 
 (use-package org-static-blog)
-(setq org-static-blog-publish-title "@unmonoquetecles")
+(defconst blog-root-directory
+  (concat mono-dir-vc "/unmonoqueteclea.github.io")
+  "The path of the directory that contains all blog files.")
+
+(setq org-static-blog-publish-title "@unmonoqueteclea")
 (setq org-static-blog-publish-url "https://unmonoqueteclea.github.io")
-(setq org-static-blog-publish-directory (concat mono-dir-vc "/unmonoqueteclea.github.io"))
-(setq org-static-blog-posts-directory (concat org-static-blog-publish-directory "/posts"))
-(setq org-static-blog-drafts-directory (concat org-static-blog-publish-directory "/drafts"))
+;; we move all the auto-generated blog files to 'blog' folder so that,
+;; to remove all of them, we can safely remove that floder
+(setq org-static-blog-publish-directory (concat blog-root-directory "/blog"))
+(defconst blog-static-directory
+  (concat blog-root-directory "/static")
+  "This directory contains all (non posts) statics files needed in the blog.")
+(defconst blog-publish-static-directory
+  (concat org-static-blog-publish-directory "/static")
+  "The directory where all the files in `blog-static-directory` should be moved.")
+
+(setq org-static-blog-posts-directory (concat blog-root-directory "/posts"))
+(setq org-static-blog-drafts-directory (concat blog-root-directory "/drafts"))
 (setq org-static-blog-enable-tags t)
 (setq org-static-blog-enable-tag-rss t)
 (setq org-export-with-toc nil)
 (setq org-export-with-section-numbers nil)
-;; this header is inserted into the <head> section of every page:
-(setq org-static-blog-page-header
-       (f-read-text (concat org-static-blog-publish-directory "/public/header.html") 'utf-8))
-;; this preamble is inserted at the beginning of the <body> of every page:
-(setq org-static-blog-page-preamble
-      (f-read-text (concat org-static-blog-publish-directory "/public/preamble.html") 'utf-8))
-;; this postamble is inserted at the end of the <body> of every page:
-(setq org-static-blog-page-postamble
-      (f-read-text (concat org-static-blog-publish-directory "/public/postamble.html") 'utf-8))
-;; this HTML code is inserted into the index page between the
-;; preamble and the blog posts
-(setq org-static-blog-index-front-matter
-      (f-read-text (concat org-static-blog-publish-directory "/public/title.html") 'utf-8))
 ;; number of articles on the index page
 (setq org-static-blog-index-length 5)
 ;; by default, show preview of posts
 (setq org-static-blog-use-preview t)
+
+(defun mono/blog-update-statics (&rest _)
+  "Update content in publish static directory."
+  (delete-directory blog-publish-static-directory t)
+  (copy-directory blog-static-directory blog-publish-static-directory))
+
+(defun mono/blog-update-static-pages (&rest _)
+  "Update static pages content."
+  ;; this header is inserted into the <head> section of every page:
+  (setq org-static-blog-page-header
+	(f-read-text (concat blog-root-directory "/public/header.html") 'utf-8))
+  ;; this preamble is inserted at the beginning of the <body> of every page:
+  (setq org-static-blog-page-preamble
+	(f-read-text (concat blog-root-directory "/public/preamble.html") 'utf-8))
+  ;; this postamble is inserted at the end of the <body> of every page:
+  (setq org-static-blog-page-postamble
+	(f-read-text (concat blog-root-directory "/public/postamble.html") 'utf-8))
+  ;; this HTML code is inserted into the index page between the
+  ;; preamble and the blog posts
+  (setq org-static-blog-index-front-matter
+	(f-read-text (concat blog-root-directory "/public/title.html") 'utf-8)))
+
+
+(mono/blog-update-statics)
+(advice-add 'org-static-blog-publish :before #'mono/blog-update-static-pages)
+(advice-add 'org-static-blog-publish :after #'mono/blog-update-statics)
 
 (provide 'mono-blog)
 
