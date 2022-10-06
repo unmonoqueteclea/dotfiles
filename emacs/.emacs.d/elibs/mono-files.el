@@ -31,13 +31,6 @@
 (use-package all-the-icons-dired)
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-;; this package adds a single command dired-rsync which allows the
-;; user to copy marked files in a dired buffer via rsync.
-;; see https://github.com/stsquad/dired-rsync
-(use-package dired-rsync
-  :config
-  (bind-key "C-c C-r" 'dired-rsync dired-mode-map))
-
 ;; always follow links to git files
 (setq vc-follow-symlinks t)
 
