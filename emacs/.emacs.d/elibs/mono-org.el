@@ -163,7 +163,11 @@
 ;; repetition algorithm to conduct interactive "drill sessions", using
 ;; org files as sources of facts to be memorised.
 (use-package org-drill
-  :config (setq org-drill-learn-fraction 0.3))
+  :config (setq org-drill-learn-fraction 0.25))
+
+;; this package is needed to perform syntax highlight in
+;; code fragments exported from org-files into html files
+(use-package htmlize)
 
 ;; open org-mode links (including org-roam ones) in the same window
 (add-to-list 'org-link-frame-setup '(file . find-file))
