@@ -22,6 +22,9 @@ bigml_docker_login() {
     echo $DOCKER_BIGML_PASSWORD | docker login -u $DOCKER_BIGML_USERNAME --password-stdin 
 }
 
+# always use new docker compose version
+alias docker-compose='docker compose'
+
 # configure node version manager
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
