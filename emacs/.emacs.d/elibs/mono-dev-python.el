@@ -19,6 +19,7 @@
 
 ;;; Commentary:
 ;;
+;;; Code:
 
 (require 'mono-base-package)
 (require 'mono-dev-tools)
@@ -44,6 +45,7 @@
 ;;   - pip install pyls-black pyls-isort pyls-mypy
 ;;
 (require 'lsp-mode)
+(require 'lsp-pylsp)
 (setq lsp-pylsp-plugins-autopep8-enabled nil ;; we are using black instead
       lsp-pylsp-plugins-flake8-enabled t
       lsp-pylsp-plugins-jedi-completion-enabled t
@@ -60,8 +62,13 @@
      ("pyls.plugins.pyls_black.enabled" t t)
      ("pyls.plugins.pyls_isort.enabled" t t)))
 
+
 (use-package python-pytest
   :commands python-pytest-dispatch)
+
+(setq python-shell-completion-native-disabled-interpreters '("ipython"))
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--profile=emacs -i --simple-prompt")
 
 (provide 'mono-dev-python)
 
