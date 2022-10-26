@@ -83,7 +83,8 @@
 	("travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
 	("finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
 	("calendar" ,(list (all-the-icons-faicon "calendar")) nil nil :ascent center)
-	("blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)))
+	("blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
+	("projects" ,(list (all-the-icons-alltheicon "script")) nil nil :ascent center)))
 
 ;; this package lets you “supercharge” your Org daily/weekly
 ;; agenda. The idea is to group items into sections, rather than

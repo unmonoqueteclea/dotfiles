@@ -27,6 +27,7 @@
 ;;; Code:
 
 (require 'mono-base-package)
+(require 'mono-base-theme) ;; all-the-icons is defined there
 
 ;; TODO Review this post:
 ;; https://kristofferbalintona.me/posts/vertico-marginalia-all-the-icons-completion-and-orderless/
@@ -91,6 +92,13 @@
   :demand t
   :commands marginalia-mode
   :config (marginalia-mode 1))
+
+;; add icons to completion candidates using the built in completion
+;; metadata functions.
+;; see https://github.com/MintSoup/all-the-icons-completion
+(use-package all-the-icons-completion)
+(all-the-icons-completion-mode)
+
 
 ;; Consult provides practical commands based on the Emacs completion
 ;; function completing-read. Completion allows you to quickly select
