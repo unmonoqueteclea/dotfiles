@@ -148,17 +148,6 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
-;; from https://github.com/org-roam/org-roam/issues/507
-(defun tim/org-roam-buffer-show (_)
-  "Always open side buffer when open an org-roam buffer."
-  (if (and
-       ;; don't do anything if we're in the minibuffer
-       (not (minibufferp))
-       ;; show org-roam buffer iff the current buffer has a org-roam file
-       (xor (org-roam-file-p) (eq 'visible (org-roam-buffer--visibility))))
-      (org-roam-buffer-toggle)))
-(add-hook 'window-buffer-change-functions 'tim/org-roam-buffer-show)
-
 ;; Org-Drill is an extension for Org mode. Org-Drill uses a spaced
 ;; repetition algorithm to conduct interactive "drill sessions", using
 ;; org files as sources of facts to be memorised.
