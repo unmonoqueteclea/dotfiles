@@ -45,6 +45,7 @@
 (require 'mono-buffer)
 (require 'mono-complete)
 (require 'mono-org)
+(require 'mono-slides)
 (require 'mono-docs)
 (require 'mono-tools-terminal)
 (require 'mono-dwim)
