@@ -25,10 +25,12 @@
 ;;; Code:
 (require 'mono-base-package)
 (require 'mono-base-theme) ;; all-the-icons is defined there
+(require 'mono-buffer) ;; diminish definition
 
 ;; show icons in dired items
 ;; See https://github.com/jtbm37/all-the-icons-dired
-(use-package all-the-icons-dired)
+(use-package all-the-icons-dired
+  :diminish all-the-icons-dired-mode)
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
 ;; always follow links to git files

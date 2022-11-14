@@ -23,6 +23,7 @@
 ;;; Code:
 
 (require 'mono-base-package)
+(require 'mono-buffer) ;; diminish definition
 
 ;; which-key is a minor mode for Emacs that displays the key bindings
 ;; following your currently entered incomplete command (a prefix)
@@ -30,6 +31,7 @@
 ;; See https://github.com/justbur/emacs-which-key
 (use-package which-key
   :demand t
+  :diminish which-key-mode
   :functions which-key-mode
   :custom (which-key-idle-delay 0.2)
   :config (which-key-mode))

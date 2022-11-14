@@ -36,6 +36,11 @@
   (define-key yafolding-mode-map (kbd "<C-M-return>") 'yafolding-toggle-element)
   (define-key yafolding-mode-map (kbd "<C-return>") nil))
 
+;; this package implements hiding or abbreviation of the mode line
+;; displays (lighters) of minor-modes.
+;; https://github.com/myrjola/diminish.el
+(use-package diminish)
+
 (provide 'mono-buffer)
 
 ;;; mono-buffer.el ends here
