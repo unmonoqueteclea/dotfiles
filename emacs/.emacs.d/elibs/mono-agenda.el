@@ -166,13 +166,13 @@
 (use-package org-gcal
  :demand t
  :after org
- :config
+ :init
  (setq org-gcal-client-id (getenv "GOOGLE_CLIENT_ID")
-	org-gcal-client-secret (getenv "GOOGLE_CLIENT_SECRET")
-	org-gcal-fetch-file-alist
-	`((,mono-work-email . ,calendar-bigml)
-	  (,mono-personal-email . ,calendar-google))
-	org-gcal-recurring-events-mode "nested"))
+       org-gcal-client-secret (getenv "GOOGLE_CLIENT_SECRET")
+       org-gcal-fetch-file-alist
+       `((,mono-work-email . ,calendar-bigml)
+	 (,mono-personal-email . ,calendar-google))
+       org-gcal-recurring-events-mode "nested"))
 
 
 (setq org-capture-templates
