@@ -124,7 +124,7 @@
 
 (setq consult-ripgrep-args
       "rg --null -uu --line-buffered --color=never --max-columns=1000
-          --glob !{cov_html,.git,.mypy_cache,.egg-info,.pytest_cache,*.egg-info,node_modules/*}
+          --glob !{cov_html,.git,.mypy_cache,.egg-info,.pytest_cache,*.egg-info,node_modules/*,*build/lib.linux-x86_64*}
           --path-separator /   --smart-case --no-heading --line-number .")
 
 
