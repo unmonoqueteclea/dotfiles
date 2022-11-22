@@ -2,9 +2,9 @@
 
 # utilities for software development
 
-# we are building emacs from source, so we need an alias
-# to open it easily
-alias emacs="${DIR_VC}/emacs/src/emacs -fs --debug-init"
+# I am building emacs from source, so I need to add an alias to open
+# it easily (fullscreen)
+alias emacs="${DIR_SOURCES}/emacs/src/emacs -fs --debug-init"
 
 # pyenv configuration for generating Python environments
 # pyenv lets you easily switch between multiple versions of Python.
@@ -24,8 +24,12 @@ bigml_docker_login() {
 
 # always use new docker compose version
 alias docker-compose='docker compose'
+export COMPOSE='docker compose'
 
-# configure node version manager
+# configure node version manager, for generating nodejs environments
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # load nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # load nvm bash_completion
+
+# pgadmin tool
+alias pgadmin="docker run -p 80:80 -e 'PGADMIN_DEFAULT_EMAIL=gonzalez@bigml.com' -e 'PGADMIN_DEFAULT_PASSWORD=bigml*' --add-host host.docker.internal:host-gateway  dpage/pgadmin4"
