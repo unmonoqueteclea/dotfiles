@@ -33,3 +33,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # pgadmin tool
 alias pgadmin="docker run -p 80:80 -e 'PGADMIN_DEFAULT_EMAIL=gonzalez@bigml.com' -e 'PGADMIN_DEFAULT_PASSWORD=bigml*' --add-host host.docker.internal:host-gateway  dpage/pgadmin4"
+
+# opencv (built from source)
+export OPENCV_INCLUDE_PATH="/usr/local/include/opencv4"
+export OPENCV_LIBRARY_PATH="/usr/local/lib"
