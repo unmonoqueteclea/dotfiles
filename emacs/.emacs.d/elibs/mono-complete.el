@@ -160,8 +160,7 @@
   :defines embark-act embark-dwim
   :functions embark-prefix-help-command
   :bind
-  (("M-." . embark-act)         ;; pick some comfortable binding
-   ("M-," . embark-dwim))        ;; good alternative: M-.
+  (("M-." . embark-act))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)

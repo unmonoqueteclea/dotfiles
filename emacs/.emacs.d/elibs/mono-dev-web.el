@@ -19,7 +19,7 @@
 
 
 ;;; Commentary:
-;; 
+;;
 
 ;;; Code:
 (require 'mono-base-package)
@@ -80,13 +80,6 @@
   (eval-after-load 'web-mode
     '(add-hook 'vue-mode-hook 'add-node-modules-path)))
 
-;; configure flycheck for web-mode
-(with-eval-after-load 'flycheck
-  ;; use eslint_d if you want a faster linter
-  ;;(setq flycheck-javascript-eslint-executable "eslint_d")
-  (flycheck-add-mode 'javascript-eslint 'vue-mode)
-  (flycheck-add-mode 'javascript-eslint 'web-mode))
-
 ;; automatically execute eslint-fix on save
 (use-package eslint-fix
   :demand t
@@ -106,9 +99,32 @@ MY-PAIR is a cons cell (regexp . minor-mode)."
 (use-package prettier-js
   :demand t
   :config
-  (add-hook 'web-mode-hook #'(lambda ()
-                               (enable-minor-mode
-                                '("\\.js\\'" . prettier-js-mode)))))
+  (add-hook 'web-mode-hook #'(lambda () (enable-minor-mode '("\\.js\\'" . prettier-js-mode)))))
+
+
+;; https://github.com/leafOfTree/svelte-mode
+(use-package svelte-mode)
+
+;; see https://ag91.github.io/blog/2022/11/15/catch-you-js-consolelog-you-forgot-to-remove-with-emacs-and-magit/
+(defun ag91/find-console-log-in-js-staged-files ()
+  "Warn if there are console.log in staged files."
+  (when  (s-contains-p "\.js" (s-join " " (magit-staged-files)))
+    (--> (shell-command-to-string "git diff --cached")
+         s-lines
+         (--keep (when (and (s-starts-with-p "+" it) (s-contains-p "console\." it))
+                   (substring it 1 (length it)))
+                 it)
+         (--each it
+           (warn (buttonize
+		  (format "You have a console.* in commit: %s" it)
+		  `(lambda (x)
+                     (let ((default-directory ,default-directory))
+                       (magit-diff-staged))
+                     (goto-char (point-min))
+                     (search-forward ,it nil t))))))))
+
+(add-hook 'magit-post-stage-hook 'ag91/find-console-log-in-js-staged-files)
+
 
 (provide 'mono-dev-web)
 ;;; mono-dev-web.el ends here

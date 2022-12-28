@@ -35,6 +35,7 @@
   ;; you should import your public and secret gpg key
   ;; by doing 'gpg --import /path/to/your/gpg/key'
   (require 'org-crypt)
+  (require 'org-archive)
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
   ;; gpg key to use for encryption
@@ -65,16 +66,11 @@
 (use-package restclient)
 (use-package ob-restclient)
 
-
 (setq org-confirm-babel-evaluate nil)
 ;; org-babel: languages that we want to be able to execute
 (org-babel-do-load-languages
  'org-babel-load-languages
- '(
-   (shell . t)
-   (python . t)
-   (restclient . t)
-   )
+ '((shell . t) (python . t) (restclient . t))
  )
 
 ;; this package implements a “modern” style for your Org buffers using
@@ -121,16 +117,6 @@
          ;; to create a org-roam node from a heading
          ("C-c n n" . org-id-get-create))
   :config
-  ;; from org-roam config. Show org-roam buffer as a side-window
-  (add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-side-window)
-               (side . right)
-               (slot . 0)
-               (window-width . 0.33)
-	       ;; Let use move the cursor to side-window
-               (window-parameters . ((no-other-window . nil)
-                                     (no-delete-other-windows . t)))))
   (setq org-roam-db-node-include-function
 	;; org-roam should ignore :drill headers
 	(lambda ()

@@ -61,13 +61,13 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(require 'straight)  ;; to avoid flycheck error
+(require 'straight)  ;; to avoid lint error
 
 ;; configure straight to work with use-package without the needed to
 ;; add ':straight t'. It will be assumed unless you explicitly override
 ;; it with :straight nil
 (straight-use-package 'use-package)
-(require 'use-package)  ;; to avoid flycheck errors
+(require 'use-package)  ;; to avoid lint errors
 (setq straight-use-package-by-default t)
 
 ;; we want to defer load of all packages by default.  You can use
