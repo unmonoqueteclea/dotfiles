@@ -42,9 +42,12 @@
 
 (setq org-static-blog-publish-title "@unmonoqueteclea")
 (setq org-static-blog-publish-url "https://unmonoqueteclea.github.io")
-;; we move all the auto-generated blog files to 'blog' folder so that,
-;; to remove all of them, we can safely remove that floder
-(setq org-static-blog-publish-directory (concat blog-root-directory "/blog"))
+(setq org-static-blog-rss-file "feed.xml")
+;; we move all the auto-generated blog files to 'docs' folder so that,
+;; to remove all of them, we can safely remove that folder.  we are
+;; using the /docs folder because it is the one deployed by Github
+;; docs
+(setq org-static-blog-publish-directory (concat blog-root-directory "/docs"))
 (defconst blog-static-directory
   (concat blog-root-directory "/static")
   "This directory contains all (non posts) statics files needed in the blog.")
