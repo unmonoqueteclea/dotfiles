@@ -67,7 +67,7 @@
   :defines fontaine-presets
   :demand t
   :config
-  (let ((default-height-augment 0))
+  (let ((default-height-augment -12))
     ;; config from Prot's configuration
     (setq fontaine-presets
 	  `((tiny
@@ -134,7 +134,6 @@
 ;; this package is required by many others to show emojis
 (use-package all-the-icons :if (display-graphic-p))
 (require 'all-the-icons)
-
 (provide 'mono-base-theme)
 
 ;;; mono-base-theme.el ends here
