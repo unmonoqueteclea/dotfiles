@@ -42,10 +42,8 @@
 (setq dired-omit-files
       "^.DS_Store$\\|^.git$\\|.egg-info$\\|.pytest_cache$\\|__pycache__$\\|Icon\015$\\|.mypy_cache$")
 
-;; a: show hidden fles
-;; l: list files in long format
-;; h: list the size in human readable format
-(setq dired-listing-switches "-alh")
+;; ls --help to show switches
+(setq dired-listing-switches "-alGh")
 
 (provide 'mono-files)
 
