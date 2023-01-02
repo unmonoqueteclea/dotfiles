@@ -58,6 +58,9 @@
         (pyenv-mode-set project)
       (pyenv-mode-unset))))
 (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
+;; pyenv tries to override C-c C-s keybind that I am using in other places
+(eval-after-load "pyenv-mode"
+  (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
 ;; automatically activate pyenv version from Emacs with pyenv-mode.
 ;; It traverse directories up until .python-version file will be found
