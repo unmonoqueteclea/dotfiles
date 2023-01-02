@@ -16,7 +16,9 @@
 
 
 ;;; Commentary:
-;;
+;;  In the main agenda files, I am using an ARCHIVE entry for each
+;;  header.  To send a finished item to ARCHIVE, use function
+;;  =org-archive-to-archive-sibling=
 
 ;;; Code:
 

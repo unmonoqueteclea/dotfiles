@@ -1,6 +1,6 @@
 # ⚙️ unmonoqueteclea's dotfiles
 
-These are the dotfiles that powers my daily work. My `GNU Emacs`
+These are the dotfiles that power my daily work. My `GNU Emacs`
 configuration is also included in the repository.
 
 I use `Ubuntu 22.04` with `GNOME 42` and `gdm3` as login screen
@@ -31,4 +31,4 @@ XKBOPTIONS="caps:ctrl_modifier"
 
 ## synced data folder
 Some of these configurations assumed a synced data folder. I use
-`Google Drive`, with `rclone` helping me to synchronize the files. 
+`Google Drive`, with `rclone` helping me to synchronize the files.
