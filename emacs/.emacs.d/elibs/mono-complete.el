@@ -22,7 +22,7 @@
 ;;  is the way in which the user makes selections from lists of items.
 ;;  Examples: opening files, switching buffers, etc
 ;;  Interesting video: https://www.youtube.com/watch?v=J0OaRy85MOo
-;; 
+;;
 
 ;;; Code:
 
@@ -123,10 +123,10 @@
    ("C-c g" . consult-ripgrep)))
 
 (setq consult-ripgrep-args
-      "rg --null -uu --line-buffered --color=never --max-columns=1000
-          --glob !{cov_html,.git,.mypy_cache,.egg-info,.pytest_cache,*.egg-info,node_modules/*,*build/lib.linux-x86_64*}
-          --path-separator /   --smart-case --no-heading --line-number .")
-
+      (concat "rg" " --null" " -uu"  " --max-columns=1000"
+              " --smart-case" " --line-number"
+	      " --glob !{.git,.egg-info}"
+	      " ."))
 
 ;; TODO Check docs and improve configuration of corfu
 
