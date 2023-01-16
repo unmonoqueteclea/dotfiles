@@ -1,6 +1,6 @@
 ;;; mono-agenda.el --- agenda and tasks management -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; copyright (C) 2022,2023  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -181,12 +181,11 @@
       '(("w" "Work task" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}
  :PROPERTIES:
- :Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
  :END:"
 	 :empty-lines 1)
 	("p" "Personal task" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
 	 :empty-lines 1)))
- 
+
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here
