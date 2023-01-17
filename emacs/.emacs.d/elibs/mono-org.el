@@ -105,7 +105,7 @@
   :functions org-roam-db-autosync-mode
   :custom
   (org-roam-completion-everywhere t)
-   (org-roam-directory  (concat mono-dir-org "/roam"))
+  (org-roam-directory  (concat mono-dir-org "/roam"))
   (org-roam-db-location (concat mono-dir-org "/roam/org-roam.db"))
   (org-roam-completion-everywhere t)
   :bind (("C-c n a" . org-roam-alias-add)

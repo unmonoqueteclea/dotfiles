@@ -28,12 +28,11 @@
 (scroll-bar-mode -1)
 (column-number-mode)
 
-;; TODO check new Prot's ef-themes
-
-;; load modus themes from Protesilaos
-;; See https://github.com/protesilaos/modus-themes
-;; the overarching objective of this project is to always offer
-;; accessible color combinations.
+;; load modus themes from Protesilaos See
+;; https://github.com/protesilaos/modus-themes the overarching
+;; objective of this project is to always offer accessible color
+;; combinations. I also tried Prot's ef-themes but I can't find any
+;; benefit in using them.
 (use-package emacs
   :defines modus-themes-org-agenda
   :init
