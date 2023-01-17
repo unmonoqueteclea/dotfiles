@@ -52,7 +52,10 @@
 (setq org-agenda-files `(,mono-dir-agenda))
 
 (setq org-habit-graph-column 80
-      org-habit-show-habits-only-for-today nil)
+      org-habit-show-all-today nil
+      org-habit-show-habits-only-for-today nil
+      org-habit-preceding-days 14
+      org-habit-following-days 14)
 
 (setq org-agenda-overriding-header "⚡ Agenda")
 
@@ -97,6 +100,7 @@
   :config (org-super-agenda-mode))
 
 (setq
+ org-agenda-time-grid nil
  org-agenda-current-time-string "⏰ ┈┈┈┈┈┈┈┈┈┈┈ now"
  org-agenda-compact-blocks nil
  org-agenda-window-setup 'current-window
@@ -104,29 +108,27 @@
  org-deadline-warning-days 7
  org-agenda-custom-commands
  '(
-   ("w" "Work agenda view"
+   ("w" "🖥️ Work agenda view"
     ((agenda
       ""
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
-	'((:name "Habit" :habit)
-	  (:name "Should have done..."
-	    ;; only show tasks from category work or calendar
-	    :discard (:not (:category ("work" "calendar")))
+	'((:name "➰ Habit" :habit)
+	  (:name "⚠️ Should have done..."
 	    ;; show past scheduled tasks
 	    :scheduled past
 	    ;; show past deadline tasks
 	    :deadline past
 	    :order 1)
-	  (:name "Today's work tasks"
+	  (:name "📅 Today's scheduled tasks"
            ;; only show tasks from category work or calendar
-           :discard (:not (:category ("work" "calendar")))
+           ;; :discard (:not (:category ("work" "calendar")))
            ;; match items with today’s date
            :date today
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "Other work tasks")
+      ((org-agenda-overriding-header "✅ Other work tasks")
        (org-super-agenda-groups
          ;; only show tasks from category work or calendar
 	'((:discard (:not (:category ("work" "calendar"))))
@@ -134,13 +136,13 @@
 	  )))
      ))
 
-   ("p" "Personal agenda view"
+   ("p" "🧑 Personal agenda view"
     ((agenda
       ""
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
-	'((:name "Habit" :habit)
-	  (:name "Should have done..."
+	'((:name "➰ Habit" :habit)
+	  (:name "⚠️ Should have done..."
 	    ;; only show tasks from category work or calendar
 	    :discard (:category ("work"))
 	    ;; show past scheduled tasks
@@ -148,7 +150,7 @@
 	    ;; show past deadline tasks
 	    :deadline past
 	    :order 1)
-	  (:name "Today's work"
+	  (:name "📅 Today's personal tasks"
            ;; only show tasks from category work or calendar
            :discard (:category ("work"))
            ;; match items with today’s date
@@ -156,10 +158,10 @@
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "Other tasks")
+      ((org-agenda-overriding-header "✅ Other personal tasks")
        (org-super-agenda-groups
          ;; only show tasks from category work or calendar
-	'((:discard (:category ("work")))
+	'((:discard (:category ("work" "routine")))
 	  (:auto-category t))
 	  )))
      ))))
@@ -178,12 +180,14 @@
 
 
 (setq org-capture-templates
-      '(("w" "Work task" entry (file+headline mono-agenda-work "Inbox")
-	 "* TODO %^{task}
- :PROPERTIES:
- :END:"
+      '(("w" "🖥️ Work task" entry (file+headline mono-agenda-work "Inbox")
+	 "* TODO %^{task}"
 	 :empty-lines 1)
-	("p" "Personal task" entry (file mono-agenda-inbox)
+	;; PR-related task
+	("r" "✅ Pull Request task" entry (file+headline mono-agenda-work "pull requests")
+	 "* TODO ✅ review/merge %^{url}\nSCHEDULED: <%<%Y-%m-%d %a>>"
+	 :empty-lines 1)
+	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
 	 :empty-lines 1)))
 

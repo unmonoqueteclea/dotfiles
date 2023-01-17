@@ -4,7 +4,7 @@
 
 # I am building emacs from source, so I need to add an alias to open
 # it easily (fullscreen)
-alias emacs="${DIR_SOURCES}/emacs/src/emacs -fs --debug-init"
+alias emacs="${DIR_SOURCES}/emacs/src/emacs --debug-init"
 
 # pyenv configuration for generating Python environments
 # pyenv lets you easily switch between multiple versions of Python.

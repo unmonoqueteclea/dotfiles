@@ -125,6 +125,7 @@
   (set-face-background 'fringe (face-attribute 'default :background)))
 
 (add-borders)
+(toggle-frame-fullscreen)
 
 ;; when we toggle the theme, we have to add the borders again
 ;; to ensure the correct color is used
