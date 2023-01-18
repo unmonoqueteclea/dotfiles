@@ -132,8 +132,11 @@
 (advice-add 'modus-themes-toggle :after 'add-borders)
 
 ;; this package is required by many others to show emojis
-(use-package all-the-icons :if (display-graphic-p))
-(require 'all-the-icons)
+(use-package all-the-icons :demand t :if (display-graphic-p))
+;; this is another emoji-related package
+;; TODO when I upgrade to emacs 29, I won't need this as
+;; emacs 29 includes native emoji support.
+(use-package emojify :hook (after-init . global-emojify-mode))
 (provide 'mono-base-theme)
 
 ;;; mono-base-theme.el ends here

@@ -189,7 +189,6 @@
 ;; [C-c C-p] In the new grep buffer to active wgrep
 (use-package wgrep :demand t)
 
-;; TODO Explore writing linters such us proselint artsbollock and langtool
 
 (provide 'mono-complete)
 

@@ -25,14 +25,9 @@
 (require 'mono-dev-tools)
 (require 'mono-projects)
 (require 'python)
-(require 'eglot)
 
-;; ensure eglot works with python and formats on save
-(add-hook
- 'python-mode-hook
- (lambda ()
-   (eglot-ensure)
-   (add-hook 'before-save-hook 'eglot-format nil t)))
+;; remove guess indent python message
+(setq python-indent-guess-indent-offset-verbose nil)
 
 ;; configure ipython as my default python shell
 (setq python-shell-completion-native-disabled-interpreters '("ipython"))
@@ -41,16 +36,43 @@
 
 ;; integrate pytest within emacs
 ;; https://github.com/wbolster/emacs-python-pytest
-(use-package python-pytest
-  :commands python-pytest-dispatch)
+(use-package python-pytest :commands python-pytest-dispatch)
 
-;; use pyenv to manage Python versions within Emacs Pyenv mode
-;; integrates Fabián E. Gallina's python.el with the pyenv tool. This
-;; gives packages which already use python.el (like python-django)
-;; pyenv virtual environment support out-of-the-box.  Pyenv setup the
-;; PYENV_VERSION environment variable and python-shell-virtualenv-path
-;; custom variable based on user input
-(use-package pyenv-mode :demand :commands pyenv-mode :config  (pyenv-mode))
+;; to manage python versions and virtualenvs I am using pyenv. It lets
+;; you easily switch between multiple versions of Python. It's simple,
+;; unobtrusive, and follows the UNIX tradition of single-purpose tools
+;; that do one thing well.
+
+;; pyenv mode integrates Fabián E. Gallina's python.el with the pyenv
+;; tool. This gives packages which already use python.el (like
+;; python-django) pyenv virtual environment support out-of-the-box.
+;; Pyenv setup the PYENV_VERSION environment variable and
+;; python-shell-virtualenv-path custom variable based on user input
+(use-package pyenv-mode :demand t :commands pyenv-mode :config  (pyenv-mode))
+;; pyenv tries to override C-c C-s keybind that I am using in other places
+(eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
+
+;; some additional functions that complement pyenv-mode
+(defun pyenv-versions ()
+  "Show the list of pyenv versions."
+  (interactive)
+  (shell-command "pyenv versions"))
+
+(defun pyenv-create-env (parent name)
+  "Create pyenv version from PARENT Python version and evn NAME."
+  (interactive "sPython version to use: \nsEnvironment name: ")
+  (shell-command (concat "pyenv virtualenv " parent " " name)))
+
+(defun pyenv-remove-env (name)
+  "Remove pyenv version from its NAME."
+  (interactive
+   (list
+    (completing-read "Choose one: " (pyenv-mode-versions))))
+  (shell-command (concat "pyenv virtualenv-delete -f " name)))
+
+;; with this, we ensure that we are always using the right environment
+;; associated to a specific projectile project.
+;; copied from pyenv.el doc
 (defun projectile-pyenv-mode-set ()
   "Set pyenv version matching project name."
   (let ((project (projectile-project-name)))
@@ -58,37 +80,31 @@
         (pyenv-mode-set project)
       (pyenv-mode-unset))))
 (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
-;; pyenv tries to override C-c C-s keybind that I am using in other places
-(eval-after-load "pyenv-mode"
-  (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
+;; the same as before, but for non-projectile projects
 ;; automatically activate pyenv version from Emacs with pyenv-mode.
 ;; It traverse directories up until .python-version file will be found
 ;; and activates pyenv version defined there.
-(use-package pyenv-mode-auto)
+(use-package pyenv-mode-auto :demand t)
 
-;; temporarily here until eglot is working nicely
-;; See https://www.mattduck.com/lsp-python-getting-started.html
-;; In your project, you should do:
-;;   - pip install python-language-server[all]
-;;   - pip install pyls-black pyls-isort pyls-mypy
-;;
-;; (require 'lsp-mode)
-;; (require 'lsp-pylsp)
-;; (setq lsp-pylsp-plugins-autopep8-enabled nil ;; we are using black instead
-;;       lsp-pylsp-plugins-flake8-enabled t
-;;       lsp-pylsp-plugins-jedi-completion-enabled t
-;;       lsp-pylsp-plugins-jedi-use-pyenv-environment t
-;;       lsp-pylsp-plugins-pycodestyle-enabled nil  ;; we are not using pycodestyle
-;;       lsp-pylsp-plugins-pydocstyle-enabled nil
-;;       lsp-pylsp-plugins-pylint-enabled nil ;; we are using flaky instead pylint
-;;       lsp-pylsp-plugins-yapf-enabled nil) ;; we are not usng yapf
+;; TODO when I upgrade to emacs 29 I won't need this, as it is already
+;; included by default
+(use-package eglot
+  :config
+  ;; shutdown server after killing last managed buffer
+  (setq eglot-autoshutdown t))
 
-;; (lsp-register-custom-settings
-;;    '(("pyls.plugins.pyls_black.enabled" t t)
-;;      ("pyls.plugins.pyls_isort.enabled" t t)))
+(add-hook
+ 'python-mode-hook
+ (lambda ()
+   (eglot-ensure)
+   ;; ensure eglot works with python and formats on save
+   (add-hook 'before-save-hook 'eglot-format nil t)))
 
 
+;; recommendation from lsp-mode docs
+;; not sure if it is already useful for eglot
+(setq read-process-output-max (* 1024 1024))
 
 (provide 'mono-dev-python)
 
