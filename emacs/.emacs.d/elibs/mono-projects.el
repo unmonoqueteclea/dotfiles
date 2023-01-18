@@ -41,6 +41,7 @@
 (use-package projectile
   :demand t
   :init (projectile-mode +1)
+  :diminish projectile-mode
   :bind
   (:map projectile-mode-map ("C-c P" . projectile-command-map))
   :config
@@ -67,9 +68,34 @@
   (projectile-switch-project)
   (tab-rename (projectile-project-name)))
 
+(defun mono/new-mail-tab ()
+  "Open a new tab with mail."
+  (interactive)
+  (tab-new-to)
+  (mu4e)
+  (tab-rename "mail")
+  (mu4e-update-mail-and-index t))
+
+(defun mono/new-docker-tab ()
+  "Open a new tab with docker containers."
+  (interactive)
+  (tab-new-to)
+  (docker-containers)
+  (tab-rename "docker"))
+
+(defun mono/new-agenda-tab ()
+  "Open a new tab with agenda."
+  (interactive)
+  (tab-new-to)
+  (org-agenda)
+  (tab-rename "agenda"))
+
 (global-set-key (kbd "C-c w r") 'tab-bar-rename-tab)
 (global-set-key (kbd "C-c w k") 'tab-bar-close-tab)
 (global-set-key (kbd "C-c w o") 'mono/new-project-tab)
+(global-set-key (kbd "C-c w a") 'mono/new-agenda-tab)
+(global-set-key (kbd "C-c w d") 'mono/new-docker-tab)
+(global-set-key (kbd "C-c w m") 'mono/new-mail-tab)
 
 (provide 'mono-projects)
 

@@ -114,7 +114,7 @@
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
 	'((:name "➰ Habit" :habit)
-	  (:name "⚠️ Should have done..."
+	  (:name "⚠ Should have done..."
 	    ;; show past scheduled tasks
 	    :scheduled past
 	    ;; show past deadline tasks
@@ -142,7 +142,7 @@
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
 	'((:name "➰ Habit" :habit)
-	  (:name "⚠️ Should have done..."
+	  (:name "⚠ Should have done..."
 	    ;; only show tasks from category work or calendar
 	    :discard (:category ("work"))
 	    ;; show past scheduled tasks

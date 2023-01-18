@@ -33,6 +33,9 @@
 ;; important packages in my configuration.
 ;; https://github.com/magit/magit
 (use-package magit)
+;; pull requests and issues from magit interface
+;; (needs .authinfo file with github/gitlab token)
+(use-package forge :after magit)
 
 ;; emacs integration for Docker!
 ;; supports docker containers, images, volumes, networks and docker-compose.
