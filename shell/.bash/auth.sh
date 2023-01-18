@@ -1,7 +1,6 @@
  #!/usr/bin/env bash
 
 # auth and credential related utilities
-
 export SSH_KEYS_DIR="${DIR_SYNC}/access/ssh"
 
 # when using GNOME, it ensures that the ssh-agent
@@ -10,4 +9,4 @@ export SSH_KEYS_DIR="${DIR_SYNC}/access/ssh"
 # Here, we are also asking for the password of my main SSH key.
 # We could remove the `--eval` and wait until the password
 # is first prompted
-eval "$(keychain --agents ssh --nogui --timeout 120 --eval $SSH_KEYS_DIR/id_rsa)"
+eval "$(keychain --agents ssh --nogui --timeout 480 --eval $SSH_KEYS_DIR/id_rsa)"
