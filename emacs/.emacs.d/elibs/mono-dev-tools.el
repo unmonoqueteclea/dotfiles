@@ -47,6 +47,10 @@
   :config
   (setq docker-container-shell-file-name shell-file-name))
 
+;; TODO when I update to emacs 29, I think docker-tramp won't be
+;; needed
+(use-package docker-tramp)
+
 ;; emacs integration for Kubernetes
 ;; https://github.com/abrochard/kubel
 (use-package kubel)
