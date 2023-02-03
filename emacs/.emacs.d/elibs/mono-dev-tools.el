@@ -37,10 +37,21 @@
 ;; (needs .authinfo file with github/gitlab token)
 (use-package forge :after magit)
 
-
-;; Walk through git revisions of a file
+;; walk through git revisions of a file
 ;; https://github.com/emacsmirror/git-timemachine
 (use-package git-timemachine)
+
+;; git-gutter.el is an Emacs port of the Sublime Text plugin GitGutter
+;; https://github.com/emacsorphanage/git-gutter
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode +1))
+
+;; interactive Emacs functions that create URLs for files and commits
+;; in repositories https://github.com/sshaw/git-link
+;; If git-timemachine-mode is active git-link generates a URL for the
+;; version of the file being visited.
+(use-package git-link)
 
 ;; emacs integration for Docker!
 ;; supports docker containers, images, volumes, networks and docker-compose.
