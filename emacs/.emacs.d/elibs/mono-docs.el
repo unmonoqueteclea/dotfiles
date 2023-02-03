@@ -40,6 +40,22 @@
   (define-key pdf-view-mode-map (kbd "C-o") 'pdf-occur)
   (pdf-loader-install))
 
+;; syntax highlight and edit features for markdown files
+;; https://jblevins.org/projects/markdown-mode/
+(use-package markdown-mode :demand t)
+
+
+;; translate using several engines
+;; https://github.com/lorniu/go-translate
+(use-package go-translate
+  :config
+  (setq gts-translate-list '(("en" "es") ("es" "en")))
+  (setq gts-default-translator
+	(gts-translator
+	 :picker (gts-prompt-picker)
+	 :engines (list (gts-bing-engine) (gts-google-engine))
+	 :render (gts-buffer-render))))
+
 (provide 'mono-docs)
 
 ;;; mono-docs.el ends here
