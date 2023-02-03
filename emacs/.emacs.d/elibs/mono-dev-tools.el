@@ -37,6 +37,11 @@
 ;; (needs .authinfo file with github/gitlab token)
 (use-package forge :after magit)
 
+
+;; Walk through git revisions of a file
+;; https://github.com/emacsmirror/git-timemachine
+(use-package git-timemachine)
+
 ;; emacs integration for Docker!
 ;; supports docker containers, images, volumes, networks and docker-compose.
 ;; see https://github.com/Silex/docker.el
