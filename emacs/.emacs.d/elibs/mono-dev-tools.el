@@ -44,7 +44,12 @@
 ;; git-gutter.el is an Emacs port of the Sublime Text plugin GitGutter
 ;; https://github.com/emacsorphanage/git-gutter
 (use-package git-gutter
+  :demand t
+  :diminish git-gutter-mode
   :config
+  (setq git-gutter:added-sign "+")
+  (setq git-gutter:modified-sign "*")
+  (setq git-gutter:hide-gutter t)
   (global-git-gutter-mode +1))
 
 ;; interactive Emacs functions that create URLs for files and commits

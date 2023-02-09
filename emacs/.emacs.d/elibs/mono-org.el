@@ -40,7 +40,11 @@
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
   ;; gpg key to use for encryption
   ;; either the Key ID or set to nil to use symmetric encryption.
-  (setq org-crypt-key "pgonzalezcarrizo@gmail.com"))
+  (setq org-crypt-key "pgonzalezcarrizo@gmail.com")
+  ;; both the state changes and the timer logs are placed inside the
+  ;; drawer
+  (setq org-log-into-drawer t)
+  (setq org-log-done t))
 
 (require 'org-indent)
 (require 'org-element)

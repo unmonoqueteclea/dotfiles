@@ -53,17 +53,17 @@
 (eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
 ;; some additional functions that complement pyenv-mode
-(defun pyenv-versions ()
+(defun mono/pyenv-versions ()
   "Show the list of pyenv versions."
   (interactive)
   (shell-command "pyenv versions"))
 
-(defun pyenv-create-env (parent name)
+(defun mono/pyenv-create-env (parent name)
   "Create pyenv version from PARENT Python version and evn NAME."
   (interactive "sPython version to use: \nsEnvironment name: ")
   (shell-command (concat "pyenv virtualenv " parent " " name)))
 
-(defun pyenv-remove-env (name)
+(defun mono/pyenv-remove-env (name)
   "Remove pyenv version from its NAME."
   (interactive
    (list
