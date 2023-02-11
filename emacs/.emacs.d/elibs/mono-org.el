@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;  I use org-mode mainly to take notes (org-roam) to manage tasks and
+;;  I use org-mode mainly to take notes (see mono-notes) to manage tasks and
 ;;  appointments (org-agenda), to manage spaced repetition flashcards
 ;;  (org-drill) and even for doing some literate programming.
 
@@ -90,7 +90,6 @@
   :config
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
 
-
 ;; org-modern provides a clean and efficient org style. The blocks
 ;; (e.g. source, example) are particularly nice. But when org-indent
 ;; is enabled, the block "bracket", which uses the fringe area, is
@@ -100,46 +99,6 @@
   :straight (:host github :repo "jdtsmith/org-modern-indent" :branch "main")
   :hook
   (org-indent-mode . org-modern-indent-mode))
-
-;; Org-roam is a Roam replica
-;; built on top of the all-powerful Org-mode.  Org-roam is a solution
-;; for effortless non-hierarchical note-taking with Org-mode. With
-;; Org-roam, notes flow naturally, making note-taking fun and
-;; easy. Org-roam should also work as a plug-and-play solution for
-;; anyone already using Org-mode for their personal wiki.
-(use-package org-roam
-  :demand t
-  :functions org-roam-db-autosync-mode
-  :custom
-  (org-roam-completion-everywhere t)
-  (org-roam-directory  (concat mono-dir-org "/roam"))
-  (org-roam-db-location (concat mono-dir-org "/roam/org-roam.db"))
-  (org-roam-completion-everywhere t)
-  :bind (("C-c n a" . org-roam-alias-add)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n j" . org-roam-dailies-capture-today)
-         ("C-c n l" . org-roam-buffer-toggle)
-         ;; to create a org-roam node from a heading
-         ("C-c n n" . org-id-get-create))
-  :config
-  (setq org-roam-db-node-include-function
-	;; org-roam should ignore :drill headers
-	(lambda ()
-          (not (member "drill" (org-get-tags)))))
-  (require 'org-roam-protocol))
-
-;; org-roam-ui: a graphical frontend for your org-roam Zettelkasten
-;; See https://github.com/org-roam/org-roam-ui
-(use-package org-roam-ui
-    :straight (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-    :after org-roam
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
 
 ;; Org-Drill is an extension for Org mode. Org-Drill uses a spaced
 ;; repetition algorithm to conduct interactive "drill sessions", using
@@ -151,7 +110,7 @@
 ;; code fragments exported from org-files into html files
 (use-package htmlize)
 
-;; open org-mode links (including org-roam ones) in the same window
+;; open org-mode links in the same window
 (add-to-list 'org-link-frame-setup '(file . find-file))
 
 (provide 'mono-org)
