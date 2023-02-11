@@ -45,6 +45,7 @@
 (require 'mono-help)
 (require 'mono-complete)
 (require 'mono-org)
+(require 'mono-notes)
 (require 'mono-slides)
 (require 'mono-docs)
 (require 'mono-tools-terminal)
