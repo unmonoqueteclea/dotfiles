@@ -1,3 +1,4 @@
 .projectile
 *.secrets.sh
 *feeds.org
+*.mbsyncrc

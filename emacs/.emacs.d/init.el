@@ -57,8 +57,10 @@
 (require 'mono-dev-python)
 (require 'mono-blog)
 (require 'mono-tools-browser)
+(require 'mono-tools-email)
 (require 'mono-tools-feeds)
 (require 'mono-keyboard)
+(require 'mono-secret)
 
 (provide 'init)
 

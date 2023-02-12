@@ -1,4 +1,4 @@
-# ⚙️ unmonoqueteclea's dotfiles
+# ⚙ unmonoqueteclea's dotfiles
 
 These are the dotfiles that power my daily work. My `GNU Emacs`
 configuration is also included in the repository.
