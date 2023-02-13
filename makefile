@@ -11,3 +11,5 @@ stow:
 	stow --verbose --target=$$HOME --restow xmonad/
 	stow --verbose --target=$$HOME --restow python/
 	stow --verbose --target=$$HOME --restow mail/
+	mkdir -p $$HOME/.config/rclone
+	stow --verbose --target=$$HOME/.config/rclone --restow rclone/

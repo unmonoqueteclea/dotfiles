@@ -2,3 +2,4 @@
 *.secrets.sh
 *feeds.org
 *.mbsyncrc
+*rclone.conf
