@@ -37,3 +37,10 @@ alias pgadmin="docker run -p 80:80 -e 'PGADMIN_DEFAULT_EMAIL=gonzalez@bigml.com'
 # opencv (built from source)
 export OPENCV_INCLUDE_PATH="/usr/local/include/opencv4"
 export OPENCV_LIBRARY_PATH="/usr/local/lib"
+
+# create a tunnel to a specified port
+# like ngrok but without the need of any client or account
+tunnel() {
+    echo "Creating a tunnel for localhost port $1"
+    ssh -R 80:localhost:$1 localhost.run
+}
