@@ -10,3 +10,4 @@ export SSH_KEYS_DIR="${DIR_SYNC}/access/ssh"
 # We could remove the `--eval` and wait until the password
 # is first prompted
 eval "$(keychain --agents ssh --nogui --timeout 480 --eval $SSH_KEYS_DIR/id_rsa)"
+eval "$(keychain --agents ssh --nogui --timeout 480  $SSH_KEYS_DIR/bigml/bigml_ssh)"

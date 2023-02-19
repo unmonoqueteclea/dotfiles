@@ -191,5 +191,17 @@
 	 "* TODO %^{task}"
 	 :empty-lines 1)))
 
+;; see https://github.com/ml729/org-habit-stats/
+(use-package org-habit-stats
+  :straight (org-habit-stats :type git :host github :repo "ml729/org-habit-stats"))
+
+;; open habit stats view for agenda items
+(add-hook
+ 'org-agenda-mode-hook
+ (lambda ()
+   (local-set-key (kbd "H") 'org-habit-stats-view-habit-at-point-agenda)))
+
+
+
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here
