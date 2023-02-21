@@ -63,5 +63,14 @@
      (format "%s | xargs -i rsync -aP {} %s" clean-files-cmd clean-output))
    :utils "rsync"))
 
+(defun mono/dwim-validate-json ()
+  "Validate JSON file using jsonlint"
+  (interactive)
+  (dwim-shell-command-on-marked-files
+   "Validate JSON file"
+   "jsonlint <<f>>"
+   :error-autofocus t
+   :silent-success t))
+
 (provide 'mono-dwim)
 ;;; mono-dwim.el ends here
