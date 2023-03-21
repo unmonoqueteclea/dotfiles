@@ -125,8 +125,7 @@
 (setq consult-ripgrep-args
       (concat "rg" " --null" " -uu"  " --max-columns=1000"
               " --smart-case" " --line-number"
-	      " --glob !{.git,.egg-info,.mypy_cache,node_modules,migrations}"
-	      " ."))
+	      " --glob !{.git,.egg-info,.mypy_cache,node_modules,migrations}"))
 
 ;; TODO Check docs and improve configuration of corfu
 

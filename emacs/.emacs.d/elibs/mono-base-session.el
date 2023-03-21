@@ -75,7 +75,7 @@
 (add-hook 'savehist-save-hook 'unpropertize-kill-ring)
 
 ;; recentf files
-(setq recentf-max-menu-items 40)
+(setq recentf-max-menu-items 10)
 (setq recentf-save-file (expand-file-name "recentf" mono-dir-cache))
 (recentf-mode 1)
 

@@ -110,6 +110,10 @@
 ;; code fragments exported from org-files into html files
 (use-package htmlize)
 
+;; this package allows running gnuplot files from within the GNU Emacs
+;; editor (you will also need the gnuplot system package)
+(use-package gnuplot)
+
 ;; open org-mode links in the same window
 (add-to-list 'org-link-frame-setup '(file . find-file))
 
