@@ -25,6 +25,8 @@
 (defun mono/open-denote-directory ()
   "Open the main denote directory."
   (interactive)
+  (tab-new)
+  (tab-rename "notes")
   (find-file denote-directory))
 
 (defun mono/search-in-notes ()
