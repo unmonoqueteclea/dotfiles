@@ -90,11 +90,19 @@
   (org-agenda)
   (tab-rename "agenda"))
 
+(defun mono/new-draft-tab ()
+  "Open a draft tab."
+  (interactive)
+  (tab-new-to)
+  (switch-to-buffer "draft")
+  (tab-rename "draft"))
+
 (global-set-key (kbd "C-c w r") 'tab-bar-rename-tab)
 (global-set-key (kbd "C-c w k") 'tab-bar-close-tab)
 (global-set-key (kbd "C-c w o") 'mono/new-project-tab)
 (global-set-key (kbd "C-c w a") 'mono/new-agenda-tab)
 (global-set-key (kbd "C-c w d") 'mono/new-docker-tab)
+(global-set-key (kbd "C-c w D") 'mono/new-draft-tab)
 (global-set-key (kbd "C-c w m") 'mono/new-mail-tab)
 
 (provide 'mono-projects)
