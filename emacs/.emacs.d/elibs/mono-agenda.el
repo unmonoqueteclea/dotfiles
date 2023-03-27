@@ -55,7 +55,8 @@
       org-habit-show-all-today nil
       org-habit-show-habits-only-for-today nil
       org-habit-preceding-days 14
-      org-habit-following-days 14)
+      org-habit-following-days 14
+      org-agenda-tags-column -160)
 
 (setq org-agenda-overriding-header "⚡ Agenda")
 
