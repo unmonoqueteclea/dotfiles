@@ -19,7 +19,7 @@ eval "$(pyenv virtualenv-init -)"
 
 # automatically login docker to BigML registry
 bigml_docker_login() {
-    echo $DOCKER_BIGML_PASSWORD | docker login -u $DOCKER_BIGML_USERNAME --password-stdin 
+    echo $DOCKER_BIGML_PASSWORD | docker login -u $DOCKER_BIGML_USERNAME --password-stdin
 }
 
 # always use new docker compose version

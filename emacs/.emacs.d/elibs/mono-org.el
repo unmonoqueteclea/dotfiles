@@ -74,7 +74,7 @@
 ;; org-babel: languages that we want to be able to execute
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((shell . t) (python . t) (restclient . t))
+ '((shell . t) (python . t) (restclient . t) (sql . t))
  )
 
 ;; this package implements a “modern” style for your Org buffers using
