@@ -37,8 +37,44 @@
     (mapc #'elfeed-search-update-entry entries)
     (unless (use-region-p) (forward-line))))
 
-;; Elfeed is an extensible web feed reader for Emacs,
-;; supporting both Atom and RSS.
+
+;; to read hackernews from emacs, I use it from elfeed. It generates
+;; an org buffer with the content and the comments of a hacker news
+;; post i need to use my own fork to ensure that the link of the post
+;; uses org-syntax (so that I can store it in pocket using
+;; pocket-add-link) IMPORTANT: Instead of using the official HN RSS
+;; (that links to articles) we are using https://hnrss.org/frontpage
+;; that links to comments page
+(use-package hnreader
+  :straight (hnreader :type git :host github :repo "unmonoqueteclea/emacs-hnreader"))
+
+;; to read reddit from emacs, I use this from elfeed
+(use-package reddigg)
+
+;; connect emacs to pocket, allowing things like storing links
+(use-package pocket-reader)
+
+;; original from https://blog.dornea.nu/2023/04/21/read-hackernews-and-reddit-the-emacs-way/
+(defun mono/elfeed-reddit-show-commments (&optional link)
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (if link link (elfeed-entry-link entry))))
+    (reddigg-view-comments link)))
+
+;; original from https://blog.dornea.nu/2023/04/21/read-hackernews-and-reddit-the-emacs-way/
+(defun mono/elfeed-hn-show-commments (&optional link)
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (if link link (elfeed-entry-link entry))))
+    (setq-local hnreader-view-comments-in-same-window nil)
+    (hnreader-comment (format "%s" link))))
+
+;; elfeed is an extensible web feed reader for Emacs, supporting both
+;; Atom and RSS.
 (use-package elfeed
   :commands elfeed
   :functions
@@ -56,7 +92,9 @@
   :config
   (setq elfeed-curl-max-connections 2
         elfeed-search-filter "@1-week-ago +unread +fav")
-  (define-key elfeed-search-mode-map (kbd "w") 'mono/elfeed-firefox-open))
+  (define-key elfeed-search-mode-map (kbd "w") 'mono/elfeed-firefox-open)
+  (define-key elfeed-search-mode-map (kbd "r") 'mono/elfeed-reddit-show-commments)
+  (define-key elfeed-search-mode-map (kbd "h") 'mono/elfeed-hn-show-commments))
 
 ;; store feeds in an org file
 (use-package elfeed-org
