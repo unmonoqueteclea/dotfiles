@@ -45,6 +45,10 @@
 ;; ls --help to show switches
 (setq dired-listing-switches "-alGh")
 
+;; when auto-save-visited-mode is enabled, Emacs will auto-save
+;; file-visiting buffers after five seconds of idle time.
+(setq auto-save-visited-mode t)
+
 (provide 'mono-files)
 
 ;;; mono-files.el ends here
