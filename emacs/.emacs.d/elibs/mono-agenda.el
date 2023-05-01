@@ -186,7 +186,7 @@
 	 :empty-lines 1)
 	;; PR-related task
 	("r" "✅ Pull Request task" entry (file+headline mono-agenda-work "pull requests")
-	 "* TODO ✅ review/merge %^{url}\nSCHEDULED: <%<%Y-%m-%d %a>>"
+	 "* TODO review/merge %^{url}\nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
