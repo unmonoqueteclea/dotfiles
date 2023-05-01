@@ -20,7 +20,7 @@
 ;;; Commentary:
 ;;  Last full review: 2022-12-28
 ;;
-;;  We use Emacs tabs and projectile to separate different workspaces.
+;;  We use Emacs tabs and project.el to separate different workspaces.
 ;;  Using [C-c w] prefix.
 
 ;;; Code:
@@ -35,38 +35,18 @@
 (global-set-key (kbd "C-<return>") 'tab-switch)
 (define-key org-mode-map (kbd "C-<return>") 'tab-switch)
 
-;; projectile is a project interaction library for Emacs.
-;; use 'projectile-add-known-project' to add a new project
-;; https://github.com/bbatsov/projectile
-(use-package projectile
-  :demand t
-  :init (projectile-mode +1)
-  :diminish projectile-mode
+(use-package consult-project-extra
   :bind
-  (:map projectile-mode-map ("C-c P" . projectile-command-map))
-  :config
-  (setq projectile-project-search-path `(,mono-dir-vc))
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-function (lambda (_) (projectile-project-root))))
-
-;;  a package to incorporate projectile into consult.
-;;  this allows to choose a project, when none is selected or
-;;  choose a project buffer/file.
-;;  https://gitlab.com/OlMon/consult-projectile
-(use-package consult-projectile
-  :straight
-  (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
-  :commands consult-projectile
-  :bind
-  (("C-c p" . consult-projectile)))
+  (("C-c p" . consult-project-extra-find)))
 
 ;; public function to add a new project
 (defun mono/new-project-tab ()
   "Open a project in a new tab."
   (interactive)
   (other-tab-prefix)
-  (projectile-switch-project)
-  (tab-rename (projectile-project-name)))
+  (let* ((dir (project-prompt-project-dir)))
+    (project-switch-project dir)
+    (tab-rename (consult--project-name dir))))
 
 (defun mono/new-mail-tab ()
   "Open a new tab with mail."
