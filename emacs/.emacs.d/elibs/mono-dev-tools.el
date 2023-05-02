@@ -106,6 +106,9 @@
 ;; see https://github.com/haskell/haskell-mode
 (use-package haskell-mode)
 
+;; syntax highlight and utilities for BigML's WhizzML mode
+(use-package whizzml-mode)
+
 ;; the only cheatsheet you need
 ;; https://github.com/chubin/cheat.sh
 (use-package cheat-sh
