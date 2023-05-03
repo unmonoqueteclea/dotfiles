@@ -181,7 +181,7 @@
 
 
 (setq org-capture-templates
-      '(("w" "🖥 Work task" entry (file+headline mono-agenda-work "Inbox")
+      '(("w" "👷 Work task" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}"
 	 :empty-lines 1)
 	;; PR-related task

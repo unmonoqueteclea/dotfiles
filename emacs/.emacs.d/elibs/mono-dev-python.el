@@ -18,6 +18,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;;  Last full review: 2023-05-02
 ;;
 ;;; Code:
 
@@ -28,11 +29,6 @@
 
 ;; remove guess indent python message
 (setq python-indent-guess-indent-offset-verbose nil)
-
-;; configure ipython as my default python shell
-(setq python-shell-completion-native-disabled-interpreters '("ipython"))
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--profile=emacs -i --simple-prompt")
 
 ;; integrate pytest within emacs
 ;; https://github.com/wbolster/emacs-python-pytest
@@ -70,41 +66,47 @@
     (completing-read "Choose one: " (pyenv-mode-versions))))
   (shell-command (concat "pyenv virtualenv-delete -f " name)))
 
-;; with this, we ensure that we are always using the right environment
-;; associated to a specific projectile project.
-;; copied from pyenv.el doc
-(defun projectile-pyenv-mode-set ()
-  "Set pyenv version matching project name."
-  (let ((project (projectile-project-name)))
-    (if (member project (pyenv-mode-versions))
-        (pyenv-mode-set project)
-      (pyenv-mode-unset))))
-(add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
-
-;; the same as before, but for non-projectile projects
 ;; automatically activate pyenv version from Emacs with pyenv-mode.
-;; It traverse directories up until .python-version file will be found
+;; It traverse directories up until .python-version file will be found)
 ;; and activates pyenv version defined there.
-(use-package pyenv-mode-auto :demand t)
+(defun pyenv-mode-auto-hook ()
+  "Automatically activates pyenv version if .python-version file exists."
+  (f-traverse-upwards
+   (lambda (path)
+     (let ((pyenv-version-path (f-expand ".python-version" path)))
+       (if (f-exists? pyenv-version-path)
+           (progn
+             (pyenv-mode-set (car (s-lines (s-trim (f-read-text pyenv-version-path 'utf-8)))))
+             t))))))
 
-;; TODO when I upgrade to emacs 29 I won't need this, as it is already
-;; included by default
-(use-package eglot
-  :config
-  ;; shutdown server after killing last managed buffer
-  (setq eglot-autoshutdown t))
+(add-hook 'find-file-hook 'pyenv-mode-auto-hook)
+
+(defun lint-fix-file-and-revert ()
+  (interactive)
+  (when (derived-mode-p 'python-mode)
+    (shell-command (concat "black " (buffer-file-name)))
+    (shell-command (concat "ruff --fix " (buffer-file-name))))
+  (revert-buffer t t))
+
+;; force eglot to use pyright always
+(require 'eglot)
+(add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
 (add-hook
  'python-mode-hook
  (lambda ()
+   (flymake-mode)
    (eglot-ensure)
-   ;; ensure eglot works with python and formats on save
-   (add-hook 'before-save-hook 'eglot-format nil t)))
+   (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
 
+;; see https://www.reddit.com/r/emacs/comments/10yzhmn/flymake_just_works_with_ruff/
+(setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
+(add-hook 'eglot-managed-mode-hook
+   (lambda () (cond
+	       ((derived-mode-p 'python-base-mode)
+                (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))
+               (t nil))))
 
-;; recommendation from lsp-mode docs
-;; not sure if it is already useful for eglot
-(setq read-process-output-max (* 1024 1024))
 
 (provide 'mono-dev-python)
 

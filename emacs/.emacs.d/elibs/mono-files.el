@@ -40,7 +40,7 @@
 (require 'dired-x)
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 (setq dired-omit-files
-      "^.DS_Store$\\|^.git$\\|.egg-info$\\|.pytest_cache$\\|__pycache__$\\|Icon\015$\\|.mypy_cache$")
+      "^.ipynb_checkpoints$\\|^.DS_Store$\\|^.ruff_cache$\\|^.git$\\|.egg-info$\\|.pytest_cache$\\|__pycache__$\\|Icon\015$\\|.mypy_cache$")
 
 ;; ls --help to show switches
 (setq dired-listing-switches "-alGh")
