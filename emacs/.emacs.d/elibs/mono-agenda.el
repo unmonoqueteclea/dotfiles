@@ -51,7 +51,7 @@
 ;; everything in the agenda folder should be shown in the agenda
 (setq org-agenda-files `(,mono-dir-agenda))
 
-(setq org-habit-graph-column 80
+(setq org-habit-graph-column 100
       org-habit-show-all-today nil
       org-habit-show-habits-only-for-today nil
       org-habit-preceding-days 14

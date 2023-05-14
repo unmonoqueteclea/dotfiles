@@ -41,6 +41,14 @@
 ;; https://github.com/myrjola/diminish.el
 (use-package diminish)
 
+;; jinx.el - enchanted spell checker
+;; On Debian or Ubuntu, install the packages libenchant-2-dev and pkg-config
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
+
+
 (provide 'mono-buffer)
 
 ;;; mono-buffer.el ends here
