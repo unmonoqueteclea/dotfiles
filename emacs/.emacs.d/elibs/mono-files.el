@@ -49,6 +49,11 @@
 ;; file-visiting buffers after five seconds of idle time.
 (setq auto-save-visited-mode t)
 
+;; Do not outright delete files.  Move them to the system trash
+;; instead.  The `trashed' package can act on them in a Dired-like
+;; fashion.
+(setq delete-by-moving-to-trash t)
+
 (provide 'mono-files)
 
 ;;; mono-files.el ends here
