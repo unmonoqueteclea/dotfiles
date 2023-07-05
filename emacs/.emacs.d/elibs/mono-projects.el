@@ -84,6 +84,7 @@
 (global-set-key (kbd "C-c w d") 'mono/new-docker-tab)
 (global-set-key (kbd "C-c w D") 'mono/new-draft-tab)
 (global-set-key (kbd "C-c w m") 'mono/new-mail-tab)
+(global-set-key (kbd "C-c w p") 'mono/new-pomidor-tab)
 ;; you have also a keybind in "C-c n" to open denote within a new tab
 
 (provide 'mono-projects)

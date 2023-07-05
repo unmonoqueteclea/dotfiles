@@ -175,6 +175,18 @@
 (use-package org-habit-stats
   :straight (org-habit-stats :type git :host github :repo "ml729/org-habit-stats"))
 
+(use-package pomidor
+  :config
+  (setq pomidor-sound-tick nil
+        pomidor-sound-tack nil))
+
+(defun mono/new-pomidor-tab ()
+  "Open a new tab with pomidor"
+  (interactive)
+  (tab-new-to)
+  (pomidor)
+  (tab-rename "pomodoro"))
+
 ;; open habit stats view for agenda items
 (add-hook
  'org-agenda-mode-hook
