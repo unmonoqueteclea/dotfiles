@@ -42,12 +42,6 @@
   (expand-file-name "inbox.org" mono-dir-agenda)
   "Inbox agenda file.")
 
-(defconst calendar-bigml
-  (expand-file-name "cal-bigml.org" mono-dir-agenda))
-
-(defconst calendar-google
-  (expand-file-name "cal-google.org" mono-dir-agenda))
-
 ;; everything in the agenda folder should be shown in the agenda
 (setq org-agenda-files `(,mono-dir-agenda))
 
@@ -88,7 +82,6 @@
 	("kaizen" ,(list (all-the-icons-faicon "percent")) nil nil :ascent center)
 	("travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
 	("finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
-	("calendar" ,(list (all-the-icons-faicon "calendar")) nil nil :ascent center)
 	("blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
 	("projects" ,(list (all-the-icons-alltheicon "script")) nil nil :ascent center)))
 
@@ -122,8 +115,8 @@
 	    :deadline past
 	    :order 1)
 	  (:name "📅 Today's scheduled tasks"
-           ;; only show tasks from category work or calendar
-           ;; :discard (:not (:category ("work" "calendar")))
+           ;; only show tasks from category work
+           ;; :discard (:not (:category ("work")))
            ;; match items with today’s date
            :date today
            :order 2)))))
@@ -131,8 +124,8 @@
       ""
       ((org-agenda-overriding-header "✅ Other work tasks")
        (org-super-agenda-groups
-         ;; only show tasks from category work or calendar
-	'((:discard (:not (:category ("work" "calendar"))))
+         ;; only show tasks from category work
+	'((:discard (:not (:category ("work"))))
 	  (:auto-tags t))
 	  )))
      ))
@@ -144,7 +137,7 @@
        (org-super-agenda-groups
 	'((:name "➰ Habit" :habit)
 	  (:name "⚠ Should have done..."
-	    ;; only show tasks from category work or calendar
+	    ;; only show tasks from category work
 	    :discard (:category ("work"))
 	    ;; show past scheduled tasks
 	    :scheduled past
@@ -152,7 +145,7 @@
 	    :deadline past
 	    :order 1)
 	  (:name "📅 Today's personal tasks"
-           ;; only show tasks from category work or calendar
+           ;; only show tasks from category work
            :discard (:category ("work"))
            ;; match items with today’s date
            :date today
@@ -161,24 +154,10 @@
       ""
       ((org-agenda-overriding-header "✅ Other personal tasks")
        (org-super-agenda-groups
-         ;; only show tasks from category work or calendar
 	'((:discard (:category ("work" "routine")))
 	  (:auto-category t))
 	  )))
      ))))
-
-;; synchronize org files with google calendar
-(use-package org-gcal
- :demand t
- :after org
- :init
- (setq org-gcal-client-id (getenv "GOOGLE_CLIENT_ID")
-       org-gcal-client-secret (getenv "GOOGLE_CLIENT_SECRET")
-       org-gcal-fetch-file-alist
-       `((,mono-work-email . ,calendar-bigml)
-	 (,mono-personal-email . ,calendar-google))
-       org-gcal-recurring-events-mode "nested"))
-
 
 (setq org-capture-templates
       '(("w" "👷 Work task" entry (file+headline mono-agenda-work "Inbox")
