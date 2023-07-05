@@ -65,6 +65,9 @@
 (setq org-static-blog-index-length 5)
 ;; by default, show preview of posts
 (setq org-static-blog-use-preview t)
+;; ellipsis configuration
+(setq org-static-blog-preview-link-p t) ;; make it clickable
+(setq org-static-blog-preview-ellipsis "Read more...")
 
 (defun mono/blog-update-statics (&rest _)
   "Update content in publish static directory."
