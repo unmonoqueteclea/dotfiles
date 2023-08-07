@@ -77,6 +77,11 @@
  '((shell . t) (python . t) (restclient . t) (sql . t))
  )
 
+;; better aligment for tables
+(use-package valign
+  :ensure t
+  :hook ((markdown-mode org-mode) . valign-mode))
+
 ;; this package implements a “modern” style for your Org buffers using
 ;; font locking and text properties. The package styles headlines,
 ;; keywords, tables and source blocks. The styling is configurable,
