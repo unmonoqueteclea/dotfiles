@@ -54,6 +54,13 @@
 ;; fashion.
 (setq delete-by-moving-to-trash t)
 
+
+;; This package adds the command dired-rsync which allows the user to
+;; copy marked files in a dired buffer via rsync.
+(use-package dired-rsync
+  :bind (:map dired-mode-map
+              ("C-c C-r" . dired-rsync)))
+
 (provide 'mono-files)
 
 ;;; mono-files.el ends here

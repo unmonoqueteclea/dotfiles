@@ -49,20 +49,6 @@
    :error-autofocus t
    :silent-success t))
 
-(defun mono/dwim-rsync (output)
-  "Use rsync to move selected files to OUTPUT."
-  (interactive "D")
-  (dwim-shell-command-on-marked-files
-   (format "Moving selected files to %s" output)
-   ;; we need to convert TRAMP ssh syntax (e.g. /ssh:myserver:/home)
-   ;; to rsync syntax (e.g. myserver:/home). For the output file
-   ;; it's easy, but for input files we need to do it in the command,
-   ;; that is where <<*>> is expanded.
-   (let ((clean-output (replace-regexp-in-string "\/ssh:" "" output))
-	 (clean-files-cmd "echo <<*>> | sed 's/\\/ssh://g'"))
-     (format "%s | xargs -i rsync -aP {} %s" clean-files-cmd clean-output))
-   :utils "rsync"))
-
 (defun mono/dwim-validate-json ()
   "Validate JSON file using jsonlint"
   (interactive)
