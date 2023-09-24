@@ -84,6 +84,7 @@
 (defun lint-fix-file-and-revert ()
   (interactive)
   (when (derived-mode-p 'python-mode)
+    (shell-command (concat "isort " (buffer-file-name)))
     (shell-command (concat "black " (buffer-file-name)))
     (shell-command (concat "ruff --fix " (buffer-file-name))))
   (revert-buffer t t))
