@@ -77,30 +77,21 @@
   :config
   (eval-after-load 'web-mode
     '(add-hook 'web-mode-hook 'add-node-modules-path))
-  (eval-after-load 'web-mode
+  (eval-after-load 'vue-mode
     '(add-hook 'vue-mode-hook 'add-node-modules-path)))
 
 ;; automatically execute eslint-fix on save
 (use-package eslint-fix
   :demand t
   :config
+  (eval-after-load 'web-mode
+    '(add-hook 'web-mode-hook
+	       (lambda () (add-hook 'after-save-hook 'eslint-fix nil t))))
   (eval-after-load 'vue-mode
     '(add-hook 'vue-mode-hook
 	       (lambda () (add-hook 'after-save-hook 'eslint-fix nil t)))))
 
-;; run prettier on save
-(defun enable-minor-mode (my-pair)
-  "Enable minor mode if filename match the regexp.
-MY-PAIR is a cons cell (regexp . minor-mode)."
-  (if (buffer-file-name)
-      (if (string-match (car my-pair) buffer-file-name)
-          (funcall (cdr my-pair)))))
-
-(use-package prettier-js
-  :demand t
-  :config
-  (add-hook 'web-mode-hook #'(lambda () (enable-minor-mode '("\\.js\\'" . prettier-js-mode)))))
-
+;; we could run prettier (with prettier-js) but, for now, eslint (with eslint-fix) is enough
 
 ;; https://github.com/leafOfTree/svelte-mode
 (use-package svelte-mode)
