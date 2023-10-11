@@ -24,6 +24,7 @@
 ;;; Code:
 (require 'mono-base-package)
 (require 'mono-dev-tools)
+(require 'mono-dwim)
 
 ;; web-mode is the main mode to work with HTML, CSS or Javascript code.
 ;; It provides smart indentation, jumping with C-c C-n between
@@ -113,6 +114,15 @@
                        (magit-diff-staged))
                      (goto-char (point-min))
                      (search-forward ,it nil t))))))))
+
+;; before saving a json file, pretty print it
+;; after saving it, validate it with a command line tool
+(use-package json-mode)
+(add-hook 'json-mode-hook
+	  (lambda()
+	    ;; final nil t ensure before-save-hook is buffer local
+	    (add-hook 'before-save-hook 'json-pretty-print-buffer nil t)
+	    (add-hook 'after-save-hook 'mono/dwim-validate-json nil t)))
 
 (add-hook 'magit-post-stage-hook 'ag91/find-console-log-in-js-staged-files)
 
