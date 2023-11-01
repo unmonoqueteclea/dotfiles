@@ -23,7 +23,6 @@ bigml_docker_login() {
 }
 
 # always use new docker compose version
-alias docker-compose='docker compose'
 export COMPOSE='docker compose'
 
 # configure node version manager, for generating nodejs environments
@@ -44,3 +43,12 @@ tunnel() {
     echo "Creating a tunnel for localhost port $1"
     ssh -R 80:localhost:$1 localhost.run
 }
+
+# print my public ip
+alias myip='curl l2.io/ip && echo ""'
+
+# internet speed test
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+
+# information about the computer
+alias osinfo='curl -sL https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch | bash'
