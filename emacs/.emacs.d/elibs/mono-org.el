@@ -114,6 +114,18 @@
 ;; editor (you will also need the gnuplot system package)
 (use-package gnuplot)
 
+(use-package org-tree-slide
+  :config (setq org-tree-slide-cursor-init nil))
+
+;; configure safe commands that can be executed from org-links without confirmation
+(let ((safe-commands '(mono/org-link-viruta-checks-status
+		       mono/org-link-viruta-checks-history
+		       mono/org-link-viruta-checks-finish
+		       mono/org-link-mantras
+		       org-reset-checkbox-state-subtree)))
+  (setq org-link-elisp-skip-confirm-regexp
+        (mapconcat #'symbol-name safe-commands "\\|")))
+
 ;; open org-mode links in the same window
 (add-to-list 'org-link-frame-setup '(file . find-file))
 
