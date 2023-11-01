@@ -38,7 +38,7 @@
 (use-package denote
   :demand t
   :config
-  (setq denote-directory  (concat mono-dir-org "/denote"))
+  (setq denote-directory mono-dir-notes)
   (add-hook 'dired-mode-hook #'denote-dired-mode)
   :bind (("C-c n n" . denote)
 	 ("C-c n o" . mono/open-denote-directory)

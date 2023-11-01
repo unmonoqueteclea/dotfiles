@@ -50,6 +50,18 @@
   (expand-file-name "cache" mono-dir-emacs)
   "Directory where all non-permanent Emacs files are stored.")
 
+(defconst mono-dir-notes
+  (expand-file-name "denote" mono-dir-org)
+  "Directory where notes are stored")
+
+(defconst mono-file-notes-buy
+  (expand-file-name "20230313T082232--buy-compras__lifestyle.org" mono-dir-notes)
+  "File where I store the things I buy")
+
+(defconst mono-file-notes-books
+  (expand-file-name "20230213T082456--books__books_hobbies.org" mono-dir-notes)
+  "File where I store books I read or I want to read")
+
 (defconst mono-personal-email
   "pgonzalezcarrizo@gmail.com")
 
