@@ -52,3 +52,6 @@ alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/m
 
 # information about the computer
 alias osinfo='curl -sL https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch | bash'
+
+# CRON puts logs in /var/log/syslog
+alias cronlogs='tail -f /var/log/syslog | grep CRON'

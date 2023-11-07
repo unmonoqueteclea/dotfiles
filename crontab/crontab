@@ -1,7 +1,7 @@
 # crontab file
 # NOTE: you need to run 'make stow' every time you modify this file.
 
-# mount shared Google Drive dolder as a daemon
+# mount shared Google Drive dolder as a daemon after reboot
 # it requires rclone and a configured remote with the name 'drive'
 # --file-perms 0600 is needed so that ssh keys stored
 # in the folder have the right permissions to be used
@@ -9,3 +9,9 @@
 
 # run viruta status at 10AM, 13PM and 17PM
 0 10,13,17 * * * cd /home/unmonoqueteclea/vc/viruta/pyviruta/bin && ./run-status.sh > /dev/null 2>&1 || true
+
+# notification: every two hours, remember to drink water
+15 */2 * * * (export XDG_RUNTIME_DIR=/run/user/$(id -u) && notify-send -u normal "Time for some water! 🥤" "Remember to stay hydrated" && paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga)
+
+# notifcation: every hour, remember to relax
+0 * * * * (export XDG_RUNTIME_DIR=/run/user/$(id -u) && notify-send -u normal "Stay calmed! 🧘" "Stop, breath, think" && paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga)

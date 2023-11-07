@@ -3,13 +3,16 @@ help:
 	@echo "--------------------------------------------------"
 	@echo " - stow: automatically add soft links for all dotfiles"
 stow:
-	stow --verbose --target=$$HOME --restow shell/
-	stow --verbose --target=$$HOME --restow emacs/
-	stow --verbose --target=$$HOME --restow ssh/
-	stow --verbose --target=$$HOME --restow git/
-	stow --verbose --target=$$HOME --restow xserver/
-	stow --verbose --target=$$HOME --restow xmonad/
-	stow --verbose --target=$$HOME --restow python/
-	stow --verbose --target=$$HOME --restow mail/
-	mkdir -p $$HOME/.config/rclone
-	stow --verbose --target=$$HOME/.config/rclone --restow rclone/
+	@echo "Restowing dotfiles..."
+	@crontab "${DIR_VC}/dotfiles/crontab/crontab"
+	@stow --target=$$HOME --restow shell/
+	@stow --target=$$HOME --restow emacs/
+	@stow --target=$$HOME --restow ssh/
+	@stow --target=$$HOME --restow git/
+	@stow --target=$$HOME --restow xserver/
+	@stow --target=$$HOME --restow xmonad/
+	@stow --target=$$HOME --restow python/
+	@stow --target=$$HOME --restow mail/
+	@mkdir -p $$HOME/.config/rclone
+	@stow --target=$$HOME/.config/rclone --restow rclone/
+	@echo "✅ All dotfiles restowed correctly!"
