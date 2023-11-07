@@ -42,6 +42,10 @@
   (expand-file-name "inbox.org" mono-dir-agenda)
   "Inbox agenda file.")
 
+(defconst mono-agenda-projects
+  (expand-file-name "projects.org" mono-dir-agenda)
+  "Projects file.")
+
 ;; everything in the agenda folder should be shown in the agenda
 (setq org-agenda-files `(,mono-dir-agenda))
 
@@ -168,6 +172,9 @@
 	 :empty-lines 1)
 	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
+	 :empty-lines 1)
+	("x" "💰 Personal Project Task" entry (file+headline mono-agenda-projects "tasks")
+	 "* TODO %^{text} %^g \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("b" "🧺 Annotate new buy" entry (file mono-file-notes-buy)
 	 "* %^{item} \n:PROPERTIES:\n:url: [[%^{link-url}][%^{link-description}]]\n:date: %^{date?}\n:price: %^{price?}\n:notes: %^{notes?}\n:END:\n "
