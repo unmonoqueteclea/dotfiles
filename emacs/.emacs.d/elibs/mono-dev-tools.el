@@ -33,6 +33,12 @@
 ;; important packages in my configuration.
 ;; https://github.com/magit/magit
 (use-package magit)
+
+;; show TODOs in magit UI
+(use-package magit-todos
+  :after magit
+  :config (magit-todos-mode 1))
+
 ;; pull requests and issues from magit interface
 ;; (needs .authinfo file with github/gitlab token)
 (use-package forge :after magit)
