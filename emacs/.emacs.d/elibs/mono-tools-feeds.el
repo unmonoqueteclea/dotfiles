@@ -37,9 +37,6 @@
     (mapc #'elfeed-search-update-entry entries)
     (unless (use-region-p) (forward-line))))
 
-;; connect emacs to pocket, allowing things like storing links
-(use-package pocket-reader)
-(global-set-key (kbd "C-c n p") 'pocket-reader-generic-add-link)
 
 ;; elfeed is an extensible web feed reader for Emacs, supporting both
 ;; Atom and RSS.
