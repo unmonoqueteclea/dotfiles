@@ -1,6 +1,6 @@
 ;;; init.el --- Where everything begins -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -55,13 +55,15 @@
 (require 'mono-dev-tools)
 (require 'mono-dev-web)
 (require 'mono-dev-python)
+(require 'mono-dev-clojure)
 (require 'mono-blog)
 (require 'mono-tools-browser)
 (require 'mono-tools-email)
-(require 'mono-tools-feeds)
 (require 'mono-keyboard)
 (require 'mono-secret)
 
 (provide 'init)
 
 ;;; init.el ends here
+(put 'upcase-region 'disabled nil)
+(put 'list-timers 'disabled nil)
