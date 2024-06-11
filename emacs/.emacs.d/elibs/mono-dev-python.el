@@ -1,6 +1,6 @@
 ;;; mono-dev-python.el --- Python development tools  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -84,9 +84,11 @@
 (defun lint-fix-file-and-revert ()
   (interactive)
   (when (derived-mode-p 'python-mode)
-    (shell-command (concat "isort " (buffer-file-name)))
-    (shell-command (concat "black " (buffer-file-name)))
-    (shell-command (concat "ruff --fix " (buffer-file-name))))
+    (shell-command (concat "ruff check --fix " (buffer-file-name)))
+    ;; equivalent to isort, not done by default --fix
+    (shell-command (concat "ruff check --fix --select I " (buffer-file-name)))
+    ;; equivalent to black
+    (shell-command (concat "ruff format " (buffer-file-name))))
   (revert-buffer t t))
 
 ;; force eglot to use pyright always
@@ -97,11 +99,12 @@
  'python-mode-hook
  (lambda ()
    (flymake-mode)
+   (local-set-key (kbd "C-$") 'flymake-goto-next-error)
    (eglot-ensure)
    (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
 
 ;; see https://www.reddit.com/r/emacs/comments/10yzhmn/flymake_just_works_with_ruff/
-(setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
+(setq python-flymake-command '("ruff check" "--quiet" "--stdin-filename=stdin" "-"))
 (add-hook 'eglot-managed-mode-hook
    (lambda () (cond
 	       ((derived-mode-p 'python-base-mode)
