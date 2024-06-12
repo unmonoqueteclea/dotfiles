@@ -57,7 +57,9 @@
   (doom-modeline-mode 1)
   :config
   (setq doom-modeline-height 45
-        doom-modeline-buffer-encoding nil))
+        doom-modeline-buffer-encoding nil
+        ;; do not show clocked task in modeline
+        org-clock-clocked-in-display nil))
 
 
 (provide 'mono-buffer)
