@@ -1,6 +1,6 @@
 ;;; mono-notes.el --- take notes within Emacs -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -27,7 +27,8 @@
   (interactive)
   (tab-new)
   (tab-rename "notes")
-  (find-file denote-directory))
+  (find-file denote-directory)
+  (call-interactively 'dired-other-window))
 
 (defun mono/search-in-notes ()
   "Execute ripgrep within the denote directory."
@@ -38,6 +39,7 @@
 (use-package denote
   :demand t
   :config
+  (require 'denote-org-extras)
   (setq denote-directory mono-dir-notes)
   (add-hook 'dired-mode-hook #'denote-dired-mode)
   :bind (("C-c n n" . denote)
