@@ -1,6 +1,6 @@
 ;;; mono-org.el --- org-mode configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -31,9 +31,11 @@
 (use-package org
   :custom (org-modules '(org-habit))
   :config
-  ;; configure org-crypt to encrypt some org-mode headers
-  ;; you should import your public and secret gpg key
-  ;; by doing 'gpg --import /path/to/your/gpg/key'
+  ;; configure org-crypt to encrypt some org-mode headers you should
+  ;; import your public and secret gpg key by doing 'gpg --import
+  ;; /path/to/your/gpg/key'
+
+  ;;WARNING: if it suddenly stops working, you may need to update your key
   (require 'org-crypt)
   (require 'org-archive)
   (org-crypt-use-before-save-magic)
@@ -70,6 +72,7 @@
 (use-package restclient)
 (use-package ob-restclient)
 
+(setq org-duration-format (quote h:mm))
 (setq org-confirm-babel-evaluate nil)
 ;; org-babel: languages that we want to be able to execute
 (org-babel-do-load-languages
@@ -128,6 +131,7 @@
 
 ;; open org-mode links in the same window
 (add-to-list 'org-link-frame-setup '(file . find-file))
+
 
 (provide 'mono-org)
 
