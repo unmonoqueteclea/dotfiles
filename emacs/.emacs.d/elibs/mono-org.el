@@ -46,7 +46,8 @@
   ;; both the state changes and the timer logs are placed inside the
   ;; drawer
   (setq org-log-into-drawer t)
-  (setq org-log-done t))
+  (setq org-log-done t)
+  (setq org-todo-keywords '((sequence "TODO(t)" "PROGRESS(p)" "WAITING(w)" "|" "DONE(d)"))))
 
 (require 'org-indent)
 (require 'org-element)
