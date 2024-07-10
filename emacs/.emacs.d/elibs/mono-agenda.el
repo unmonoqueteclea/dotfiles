@@ -1,6 +1,6 @@
 ;;; mono-agenda.el --- agenda and tasks management -*- lexical-binding: t -*-
 
-;; copyright (C) 2022,2023  Pablo González Carrizo
+;; copyright (C) 2022,2023,2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -85,6 +85,7 @@
 	("emacs" ,(list (all-the-icons-fileicon "emacs")) nil nil :ascent center)
 	("kaizen" ,(list (all-the-icons-faicon "percent")) nil nil :ascent center)
 	("travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
+        ("buy" ,(list (all-the-icons-material "shopping_basket")) nil nil :ascent center)
 	("finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
 	("blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
 	("projects" ,(list (all-the-icons-alltheicon "script")) nil nil :ascent center)))
@@ -180,7 +181,7 @@
 	 "* %^{item} \n:PROPERTIES:\n:url: [[%^{link-url}][%^{link-description}]]\n:date: %^{date?}\n:price: %^{price?}\n:notes: %^{notes?}\n:END:\n "
 	 :empty-lines 1)
 	("B" "📚 Annotate new book" entry (file mono-file-notes-books)
-	 "* %^{item} \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
+	 "* %^{item} :pending: \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
 	 :empty-lines 1)))
 
 ;; see https://github.com/ml729/org-habit-stats/
