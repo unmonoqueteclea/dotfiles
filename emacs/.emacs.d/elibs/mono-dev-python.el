@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;  Last full review: 2023-05-02
+;;  Last full review: 2024-07-10
 ;;
 ;;; Code:
 
@@ -39,14 +39,13 @@
 ;; unobtrusive, and follows the UNIX tradition of single-purpose tools
 ;; that do one thing well.
 
-;; pyenv mode integrates Fabián E. Gallina's python.el with the pyenv
-;; tool. This gives packages which already use python.el (like
-;; python-django) pyenv virtual environment support out-of-the-box.
-;; Pyenv setup the PYENV_VERSION environment variable and
-;; python-shell-virtualenv-path custom variable based on user input
+;; pyenv mode integrates python.el with the pyenv tool. This gives
+;; packages which already use python.el pyenv virtual environment
+;; support out-of-the-box.  Pyenv setup the PYENV_VERSION environment
+;; variable and python-shell-virtualenv-path custom variable based on
+;; user input
+;; https://github.com/pythonic-emacs/pyenv-mode
 (use-package pyenv-mode :demand t :commands pyenv-mode :config  (pyenv-mode))
-;; pyenv tries to override C-c C-s keybind that I am using in other places
-(eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
 ;; some additional functions that complement pyenv-mode
 (defun mono/pyenv-versions ()
@@ -62,8 +61,7 @@
 (defun mono/pyenv-remove-env (name)
   "Remove pyenv version from its NAME."
   (interactive
-   (list
-    (completing-read "Choose one: " (pyenv-mode-versions))))
+   (list (completing-read "Choose one: " (pyenv-mode-versions))))
   (shell-command (concat "pyenv virtualenv-delete -f " name)))
 
 ;; automatically activate pyenv version from Emacs with pyenv-mode.
@@ -75,25 +73,24 @@
    (lambda (path)
      (let ((pyenv-version-path (f-expand ".python-version" path)))
        (if (f-exists? pyenv-version-path)
-           (progn
-             (pyenv-mode-set (car (s-lines (s-trim (f-read-text pyenv-version-path 'utf-8)))))
-             t))))))
+           (progn (pyenv-mode-set
+                   (car (s-lines (s-trim (f-read-text pyenv-version-path 'utf-8))))) t))))))
 
 (add-hook 'find-file-hook 'pyenv-mode-auto-hook)
+
+;; force eglot to use pyright always
+;; pyright offers a langserver, so that it is fully integrated
+;; sadly, eglot doesn't support multiple servers so we cannot use
+;; ruff-lsp (or similar ones)
+(require 'eglot)
+(add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
 (defun lint-fix-file-and-revert ()
   (interactive)
   (when (derived-mode-p 'python-mode)
-    (shell-command (concat "ruff check --fix " (buffer-file-name)))
-    ;; equivalent to isort, not done by default --fix
-    (shell-command (concat "ruff check --fix --select I " (buffer-file-name)))
-    ;; equivalent to black
-    (shell-command (concat "ruff format " (buffer-file-name))))
+    (shell-command (concat "ruff format " (buffer-file-name)))
+    (shell-command (concat "ruff check --fix --extend-select I " (buffer-file-name))))
   (revert-buffer t t))
-
-;; force eglot to use pyright always
-(require 'eglot)
-(add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
 (add-hook
  'python-mode-hook
@@ -103,13 +100,24 @@
    (eglot-ensure)
    (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
 
+
+;; IMPORTANT (2024-07-10) After several tests, I wasn't able to make Flymake
+;; work with pyright (through eglot) and ruff at the same time...
+;; I tested many thing (below) but none of them worked, it seems like
+;; eglot hijacks flymake to only show its messages.
+
 ;; see https://www.reddit.com/r/emacs/comments/10yzhmn/flymake_just_works_with_ruff/
-(setq python-flymake-command '("ruff check" "--quiet" "--stdin-filename=stdin" "-"))
-(add-hook 'eglot-managed-mode-hook
-   (lambda () (cond
-	       ((derived-mode-p 'python-base-mode)
-                (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))
-               (t nil))))
+;;(add-hook 'python-base-mode-hook 'flymake-mode)
+;;(setq python-flymake-command '("ruff" "check"  "--quiet" "--stdin-filename=stdin" "-"))
+
+;; (use-package flymake-ruff)
+;; (add-hook 'python-mode-hook #'flymake-ruff-load)
+
+;;(setq eglot-stay-out-of '(flymake))
+;; (add-hook 'eglot-managed-mode-hook
+;;           (lambda () (when (derived-mode-p 'python-base-mode)
+;;                        ;;(add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)
+;;                        (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
 
 
 (provide 'mono-dev-python)
