@@ -1,6 +1,6 @@
 ;;; mono-docs.el --- handle documents  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -32,13 +32,10 @@
 ;; See https://github.com/politza/pdf-tools
 (use-package pdf-tools
   :magic ("%PDF" . pdf-view-mode)
-  :functions pdf-loader-install
-  :defines pdf-info-epdinfo-program
-  :commands pdf-tools
   :config
   (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
   (define-key pdf-view-mode-map (kbd "C-o") 'pdf-occur)
-  (pdf-loader-install))
+  (pdf-tools-install))
 
 ;; syntax highlight and edit features for markdown files
 ;; https://jblevins.org/projects/markdown-mode/

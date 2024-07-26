@@ -46,6 +46,8 @@
 ;; user input
 ;; https://github.com/pythonic-emacs/pyenv-mode
 (use-package pyenv-mode :demand t :commands pyenv-mode :config  (pyenv-mode))
+;; pyenv tries to override C-c C-s keybind that I am using in other places
+(eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
 ;; some additional functions that complement pyenv-mode
 (defun mono/pyenv-versions ()

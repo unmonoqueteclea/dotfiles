@@ -68,6 +68,8 @@
 ;; ellipsis configuration
 (setq org-static-blog-preview-link-p t) ;; make it clickable
 (setq org-static-blog-preview-ellipsis "Read more...")
+(setq org-static-blog-enable-og-tags t)
+(setq org-static-blog-image "static/profile.png")
 
 (defun mono/blog-update-statics (&rest _)
   "Update content in publish static directory."

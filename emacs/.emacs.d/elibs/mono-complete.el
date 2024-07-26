@@ -1,6 +1,6 @@
 ;;; mono-complete.el --- completion packages -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -125,7 +125,7 @@
 (setq consult-ripgrep-args
       (concat "rg" " --null" " -uu"  " --max-columns=1000"
               " --smart-case" " --line-number"
-	      " --glob !{cov_html,.git,SOURCES.txt,.pytest_cache,.egg-info,.mypy_cache,node_modules,migrations}"))
+	      " --glob !{cov_html,.git,SOURCES.txt,.pytest_cache,*.egg-info*,*build/lib.linux-x86_64*,.mypy_cache,node_modules,migrations}"))
 
 ;; TODO Check docs and improve configuration of corfu
 
