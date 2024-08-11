@@ -1,6 +1,6 @@
 ;;; mono-projects.el --- handle projects workspaces -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -29,6 +29,10 @@
 (require 'mono-org)
 (require 'mono-complete)
 
+
+;; config how project.el finds a project
+(setq project-vc-extra-root-markers '("pyproject.toml" ".python-version"))
+
 ;; support tabs, change between them with C-RET
 (setq tab-bar-new-tab-choice "*scratch*")
 (setq tab-bar-show nil)
@@ -36,8 +40,7 @@
 (define-key org-mode-map (kbd "C-<return>") 'tab-switch)
 
 (use-package consult-project-extra
-  :bind
-  (("C-c p" . consult-project-extra-find)))
+  :bind (("C-c p" . consult-project-extra-find)))
 
 ;; public function to add a new project
 (defun mono/new-project-tab ()

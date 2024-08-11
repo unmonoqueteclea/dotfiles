@@ -1,6 +1,6 @@
 ;;; mono-base-package.el --- Manage packages -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -69,6 +69,9 @@
 (straight-use-package 'use-package)
 (require 'use-package)  ;; to avoid lint errors
 (setq straight-use-package-by-default t)
+;; avoid one problem while doing "require eglot"
+;; see https://github.com/radian-software/straight.el/issues/551#issuecomment-667540139
+(setq straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake))
 
 ;; we want to defer load of all packages by default.  You can use
 ;; ':demand t' to force that a package is loaded from init.  If you've
