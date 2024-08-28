@@ -27,6 +27,11 @@
 (require 'mono-projects)
 (require 'python)
 
+;; followed that guide to enable tree-sitter
+;; https://gist.github.com/habamax/290cda0e0cdc6118eb9a06121b9bc0d7
+(add-to-list 'major-mode-remap-alist '(pthon-mode . python-ts-mode))
+
+
 ;; remove guess indent python message
 (setq python-indent-guess-indent-offset-verbose nil)
 
