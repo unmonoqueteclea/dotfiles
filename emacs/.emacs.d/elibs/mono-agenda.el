@@ -113,63 +113,25 @@
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
 	'((:name "➰ Habit" :habit)
-	  (:name "⚠ Should have done..."
-	    ;; show past scheduled tasks
-	    :scheduled past
-	    ;; show past deadline tasks
-	    :deadline past
+	  (:name "⚠️ Should have done..."
+	    :scheduled past ;; show past scheduled tasks
+	    :deadline past ;; show past deadline tasks
 	    :order 1)
 	  (:name "📅 Today's scheduled tasks"
            ;; only show tasks from category work
            ;; :discard (:not (:category ("work")))
-           ;; match items with today’s date
-           :date today
+           :date today ;; match items with today’s date
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "✅ Other work tasks")
+      ((org-agenda-overriding-header "✅ Other tasks")
        (org-super-agenda-groups
-         ;; only show tasks from category work
-	'((:discard (:not (:category ("work"))))
-	  (:auto-tags t))
-	  )))
-     ))
-
-   ("p" "🧑 Personal agenda view"
-    ((agenda
-      ""
-      ((org-agenda-span 1)  ;; show 1 day by default
-       (org-super-agenda-groups
-	'((:name "➰ Habit" :habit)
-	  (:name "⚠ Should have done..."
-	    ;; only show tasks from category work
-	    :discard (:category ("work"))
-	    ;; show past scheduled tasks
-	    :scheduled past
-	    ;; show past deadline tasks
-	    :deadline past
-	    :order 1)
-	  (:name "📅 Today's personal tasks"
-           ;; only show tasks from category work
-           :discard (:category ("work"))
-           ;; match items with today’s date
-           :date today
-           :order 2)))))
-     (alltodo
-      ""
-      ((org-agenda-overriding-header "✅ Other personal tasks")
-       (org-super-agenda-groups
-	'((:discard (:category ("work" "routine")))
-	  (:auto-category t))
-	  )))
-     ))))
+        '((:name "🔫 LFX":tag "lfx") ;; ensrue these tasks are shown before the rest
+          (:name "Otras " :auto-tags t :discard (:not (:tag ("routine"))))))))))))
 
 (setq org-capture-templates
       '(("w" "👷 Work task" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}"
-	 :empty-lines 1)
-	("r" "✅ Pull Request task" entry (file+headline mono-agenda-work "pull requests")
-	 "* TODO review/merge %^{url}\nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
@@ -188,25 +150,11 @@
 (use-package org-habit-stats
   :straight (org-habit-stats :type git :host github :repo "ml729/org-habit-stats"))
 
-(use-package pomidor
-  :config
-  (setq pomidor-sound-tick nil
-        pomidor-sound-tack nil))
-
-(defun mono/new-pomidor-tab ()
-  "Open a new tab with pomidor"
-  (interactive)
-  (tab-new-to)
-  (pomidor)
-  (tab-rename "pomodoro"))
-
 ;; open habit stats view for agenda items
 (add-hook
  'org-agenda-mode-hook
  (lambda ()
    (local-set-key (kbd "H") 'org-habit-stats-view-habit-at-point-agenda)))
-
-
 
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here
