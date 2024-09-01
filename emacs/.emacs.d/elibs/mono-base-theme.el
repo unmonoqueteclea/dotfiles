@@ -1,6 +1,6 @@
 ;;; mono-base-theme.el --- UI and theme configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -28,26 +28,29 @@
 (scroll-bar-mode -1)
 (column-number-mode)
 
-;; load modus themes from Protesilaos See
-;; https://github.com/protesilaos/modus-themes the overarching
-;; objective of this project is to always offer accessible color
-;; combinations. I also tried Prot's ef-themes but I can't find any
-;; benefit in using them.
-(use-package emacs
-  :defines modus-themes-org-agenda
-  :init
-  ;; add all your customizations prior to loading the themes
-  ;; See mono-agenda for the rest of org-agenda configuration
-  (setq modus-themes-org-agenda
-	'((header-block . (variable-pitch semibold 1.1))
-          (header-date . (underline-today 1.1))
-          (event . (accented varied))
-          (scheduled . rainbow)
-          (habit . traffic-light)))
-  :config
-  ;; load the theme of your choice: modus-operandi or modus-vivendi
-  (load-theme 'modus-operandi)
-  :bind ("<f5>" . 'modus-themes-toggle))
+
+;; See https://github.com/protesilaos/modus-themes
+;; The overarching objective of this project is to always offer accessible
+;; color combinations. Currently not used, because I prefer some themes
+;; from ef-themes
+;; (use-package emacs
+;;   :defines modus-themes-org-agenda
+;;   :init
+;;   ;; add all your customizations prior to loading the themes
+;;   ;; See mono-agenda for the rest of org-agenda configuration
+;;   (setq modus-themes-org-agenda
+;; 	'((header-block . (variable-pitch semibold 1.1))
+;;           (header-date . (underline-today 1.1))
+;;           (event . (accented varied))
+;;           (scheduled . rainbow)
+;;           (habit . traffic-light)))
+;;   :config
+;;   ;; load the theme of your choice: modus-operandi or modus-vivendi
+;;   (load-theme 'modus-operandi))
+
+;; See https://github.com/protesilaos/ef-themes
+(use-package ef-themes
+  :demand t :config (ef-themes-select 'ef-elea-dark))
 
 ;; fontaine lets the user specify presets of font configurations and
 ;; set them on demand on graphical Emacs frames. The user option
@@ -66,14 +69,12 @@
   :defines fontaine-presets
   :demand t
   :config
-  (let ((default-height-augment -12))
+  (let ((default-height-augment -11))
     ;; config from Prot's configuration
     (setq fontaine-presets
 	  `((tiny
-             :default-family "Iosevka Comfy Wide Fixed"
              :default-height ,(+ default-height-augment 70))
             (small
-             :default-family "Iosevka Comfy Fixed"
              :default-height ,(+ default-height-augment 90))
             (regular
              :default-height ,(+ default-height-augment 100))
@@ -91,7 +92,7 @@
              ;; I keep all properties for didactic purposes, but most can be
              ;; omitted.  See the fontaine manual for the technicalities:
              ;; <https://protesilaos.com/emacs/fontaine>.
-             :default-family "Iosevka Comfy"
+             :default-family "Monospace"
              :default-weight regular
              :default-height ,(+ default-height-augment 100)
              :fixed-pitch-family nil ; falls back to :default-family
