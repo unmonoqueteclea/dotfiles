@@ -69,7 +69,7 @@
   :defines fontaine-presets
   :demand t
   :config
-  (let ((default-height-augment -11))
+  (let ((default-height-augment -17))
     ;; config from Prot's configuration
     (setq fontaine-presets
 	  `((tiny
