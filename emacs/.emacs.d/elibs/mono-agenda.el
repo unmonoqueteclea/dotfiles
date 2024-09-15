@@ -35,7 +35,7 @@
   "Directory that contains main agenda files.")
 
 (defconst mono-agenda-work
-  (expand-file-name "work.org" mono-dir-agenda)
+  (expand-file-name "trabajo.org" mono-dir-agenda)
   "Work agenda file.")
 
 (defconst mono-agenda-inbox
@@ -77,13 +77,13 @@
 
 ;; assign icons to categories
 (setq org-agenda-category-icon-alist
-      `(("work" ,(list (all-the-icons-material "work")) nil nil :ascent center)
-        ("routine" ,(list (all-the-icons-material "watch")) nil nil :ascent center)
+      `(("Trabajo" ,(list (all-the-icons-material "work")) nil nil :ascent center)
+        ("Rutina" ,(list (all-the-icons-material "watch")) nil nil :ascent center)
 	("home" ,(list (all-the-icons-material "home")) nil nil :ascent center)
 	("social" ,(list (all-the-icons-material "person")) nil nil :ascent center)
 	("inbox" ,(list (all-the-icons-faicon "inbox")) nil nil :ascent center)
 	("emacs" ,(list (all-the-icons-fileicon "emacs")) nil nil :ascent center)
-	("kaizen" ,(list (all-the-icons-faicon "percent")) nil nil :ascent center)
+	("Kaizen" ,(list (all-the-icons-faicon "percent")) nil nil :ascent center)
 	("travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
         ("buy" ,(list (all-the-icons-material "shopping_basket")) nil nil :ascent center)
 	("finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
@@ -107,30 +107,30 @@
  org-deadline-warning-days 7
  org-agenda-custom-commands
  '(
-   ("w" "🖥️ Work agenda view"
+   ("w" "🖥️ Trabajo"
     ((agenda
       ""
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
 	'((:name "➰ Habit" :habit)
-	  (:name "⚠️ Should have done..."
+	  (:name "⚠️ Debería haber terminado..."
 	    :scheduled past ;; show past scheduled tasks
 	    :deadline past ;; show past deadline tasks
 	    :order 1)
-	  (:name "📅 Today's scheduled tasks"
-           ;; only show tasks from category work
-           ;; :discard (:not (:category ("work")))
+	  (:name "📅 Tareas para hoy"
+           ;; only show tasks from category trabajo
+           ;; :discard (:not (:category ("trabajo")))
            :date today ;; match items with today’s date
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "✅ Other tasks")
+      ((org-agenda-overriding-header "✅ Otas tareas")
        (org-super-agenda-groups
         '((:name "🔫 LFX":tag "lfx") ;; ensrue these tasks are shown before the rest
-          (:name "Otras " :auto-tags t :discard (:not (:tag ("routine"))))))))))))
+          (:name "Otras " :auto-tags t :discard (:not (:tag ("Rutina"))))))))))))
 
 (setq org-capture-templates
-      '(("w" "👷 Work task" entry (file+headline mono-agenda-work "Inbox")
+      '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}"
 	 :empty-lines 1)
 	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
