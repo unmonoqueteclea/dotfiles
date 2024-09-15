@@ -1,6 +1,6 @@
 ;;; mono-dev-tools.el --- software development base tools  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -32,16 +32,23 @@
 ;; magit (git interface), nothing to add, probably one of the most
 ;; important packages in my configuration.
 ;; https://github.com/magit/magit
-(use-package magit)
+(use-package magit
+  :config
+  (define-key magit-status-mode-map (kbd "<C-return>") nil))
 
 ;; show TODOs in magit UI
 (use-package magit-todos
   :after magit
+  :demand t
   :config (magit-todos-mode 1))
 
 ;; pull requests and issues from magit interface
 ;; (needs .authinfo file with github/gitlab token)
-(use-package forge :after magit)
+(use-package forge
+  :after magit
+  :demand t
+  :config
+  (setq magit-pull-or-fetch t))
 
 ;; walk through git revisions of a file
 ;; https://github.com/emacsmirror/git-timemachine
