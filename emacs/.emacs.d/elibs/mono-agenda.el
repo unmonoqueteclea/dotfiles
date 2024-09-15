@@ -112,7 +112,7 @@
       ""
       ((org-agenda-span 1)  ;; show 1 day by default
        (org-super-agenda-groups
-	'((:name "➰ Habit" :habit)
+	'((:name "➰ Rutinas" :habit)
 	  (:name "⚠️ Debería haber terminado..."
 	    :scheduled past ;; show past scheduled tasks
 	    :deadline past ;; show past deadline tasks
