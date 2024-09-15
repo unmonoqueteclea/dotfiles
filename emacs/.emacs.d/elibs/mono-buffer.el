@@ -39,7 +39,8 @@
 ;; this package implements hiding or abbreviation of the mode line
 ;; displays (lighters) of minor-modes.
 ;; https://github.com/myrjola/diminish.el
-(use-package diminish)
+(use-package diminish
+  :diminish  pyenv-mode)
 
 ;; jinx.el - enchanted spell checker
 ;; On Debian or Ubuntu, install the packages libenchant-2-dev and pkg-config
@@ -56,7 +57,7 @@
   (which-function-mode)
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 45
+  (setq doom-modeline-height 60
         doom-modeline-buffer-encoding nil
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))

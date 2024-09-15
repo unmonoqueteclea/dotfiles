@@ -29,7 +29,6 @@
 (require 'mono-org)
 (require 'mono-complete)
 
-
 ;; config how project.el finds a project
 (setq project-vc-extra-root-markers '("pyproject.toml" ".python-version"))
 
@@ -51,13 +50,6 @@
     (project-switch-project dir)
     (tab-rename (consult--project-name dir))))
 
-(defun mono/new-mail-tab ()
-  "Open a new tab with mail."
-  (interactive)
-  (tab-new-to)
-  (mu4e)
-  (tab-rename "mail")
-  (mu4e-update-mail-and-index t))
 
 (defun mono/new-docker-tab ()
   "Open a new tab with docker containers."
@@ -83,12 +75,19 @@
 (global-set-key (kbd "C-c w r") 'tab-bar-rename-tab)
 (global-set-key (kbd "C-c w k") 'tab-bar-close-tab)
 (global-set-key (kbd "C-c w o") 'mono/new-project-tab)
+(global-set-key (kbd "C-c w n") 'denote-open-or-create)
 (global-set-key (kbd "C-c w a") 'mono/new-agenda-tab)
 (global-set-key (kbd "C-c w d") 'mono/new-docker-tab)
 (global-set-key (kbd "C-c w D") 'mono/new-draft-tab)
-(global-set-key (kbd "C-c w m") 'mono/new-mail-tab)
-(global-set-key (kbd "C-c w p") 'mono/new-pomidor-tab)
-;; you have also a keybind in "C-c n" to open denote within a new tab
+;; c-c w n is used in denote (see mono-notes.el)
+
+;; always use, if possible, tree-sitter
+(use-package treesit-auto
+  :demand t
+  :custom (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (provide 'mono-projects)
 

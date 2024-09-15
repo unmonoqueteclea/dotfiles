@@ -36,9 +36,9 @@
 ;; avoid problems with emacs using old compiled .elc files
 (setq load-prefer-newer t)
 
+(require 'mono-base-package)
 (require 'mono-base-definitions)
 (require 'mono-base-session)
-(require 'mono-base-package)
 (require 'mono-base-theme)
 (require 'mono-buffer)
 (require 'mono-files)

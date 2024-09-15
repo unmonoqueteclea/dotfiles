@@ -71,7 +71,8 @@
 (setq straight-use-package-by-default t)
 ;; avoid one problem while doing "require eglot"
 ;; see https://github.com/radian-software/straight.el/issues/551#issuecomment-667540139
-(setq straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake))
+(setq straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake xref jsonrpc external-completion))
+(require 'package)
 
 ;; we want to defer load of all packages by default.  You can use
 ;; ':demand t' to force that a package is loaded from init.  If you've

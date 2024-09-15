@@ -27,10 +27,8 @@
 (require 'mono-projects)
 (require 'python)
 
-;; followed that guide to enable tree-sitter
+;; followed that guide to enable tree-sitter (and also using treesit-auto)
 ;; https://gist.github.com/habamax/290cda0e0cdc6118eb9a06121b9bc0d7
-(add-to-list 'major-mode-remap-alist '(pthon-mode . python-ts-mode))
-
 
 ;; remove guess indent python message
 (setq python-indent-guess-indent-offset-verbose nil)
@@ -50,7 +48,13 @@
 ;; variable and python-shell-virtualenv-path custom variable based on
 ;; user input
 ;; https://github.com/pythonic-emacs/pyenv-mode
-(use-package pyenv-mode :demand t :commands pyenv-mode :config  (pyenv-mode))
+(use-package pyenv-mode
+  :demand t
+  :diminish pyenv-mode
+  :config  (pyenv-mode))
+
+(setq doom-modeline-env-enable-python nil)
+
 ;; pyenv tries to override C-c C-s keybind that I am using in other places
 (eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
@@ -92,19 +96,20 @@
 (require 'eglot)
 (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
+
 (defun lint-fix-file-and-revert ()
   (interactive)
-  (when (derived-mode-p 'python-mode)
-    (shell-command (concat "ruff format " (buffer-file-name)))
-    (shell-command (concat "ruff check --fix --extend-select I " (buffer-file-name))))
-  (revert-buffer t t))
+  (shell-command (concat "ruff format " (buffer-file-name)))
+  (shell-command (concat "ruff check --fix --extend-select I " (buffer-file-name)))
+  (revert-buffer t t t))
 
 (add-hook
- 'python-mode-hook
+ 'python-ts-mode-hook
  (lambda ()
+   (eglot-ensure)
    (flymake-mode)
    (local-set-key (kbd "C-$") 'flymake-goto-next-error)
-   (eglot-ensure)
+   (eldoc-box-hover-at-point-mode)
    (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
 
 
@@ -126,6 +131,8 @@
 ;;                        ;;(add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)
 ;;                        (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
 
+
+(use-package eldoc-box :demand t)
 
 (provide 'mono-dev-python)
 
