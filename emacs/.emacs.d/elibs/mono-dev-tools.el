@@ -127,6 +127,9 @@
 (use-package cheat-sh
   :config (global-set-key (kbd "C-h C-h") 'cheat-sh))
 
+;; 2 spaces indentation for bash scripts
+(setq sh-basic-offset 2)
+
 
 (provide 'mono-dev-tools)
 
