@@ -1,6 +1,6 @@
 ;;; mono-base-definitions.el --- constants and variables -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022  Pablo González Carrizo
+;; Copyright (C) 2022, 2024  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -59,7 +59,7 @@
   "File where I store the things I buy")
 
 (defconst mono-file-notes-books
-  (expand-file-name "20230213T082456--books__books_hobbies.org" mono-dir-notes)
+  (expand-file-name "20230213T082456--libros__hobbies.org" mono-dir-notes)
   "File where I store books I read or I want to read")
 
 (defconst mono-personal-email

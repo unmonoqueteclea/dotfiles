@@ -133,16 +133,16 @@
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}"
 	 :empty-lines 1)
-	("p" "🧑 Personal task" entry (file mono-agenda-inbox)
+	("p" "🧑 Tarea personal" entry (file mono-agenda-inbox)
 	 "* TODO %^{task}"
 	 :empty-lines 1)
-	("x" "💰 Personal Project Task" entry (file+headline mono-agenda-projects "tasks")
+	("x" "💰 Proyecto personal" entry (file+headline mono-agenda-projects "tasks")
 	 "* TODO %^{text} %^g \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
-	("b" "🧺 Annotate new buy" entry (file mono-file-notes-buy)
+	("b" "🧺 Compra" entry (file mono-file-notes-buy)
 	 "* %^{item} \n:PROPERTIES:\n:url: [[%^{link-url}][%^{link-description}]]\n:date: %^{date?}\n:price: %^{price?}\n:notes: %^{notes?}\n:END:\n "
 	 :empty-lines 1)
-	("B" "📚 Annotate new book" entry (file mono-file-notes-books)
+	("B" "📚 Libro" entry (file mono-file-notes-books)
 	 "* %^{item} :pending: \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
 	 :empty-lines 1)))
 

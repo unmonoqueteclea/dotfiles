@@ -120,12 +120,9 @@
    ("C-c f" . consult-focus-lines)
    ("C-c l" . consult-find)
    ("C-c i" . consult-imenu-multi)
-   ("C-c g" . consult-ripgrep)))
+   ("C-c g" . consult-git-grep)
+   ("C-c G" . consult-ripgrep)))
 
-(setq consult-ripgrep-args
-      (concat "rg" " --null" " -uu"  " --max-columns=1000"
-              " --smart-case" " --line-number"
-	      " --glob !{cov_html,.git,SOURCES.txt,.pytest_cache,*.egg-info*,*build/lib.linux-x86_64*,.mypy_cache,node_modules,migrations}"))
 
 ;; TODO Check docs and improve configuration of corfu
 
