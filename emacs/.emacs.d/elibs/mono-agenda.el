@@ -124,7 +124,7 @@
            :order 2)))))
      (alltodo
       ""
-      ((org-agenda-overriding-header "✅ Otas tareas")
+      ((org-agenda-overriding-header "✅ Otras tareas")
        (org-super-agenda-groups
         '((:name "🔫 LFX":tag "lfx") ;; ensrue these tasks are shown before the rest
           (:name "Otras " :auto-tags t :discard (:not (:tag ("Rutina"))))))))))))
