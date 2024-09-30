@@ -81,12 +81,11 @@
 (global-set-key (kbd "C-c w D") 'mono/new-draft-tab)
 ;; c-c w n is used in denote (see mono-notes.el)
 
-;; always use, if possible, tree-sitter
+;; for some languages, try to use tree-sitter
 (use-package treesit-auto
   :demand t
-  :custom (treesit-auto-install 'prompt)
+  :custom (treesit-auto-langs '(python javascript bash clojure markdown toml vue yaml))
   :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
 (provide 'mono-projects)
