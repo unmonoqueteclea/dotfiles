@@ -79,16 +79,16 @@
 (setq org-agenda-category-icon-alist
       `(("Trabajo" ,(list (all-the-icons-material "work")) nil nil :ascent center)
         ("Rutina" ,(list (all-the-icons-material "watch")) nil nil :ascent center)
-	("home" ,(list (all-the-icons-material "home")) nil nil :ascent center)
-	("social" ,(list (all-the-icons-material "person")) nil nil :ascent center)
-	("inbox" ,(list (all-the-icons-faicon "inbox")) nil nil :ascent center)
-	("emacs" ,(list (all-the-icons-fileicon "emacs")) nil nil :ascent center)
+	("Home" ,(list (all-the-icons-material "home")) nil nil :ascent center)
+	("Social" ,(list (all-the-icons-material "person")) nil nil :ascent center)
+	("Inbox" ,(list (all-the-icons-faicon "inbox")) nil nil :ascent center)
+	("Emacs" ,(list (all-the-icons-fileicon "emacs")) nil nil :ascent center)
 	("Kaizen" ,(list (all-the-icons-faicon "percent")) nil nil :ascent center)
-	("travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
-        ("buy" ,(list (all-the-icons-material "shopping_basket")) nil nil :ascent center)
-	("finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
-	("blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
-	("projects" ,(list (all-the-icons-alltheicon "script")) nil nil :ascent center)))
+	("Travel" ,(list (all-the-icons-faicon "plane")) nil nil :ascent center)
+        ("Buy" ,(list (all-the-icons-material "shopping_basket")) nil nil :ascent center)
+	("Finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
+	("Blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
+	("Projects" ,(list (all-the-icons-alltheicon "script")) nil nil :ascent center)))
 
 ;; this package lets you “supercharge” your Org daily/weekly
 ;; agenda. The idea is to group items into sections, rather than

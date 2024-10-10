@@ -21,31 +21,12 @@
 
 ;;; Code:
 
-
-(defun mono/open-denote-directory ()
-  "Open the main denote directory."
-  (interactive)
-  (tab-new)
-  (tab-rename "notes")
-  (find-file denote-directory)
-  (call-interactively 'dired-other-window))
-
-(defun mono/search-in-notes ()
-  "Execute ripgrep within the denote directory."
-  (interactive)
-  (find-file denote-directory)
-  (consult-ripgrep))
-
 (use-package denote
   :demand t
   :config
   (require 'denote-org-extras)
   (setq denote-directory mono-dir-notes)
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
-  :bind (("C-c n n" . denote)
-	 ("C-c n o" . mono/open-denote-directory)
-	 ("C-c n i" . denote-link)
-	 ("C-c n s" . mono/search-in-notes)))
+  (add-hook 'dired-mode-hook #'denote-dired-mode))
 
 (provide 'mono-notes)
 ;;; mono-notes.el ends here
