@@ -55,3 +55,5 @@ alias osinfo='curl -sL https://raw.githubusercontent.com/dylanaraps/neofetch/mas
 
 # CRON puts logs in /var/log/syslog
 alias cronlogs='tail -f /var/log/syslog | grep CRON'
+
+alias env-export='export $(grep -v '^#' .env | xargs)'
