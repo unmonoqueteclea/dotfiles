@@ -24,7 +24,10 @@
 
 (require 'mono-base-package)
 (require 'mono-base-definitions)
-(require 'mono-secret)
+
+;; I don´t have the secret module in all environments
+(when (file-exists-p "elibs/mono-secret.el")
+  (require 'mono-secret))
 
 ;; https://github.com/karthink/gptel?
 (use-package gptel

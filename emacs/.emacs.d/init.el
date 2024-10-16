@@ -61,7 +61,10 @@
 (require 'mono-tools-browser)
 ;(require 'mono-tools-email)
 (require 'mono-keyboard)
-(require 'mono-secret)
+
+;; I don´t have the secret module in all environments
+(when (file-exists-p "elibs/mono-secret.el")
+  (require 'mono-secret))
 
 (provide 'init)
 
