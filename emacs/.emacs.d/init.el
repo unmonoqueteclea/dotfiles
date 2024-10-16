@@ -59,7 +59,7 @@
 (require 'mono-ai)
 (require 'mono-blog)
 (require 'mono-tools-browser)
-(require 'mono-tools-email)
+;(require 'mono-tools-email)
 (require 'mono-keyboard)
 (require 'mono-secret)
 
