@@ -56,6 +56,7 @@
 (require 'mono-dev-web)
 (require 'mono-dev-python)
 (require 'mono-dev-clojure)
+(require 'mono-ai)
 (require 'mono-blog)
 (require 'mono-tools-browser)
 (require 'mono-tools-email)
