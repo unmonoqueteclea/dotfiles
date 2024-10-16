@@ -93,7 +93,6 @@
 	(f-read-text (concat blog-root-directory "/public/title.html") 'utf-8)))
 
 
-(mono/blog-update-statics)
 (advice-add 'org-static-blog-publish :before #'mono/blog-update-static-pages)
 (advice-add 'org-static-blog-publish :after #'mono/blog-update-statics)
 
