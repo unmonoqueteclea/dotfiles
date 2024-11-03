@@ -28,6 +28,7 @@
 (require 'mono-base-definitions)
 (require 'mono-org)
 (require 'mono-complete)
+(require 'mono-agenda)
 
 ;; config how project.el finds a project
 (setq project-vc-extra-root-markers '("pyproject.toml" ".python-version"))
@@ -87,6 +88,12 @@
   :custom (treesit-auto-langs '(python javascript bash clojure markdown toml vue yaml))
   :config
   (global-treesit-auto-mode))
+
+(use-package org-jira
+  :demand t
+  :config
+  (setq org-jira-working-dir mono-dir-agenda)
+  (setq jiralib-url "https://kenmei.atlassian.net"))
 
 (provide 'mono-projects)
 
