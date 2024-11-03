@@ -20,6 +20,8 @@
 ;;  header.  To send a finished item to ARCHIVE, use function
 ;;  =org-archive-to-archive-sibling=
 
+;; Last full review: 2024-11-03
+
 ;;; Code:
 
 (require 'mono-base-package)
@@ -49,31 +51,14 @@
 ;; everything in the agenda folder should be shown in the agenda
 (setq org-agenda-files `(,mono-dir-agenda))
 
-(setq org-habit-graph-column 100
-      org-habit-show-all-today nil
-      org-habit-show-habits-only-for-today nil
-      org-habit-preceding-days 14
-      org-habit-following-days 14
+(setq org-habit-graph-column 120
+      org-habit-preceding-days 21
+      org-habit-following-days 3
       org-agenda-tags-column -160)
 
-(setq org-agenda-overriding-header "⚡ Agenda")
+(setq org-agenda-overriding-header "⚡ Agenda de hoy \n")
 
-;; add a separator line between each day
-(setq org-agenda-format-date
-      (lambda (date)
-	(concat (make-string 80 9472)
-                "\n"
-                (org-agenda-format-date-aligned date))))
-
-(setq org-agenda-prefix-format
-      '((agenda . " %i %-12:c%?-12t % s  %?-5e")
-	(todo . " %i %-12:c %?5e ")
-	(tags . " %i %-12:c")
-	(search . " %i %-12:c")))
-
-(setq org-refile-targets
-      '((nil :maxlevel . 3)
-        (org-agenda-files :maxlevel . 3)))
+(setq org-refile-targets '((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3)))
 
 ;; assign icons to categories
 (setq org-agenda-category-icon-alist
@@ -94,40 +79,48 @@
 ;; agenda. The idea is to group items into sections, rather than
 ;; having them all in one big list.
 ;; See https://github.com/alphapapa/org-super-agenda
-(use-package org-super-agenda
+(use-package
+  org-super-agenda
   :demand t
-  :config (org-super-agenda-mode))
+  :config
+  (org-super-agenda-mode)
+  (setq
+   org-agenda-time-grid nil
+   org-agenda-current-time-string "⏰ ┈┈┈┈┈┈┈┈┈┈┈ now"
+   org-agenda-compact-blocks nil
+   org-agenda-window-setup 'current-window
+   org-agenda-start-on-weekday 1
+   org-deadline-warning-days 7
+   org-agenda-custom-commands
+   '(
+     ("w" "🖥️ Trabajo"
+      ((agenda
+	""
+	((org-agenda-span 1)  ;; show 1 day by default
+	 (org-super-agenda-groups
+	  '((:name "➰ Rutinas" :habit)
+	    (:name "⚠️ Debería haber terminado..." :scheduled past :deadline past :order 1)
+	    (:name "📅 Tareas para hoy" :date today :order 2)))))
+       (alltodo
+	""
+	((org-agenda-overriding-header "✅ Otras tareas")
+	 (org-super-agenda-groups '((:name "Otras")))))))
+     
+     ("o" "☑️ Otras"
+      ((agenda
+	""
+	((org-agenda-span 1)  ;; show 1 day by default
+	 (org-super-agenda-groups
+	  '((:name "➰ Rutinas" :habit)
+	    (:name "⚠️ Debería haber terminado..." :discard (:category ("Trabajo")) :scheduled past :deadline past :order 1)
+	    (:name "📅 Tareas para hoy" :discard (:category ("Trabajo")) :date today :order 2)))))
+       (alltodo
+	""
+	((org-agenda-overriding-header "✅ Otras tareas")
+	 (org-super-agenda-groups
+          '((:name "Otras" :discard (:and (:category ("Trabajo")) :habit)))))))))))
 
-(setq
- org-agenda-time-grid nil
- org-agenda-current-time-string "⏰ ┈┈┈┈┈┈┈┈┈┈┈ now"
- org-agenda-compact-blocks nil
- org-agenda-window-setup 'current-window
- org-agenda-start-on-weekday 1
- org-deadline-warning-days 7
- org-agenda-custom-commands
- '(
-   ("w" "🖥️ Trabajo"
-    ((agenda
-      ""
-      ((org-agenda-span 1)  ;; show 1 day by default
-       (org-super-agenda-groups
-	'((:name "➰ Rutinas" :habit)
-	  (:name "⚠️ Debería haber terminado..."
-	    :scheduled past ;; show past scheduled tasks
-	    :deadline past ;; show past deadline tasks
-	    :order 1)
-	  (:name "📅 Tareas para hoy"
-           ;; only show tasks from category trabajo
-           ;; :discard (:not (:category ("trabajo")))
-           :date today ;; match items with today’s date
-           :order 2)))))
-     (alltodo
-      ""
-      ((org-agenda-overriding-header "✅ Otras tareas")
-       (org-super-agenda-groups
-        '((:name "🔫 LFX":tag "lfx") ;; ensrue these tasks are shown before the rest
-          (:name "Otras " :auto-tags t :discard (:not (:tag ("Rutina"))))))))))))
+
 
 (setq org-capture-templates
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
@@ -145,16 +138,6 @@
 	("B" "📚 Libro" entry (file mono-file-notes-books)
 	 "* %^{item} :pending: \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
 	 :empty-lines 1)))
-
-;; see https://github.com/ml729/org-habit-stats/
-(use-package org-habit-stats
-  :straight (org-habit-stats :type git :host github :repo "ml729/org-habit-stats"))
-
-;; open habit stats view for agenda items
-(add-hook
- 'org-agenda-mode-hook
- (lambda ()
-   (local-set-key (kbd "H") 'org-habit-stats-view-habit-at-point-agenda)))
 
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here
