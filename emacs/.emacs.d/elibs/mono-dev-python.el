@@ -58,6 +58,10 @@
 ;; pyenv tries to override C-c C-s keybind that I am using in other places
 (eval-after-load "pyenv-mode" (define-key pyenv-mode-map (kbd "C-c C-s") nil))
 
+;; (!) pyvenv is not pyvenv
+;; For some tasks, I need to use pyvenv instead of pyenv
+(use-package pyvenv :demand t)
+
 ;; some additional functions that complement pyenv-mode
 (defun mono/pyenv-versions ()
   "Show the list of pyenv versions."
@@ -111,6 +115,12 @@
    (local-set-key (kbd "C-$") 'flymake-goto-next-error)
    (eldoc-box-hover-at-point-mode)
    (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
+
+;; A Django mode for emacs, I mainly use it to run unit tests that are
+;; not using pytest
+(use-package pony-mode
+  :demand t
+  :straight (pony-mode :type git :host github :repo "davidmiller/pony-mode"))
 
 
 ;; IMPORTANT (2024-07-10) After several tests, I wasn't able to make Flymake

@@ -51,6 +51,7 @@
 
 (require 'org-indent)
 (require 'org-element)
+(setq org-element-use-cache nil)
 (require 'org-num)
 
 (setq org-src-fontify-natively t

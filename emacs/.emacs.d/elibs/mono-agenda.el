@@ -52,6 +52,7 @@
 (setq org-agenda-files `(,mono-dir-agenda))
 
 (setq org-habit-graph-column 120
+      org-habit-show-habits-only-for-today nil
       org-habit-preceding-days 21
       org-habit-following-days 3
       org-agenda-tags-column -160)
