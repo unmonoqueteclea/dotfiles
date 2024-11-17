@@ -20,21 +20,32 @@
 ;;; Commentary:
 ;;  LLM and other AI-related packages.
 
+;; Last full review: 2024-11-17
+
 ;;; Code:
 
 (require 'mono-base-package)
 (require 'mono-base-definitions)
+(require 'mono-secret)
 
-;; I don´t have the secret module in all environments
-(when (file-exists-p "elibs/mono-secret.el")
-  (require 'mono-secret))
-
-;; https://github.com/karthink/gptel?
+;; https://github.com/karthink/gptel
 (use-package gptel
   :config
-  (setq gptel-model "gemini-pro"
-        gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
+  (setq gptel-model :gemini-pro
+	gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
 
+(use-package gptel-quick
+  :config
+  (setq gptel-quick-model :gemini-pro
+	gptel-quick-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t))
+  :straight (:host github :repo "karthink/gptel-quick"))
+
+;; https://github.com/copilot-emacs/copilot.el
+(use-package copilot
+  :straight (:host github :repo "zerolfx/copilot.el")
+  :hook (prog-mode . copilot-mode)
+  :config
+  (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
 
 (provide 'mono-ai)
 
