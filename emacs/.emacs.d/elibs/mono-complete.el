@@ -123,7 +123,6 @@
    ("C-c g" . consult-git-grep)
    ("C-c G" . consult-ripgrep)))
 
-
 ;; TODO Check docs and improve configuration of corfu
 
 ;; Corfu enhances completion at point with a small completion

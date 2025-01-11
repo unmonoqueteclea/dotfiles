@@ -45,6 +45,7 @@
   :straight (:host github :repo "zerolfx/copilot.el")
   :hook (prog-mode . copilot-mode)
   :config
+  (setq copilot-indent-offset-warning-disable t)
   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
 
 (provide 'mono-ai)
