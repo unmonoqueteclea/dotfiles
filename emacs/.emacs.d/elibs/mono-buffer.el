@@ -24,6 +24,8 @@
 ;;; Code:
 (require 'mono-base-package)
 
+(setq-default buffer-file-coding-system 'utf-8-unix)
+
 ;; don't ask for confirmation when killing buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 

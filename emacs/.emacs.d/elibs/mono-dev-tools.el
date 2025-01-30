@@ -36,12 +36,6 @@
   :config
   (define-key magit-status-mode-map (kbd "<C-return>") nil))
 
-;; show TODOs in magit UI
-(use-package magit-todos
-  :after magit
-  :demand t
-  :config (magit-todos-mode 1))
-
 ;; pull requests and issues from magit interface
 ;; (needs .authinfo file with github/gitlab token)
 (use-package forge
@@ -86,7 +80,9 @@
 
 ;; emacs integration for Kubernetes
 ;; https://github.com/abrochard/kubel
-(use-package kubel)
+(use-package kubel
+  :after (vterm)
+  :config (kubel-vterm-setup))
 
 ;; syntax highlight for dockerfiles
 ;; https://github.com/spotify/dockerfile-mode
