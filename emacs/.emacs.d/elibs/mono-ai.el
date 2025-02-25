@@ -40,12 +40,18 @@
 	gptel-quick-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t))
   :straight (:host github :repo "karthink/gptel-quick"))
 
+
+(defun no-copilot-in-json-mode ()
+   (eq major-mode 'json-mode))
+
 ;; https://github.com/copilot-emacs/copilot.el
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el")
   :hook (prog-mode . copilot-mode)
   :config
+  (add-to-list 'copilot-disable-predicates #'no-copilot-in-json-mode)
   (setq copilot-indent-offset-warning-disable t)
+  (setq copilot-max-char-warning-disable t)
   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
 
 (provide 'mono-ai)
