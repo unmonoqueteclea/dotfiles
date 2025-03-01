@@ -1,6 +1,6 @@
 ;;; mono-projects.el --- handle projects workspaces -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022, 2024  Pablo González Carrizo
+;; Copyright (C) 2022, 2024, 2025  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -29,6 +29,7 @@
 (require 'mono-org)
 (require 'mono-complete)
 (require 'mono-agenda)
+(require 'mono-secret)
 
 ;; config how project.el finds a project
 (setq project-vc-extra-root-markers '("pyproject.toml" ".python-version"))
@@ -89,11 +90,15 @@
   :config
   (global-treesit-auto-mode))
 
-(use-package org-jira
+(use-package jira
+  :straight (:host github :repo "unmonoqueteclea/jira.el")
   :demand t
   :config
-  (setq org-jira-working-dir mono-dir-agenda)
-  (setq jiralib-url "https://kenmei.atlassian.net"))
+  (setq jira-debug nil)
+  (setq jira-username secret-jira-username)
+  (setq jira-base-url secret-jira-base-url)
+  (setq jira-token secret-jira-token)
+  (setq jira-tempo-token secret-jira-tempo-token))
 
 (provide 'mono-projects)
 
