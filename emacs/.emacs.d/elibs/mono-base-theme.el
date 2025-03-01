@@ -1,6 +1,6 @@
 ;;; mono-base-theme.el --- UI and theme configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022, 2024  Pablo González Carrizo
+;; Copyright (C) 2022, 2024, 2025  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -50,7 +50,7 @@
 
 ;; See https://github.com/protesilaos/ef-themes
 (use-package ef-themes
-  :demand t :config (ef-themes-select 'ef-elea-dark))
+  :demand t :config (ef-themes-select 'ef-light))
 
 ;; fontaine lets the user specify presets of font configurations and
 ;; set them on demand on graphical Emacs frames. The user option
@@ -69,7 +69,7 @@
   :defines fontaine-presets
   :demand t
   :config
-  (let ((default-height-augment -17))
+  (let ((default-height-augment -7))
     ;; config from Prot's configuration
     (setq fontaine-presets
 	  `((tiny

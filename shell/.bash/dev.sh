@@ -17,11 +17,6 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# automatically login docker to BigML registry
-bigml_docker_login() {
-    echo $DOCKER_BIGML_PASSWORD | docker login -u $DOCKER_BIGML_USERNAME --password-stdin
-}
-
 # always use new docker compose version
 export COMPOSE='docker compose'
 
@@ -29,9 +24,6 @@ export COMPOSE='docker compose'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # load nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # load nvm bash_completion
-
-# pgadmin tool
-alias pgadmin="docker run -p 80:80 -e 'PGADMIN_DEFAULT_EMAIL=gonzalez@bigml.com' -e 'PGADMIN_DEFAULT_PASSWORD=bigml*' --add-host host.docker.internal:host-gateway  dpage/pgadmin4"
 
 # opencv (built from source)
 export OPENCV_INCLUDE_PATH="/usr/local/include/opencv4"
@@ -56,4 +48,12 @@ alias osinfo='curl -sL https://raw.githubusercontent.com/dylanaraps/neofetch/mas
 # CRON puts logs in /var/log/syslog
 alias cronlogs='tail -f /var/log/syslog | grep CRON'
 
+# export environment variables from .env file
 alias env-export='export $(grep -v '^#' .env | xargs)'
+
+
+# CARGO is Rust package manager, this is introduced by
+# uv installation (that needs Rust)
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi

@@ -21,6 +21,12 @@ if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
     fi
+else
+  # CARGO is Rust package manager, this is introduced by
+  # uv installation (that needs Rust)
+  if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+  fi
 fi
 
 # set PATH so it includes user's private bin if it exists
@@ -32,4 +38,3 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-

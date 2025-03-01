@@ -11,4 +11,3 @@ export SSH_KEYS_DIR="${DIR_SYNC}/access/ssh"
 # is first prompted
 # timeout is defined in minutes (currently: 7 days)
 eval "$(keychain --agents ssh --nogui --timeout 10080 --eval $SSH_KEYS_DIR/id_rsa)"
-eval "$(keychain --agents ssh --nogui --timeout 10080  $SSH_KEYS_DIR/bigml/bigml_ssh)"

@@ -1,6 +1,6 @@
 ;;; mono-base-package.el --- Manage packages -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022, 2024  Pablo González Carrizo
+;; Copyright (C) 2022, 2024, 2025  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -73,6 +73,8 @@
 ;; see https://github.com/radian-software/straight.el/issues/551#issuecomment-667540139
 (setq straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake xref jsonrpc external-completion))
 (require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
 ;; we want to defer load of all packages by default.  You can use
 ;; ':demand t' to force that a package is loaded from init.  If you've
@@ -84,8 +86,14 @@
 ;; commands.
 (setq use-package-always-defer t)
 
+;; This library provides a linter for the metadata in Emacs Lisp files
+;; which are intended to be packages. You can integrate it into your
+;; build process.
+(use-package package-lint)
+;;(setq  package-lint-main-file "jira.el")
+
 ;; TODO Use a lockfile and upload it to the repo
-;; TODO Need to configure MELPA, ELPA, etc?
+;; TODO Need to configure ELPA, etc?
 
 (provide 'mono-base-package)
 
