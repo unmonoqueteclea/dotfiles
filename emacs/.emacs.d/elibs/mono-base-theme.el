@@ -69,43 +69,28 @@
   :defines fontaine-presets
   :demand t
   :config
-  (let ((default-height-augment -7))
-    ;; config from Prot's configuration
-    (setq fontaine-presets
-	  `((tiny
-             :default-height ,(+ default-height-augment 70))
-            (small
-             :default-height ,(+ default-height-augment 90))
-            (regular
-             :default-height ,(+ default-height-augment 100))
-            (medium
-             :default-height ,(+ default-height-augment 110))
-            (large
-             :default-weight semilight
-             :default-height ,(+ default-height-augment 140)
-             :bold-weight extrabold)
-            (presentation
-             :default-weight semilight
-             :default-height ,(+ default-height-augment 170)
-             :bold-weight extrabold)
-            (t
-             ;; I keep all properties for didactic purposes, but most can be
-             ;; omitted.  See the fontaine manual for the technicalities:
-             ;; <https://protesilaos.com/emacs/fontaine>.
-             :default-family "Monospace"
-             :default-weight regular
-             :default-height ,(+ default-height-augment 100)
-             :fixed-pitch-family nil ; falls back to :default-family
-             :fixed-pitch-weight nil ; falls back to :default-weight
-             :fixed-pitch-height 1.0
-             :variable-pitch-family "Iosevka Comfy Duo"
-             :variable-pitch-weight nil
-             :variable-pitch-height 1.0
-             :bold-family nil ; use whatever the underlying face has
-             :bold-weight bold
-             :italic-family nil
-             :italic-slant italic
-             :line-spacing nil)))))
+  (setq fontaine-presets
+	`((regular :default-height 93)
+          (large :default-height 103)
+          (presentation :default-height 160)
+          (t
+           ;; I keep all properties for didactic purposes, but most can be
+           ;; omitted.  See the fontaine manual for the technicalities:
+           ;; <https://protesilaos.com/emacs/fontaine>.
+           :default-family "Monospace"
+           :default-weight regular
+           :default-height 93
+           :fixed-pitch-family nil ; falls back to :default-family
+           :fixed-pitch-weight nil ; falls back to :default-weight
+           :fixed-pitch-height 1.0
+           :variable-pitch-family "Iosevka Comfy Duo"
+           :variable-pitch-weight nil
+           :variable-pitch-height 1.0
+           :bold-family nil ; use whatever the underlying face has
+           :bold-weight bold
+           :italic-family nil
+           :italic-slant italic
+           :line-spacing nil))))
 
   ;; recover last preset or fall back to desired style from
   ;; `fontaine-presets'.
