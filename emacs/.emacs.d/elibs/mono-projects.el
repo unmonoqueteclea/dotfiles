@@ -95,10 +95,7 @@
   :demand t
   :config
   (setq jira-debug nil)
-  (setq jira-username secret-jira-username)
-  (setq jira-base-url secret-jira-base-url)
-  (setq jira-token secret-jira-token)
-  (setq jira-tempo-token secret-jira-tempo-token))
+  (setq jira-base-url secret-jira-base-url))
 
 (provide 'mono-projects)
 
