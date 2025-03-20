@@ -58,5 +58,14 @@
    :error-autofocus t
    :silent-success t))
 
+(defun mono/reformat-json-to-4-spaces ()
+  "Use jq to reformat JSON file to 4 spaces."
+  (interactive)
+  (dwim-shell-command-on-marked-files
+   "Reformat JSON file"
+   "jq --indent 4 . <<f>> | sed 's/$/\r/' > temp.json && mv temp.json <<f>>"
+   :error-autofocus t
+   :silent-success t))
+
 (provide 'mono-dwim)
 ;;; mono-dwim.el ends here
