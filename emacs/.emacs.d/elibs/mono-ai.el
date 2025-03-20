@@ -54,6 +54,14 @@
   (setq copilot-max-char-warning-disable t)
   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
 
+(use-package aidermacs
+  :bind (("C-c A" . aidermacs-transient-menu))
+  :config
+  (setenv "GEMINI_API_KEY" gemini-api-key)
+  :custom
+  (aidermacs-use-architect-mode nil)
+  (aidermacs-default-model "gemini/gemini-1.5-pro-latest"))
+
 (provide 'mono-ai)
 
 ;;; mono-ai.el ends here

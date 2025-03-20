@@ -22,6 +22,7 @@ function llm-doc {
 # remove the collection, useful when I want to recreate it with last changes
 alias llm-denote-clear="llm collections delete denote"
 # create the collection, using the E5-large-v2 model
+# llm sentence-transformers register intfloat/e5-large-v2 -a lv2
 # see https://til.simonwillison.net/llms/embed-paragraphs
 alias llm-denote-create="llm embed-multi denote -m lv2 --files ~/Drive/orgmode/denote '**/*.org' --store"
 

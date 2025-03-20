@@ -34,7 +34,8 @@
 ;; https://github.com/magit/magit
 (use-package magit
   :config
-  (define-key magit-status-mode-map (kbd "<C-return>") nil))
+  (define-key magit-status-mode-map (kbd "<C-return>") nil)
+  (setq ediff-window-setup-function #'ediff-setup-windows-plain))
 
 ;; pull requests and issues from magit interface
 ;; (needs .authinfo file with github/gitlab token)

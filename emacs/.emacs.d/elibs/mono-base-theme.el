@@ -50,6 +50,8 @@
 
 ;; See https://github.com/protesilaos/ef-themes
 (use-package ef-themes
+  ;; ef-elea-dark --> My favorite dark theme
+  ;; el-light --> My favourite dark theme
   :demand t :config (ef-themes-select 'ef-light))
 
 ;; fontaine lets the user specify presets of font configurations and

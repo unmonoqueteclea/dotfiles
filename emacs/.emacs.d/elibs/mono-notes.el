@@ -24,7 +24,6 @@
 (use-package denote
   :demand t
   :config
-  (require 'denote-org-extras)
   (setq denote-directory mono-dir-notes)
   (add-hook 'dired-mode-hook #'denote-dired-mode))
 
