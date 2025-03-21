@@ -127,11 +127,8 @@
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
 	 "* TODO %^{task}"
 	 :empty-lines 1)
-	("p" "🧑 Tarea personal" entry (file mono-agenda-inbox)
-	 "* TODO %^{task}"
-	 :empty-lines 1)
-	("x" "💰 Proyecto personal" entry (file+headline mono-agenda-projects "tasks")
-	 "* TODO %^{text} %^g \nSCHEDULED: <%<%Y-%m-%d %a>>"
+	("t" "✏️ Tarea" entry (file+headline mono-agenda-inbox "Inbox")
+	 "* TODO %^{text} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("b" "🧺 Compra" entry (file mono-file-notes-buy)
 	 "* %^{item} \n:PROPERTIES:\n:url: [[%^{link-url}][%^{link-description}]]\n:date: %^{date?}\n:price: %^{price?}\n:notes: %^{notes?}\n:END:\n "

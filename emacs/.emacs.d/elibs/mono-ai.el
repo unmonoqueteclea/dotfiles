@@ -59,8 +59,13 @@
   :config
   (setenv "GEMINI_API_KEY" gemini-api-key)
   :custom
-  (aidermacs-use-architect-mode nil)
-  (aidermacs-default-model "gemini/gemini-1.5-pro-latest"))
+  (aidermacs-auto-commits nil)
+  (aidermacs-show-diff-after-change t)
+  (aidermacs-backend 'vterm)
+  (aidermacs-use-architect-mode t)
+  (aidermacs-architect-model "gemini/gemini-2.0-flash-exp")
+  (aidermacs-editor-model "gemini/gemini-2.0-flash-exp")
+  (aidermacs-default-model "gemini/gemini-2.0-flash-exp"))
 
 (provide 'mono-ai)
 
