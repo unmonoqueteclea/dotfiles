@@ -34,13 +34,6 @@
   (setq gptel-model :gemini-pro
 	gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
 
-(use-package gptel-quick
-  :config
-  (setq gptel-quick-model :gemini-pro
-	gptel-quick-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t))
-  :straight (:host github :repo "karthink/gptel-quick"))
-
-
 (defun no-copilot-in-json-mode ()
    (eq major-mode 'json-mode))
 
@@ -55,7 +48,7 @@
   (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
 
 (use-package aidermacs
-  :bind (("C-c A" . aidermacs-transient-menu))
+  :bind (("C-c s" . aidermacs-transient-menu))
   :config
   (setenv "GEMINI_API_KEY" gemini-api-key)
   :custom
@@ -63,9 +56,8 @@
   (aidermacs-show-diff-after-change t)
   (aidermacs-backend 'vterm)
   (aidermacs-use-architect-mode t)
-  (aidermacs-architect-model "gemini/gemini-2.0-flash-exp")
-  (aidermacs-editor-model "gemini/gemini-2.0-flash-exp")
   (aidermacs-default-model "gemini/gemini-2.0-flash-exp"))
+
 
 (provide 'mono-ai)
 

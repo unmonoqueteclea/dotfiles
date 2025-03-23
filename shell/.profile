@@ -15,18 +15,14 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-else
-  # CARGO is Rust package manager, this is introduced by
-  # uv installation (that needs Rust)
-  if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
-  fi
+
+ # get the aliases and functions in non-interactive sheels
+. "$HOME/.bashrc"
+
+# CARGO is Rust package manager, this is introduced by
+# uv installation (that needs Rust)
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
 fi
 
 # set PATH so it includes user's private bin if it exists

@@ -3,3 +3,4 @@
 *feeds.org
 *.mbsyncrc
 *rclone.conf
+.aider*
