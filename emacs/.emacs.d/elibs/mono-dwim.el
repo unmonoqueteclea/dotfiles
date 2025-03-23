@@ -28,6 +28,7 @@
 (require 'mono-base-package)
 
 (use-package dwim-shell-command
+  :demand t
   :bind (([remap shell-command] . dwim-shell-command)
   :map dired-mode-map
    ([remap dired-do-async-shell-command] . dwim-shell-command)

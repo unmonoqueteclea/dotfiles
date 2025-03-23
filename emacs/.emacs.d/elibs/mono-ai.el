@@ -26,6 +26,7 @@
 
 (require 'mono-base-package)
 (require 'mono-base-definitions)
+(require 'mono-dwim)
 (require 'mono-secret)
 
 ;; https://github.com/karthink/gptel
