@@ -72,7 +72,7 @@
   :demand t
   :config
   (setq fontaine-presets
-	`((regular :default-height 93)
+	`((regular :default-height 94)
           (large :default-height 103)
           (presentation :default-height 160)
           (t
@@ -81,7 +81,7 @@
            ;; <https://protesilaos.com/emacs/fontaine>.
            :default-family "Monospace"
            :default-weight regular
-           :default-height 93
+           :default-height 94
            :fixed-pitch-family nil ; falls back to :default-family
            :fixed-pitch-weight nil ; falls back to :default-weight
            :fixed-pitch-height 1.0
