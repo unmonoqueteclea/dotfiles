@@ -58,6 +58,14 @@
   (aidermacs-use-architect-mode t)
   (aidermacs-default-model "gemini/gemini-2.0-flash-exp"))
 
+(defun mono/llm-commit-message ()
+  "Generate a commit-message using LLM and copy it to clipboard."
+  (interactive)
+  (dwim-shell-command-on-marked-files
+   "Generate git commit message"
+   "llm-commit-msg | xclip -selection c"
+   :error-autofocus t
+   :silent-success t))
 
 (provide 'mono-ai)
 

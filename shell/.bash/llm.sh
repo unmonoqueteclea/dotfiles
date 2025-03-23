@@ -81,11 +81,12 @@ function llm-download-web {
   wget --mirror --convert-links --accept=html,htm --no-parent -e robots=off -w 1 -np $web
 }
 
-function llm-git-commit-msg {
+function llm-commit-msg {
   git diff --staged | \
     llm -s "Write a succinct commit message. I should consist of a \
       capitalized, short summary, and more detailed explanatory text, \
-        if necessary."
+      if necessary. Do not use markdown, just plain text. Allowed prefixes: \
+      feat, fix, docs, style, refactor test, chore."
 }
 
 function llm-explain-py-directory {
@@ -93,5 +94,5 @@ function llm-explain-py-directory {
 }
 
 function llm-explain-py-element {
-  symbex $1 | llm --system 'Explain this Python code, succinctly' | llm-md
+  symbex $1 | llm --system "Explain this Python code, succinctly" | llm-md
 }

@@ -27,27 +27,12 @@
 
 (require 'mono-base-package)
 
-
 (use-package dwim-shell-command
   :bind (([remap shell-command] . dwim-shell-command)
-   :map dired-mode-map
+  :map dired-mode-map
    ([remap dired-do-async-shell-command] . dwim-shell-command)
    ([remap dired-do-shell-command] . dwim-shell-command)
    ([remap dired-smart-shell-command] . dwim-shell-command)))
-
-;; load some default commands
-(require 'dwim-shell-commands)
-
-(defun mono/dwim-suspend ()
-  "Just suspend system."
-  (interactive)
-  (dwim-shell-command-on-marked-files
-   "Suspending system"
-   "systemctl suspend"
-   :utils "systemctl"
-   :no-progress t
-   :error-autofocus t
-   :silent-success t))
 
 (defun mono/dwim-validate-json ()
   "Validate JSON file using jsonlint"

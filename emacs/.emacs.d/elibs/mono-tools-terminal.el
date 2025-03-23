@@ -26,6 +26,9 @@
 
 ;; using bash as default shell
 (setq shell-file-name "/bin/bash")
+;; force shell to be interactive so that we have access to all
+;; functions and aliases
+(setq shell-command-switch "-ic")
 
 (use-package vterm
   :defines
