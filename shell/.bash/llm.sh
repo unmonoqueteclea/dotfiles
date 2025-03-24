@@ -70,6 +70,15 @@ function llm-pipes-rg {
   rg -NI -C 10 $query;
 }
 
+function llm-pipes-commits {
+  if [ -z "$1" ]; then
+    read -p "What do you want to find in commit messages? " ticket
+  else
+    ticket="$1"
+  fi
+  git log -n 30 --grep="$ticket" --pretty=format:%H | while read commit; do git diff-tree -p $commit; done
+}
+
 
 # combined with "files-to-prompt", we can prompt a whole documentation to llm
 function llm-download-web {

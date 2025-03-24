@@ -137,5 +137,8 @@
 	 "* %^{item} :pending: \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
 	 :empty-lines 1)))
 
+;; ensure that agenda items text is shown
+(add-hook 'org-agenda-mode-hook #'org-agenda-entry-text-mode)
+
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here
