@@ -44,22 +44,12 @@
 (use-package diminish
   :diminish  pyenv-mode)
 
-;; jinx.el - enchanted spell checker
-;; On Debian or Ubuntu, install the packages libenchant-2-dev and pkg-config
-(use-package jinx
-  :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages))
-  :config
-  (setq jinx-languages "en-US es-ES")
-  (dolist (hook '(text-mode-hook markdown-mode-hook))
-    (add-hook hook #'jinx-mode)))
-
 (use-package doom-modeline
   :init
   (which-function-mode)
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 60
+  (setq doom-modeline-height 40
         doom-modeline-buffer-encoding nil
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))
