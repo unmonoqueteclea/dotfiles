@@ -8,8 +8,6 @@ function llm-md() {
   glow -s light "$1"
 }
 
-
-# document these functions
 function llm-doc {
   cat ~/vc/dotfiles/shell/.bash/llm.sh | llm -s "Provide a bullet point for each function with a description" | llm-md
 }
@@ -104,4 +102,23 @@ function llm-explain-py-directory {
 
 function llm-explain-py-element {
   symbex $1 | llm --system "Explain this Python code, succinctly" | llm-md
+}
+
+function llm-meeting-start {
+  audio-recorder -c start
+}
+
+function llm-meeting-stop {
+  new_name=$1
+  audio-recorder -c stop
+  local dir="/home/pgonzalez/Audio/"
+  cd $dir
+  local file=$(find "$dir" -type f -printf "%T@ %p\n" | sort -n | tail -1 | awk '{print $2}')
+  local timestamp=$(date +"%Y%m%d%H%M%S")
+  local new_file="$(dirname "$file")/$timestamp-$new_name.mp3"
+  echo "Renaming $file to $new_file..."
+  mv "$file" "$new_file"
+  echo "Writing summary..."
+  llm -s "Write the notes of the meeting. The top topics discussed and the decisions (swith sub-points showing examples if needed) and next actions." -a "$new_file"  > "notes/$timestamp-$new_name.md"
+  echo "Notes saved in notes/$timestamp-$new_name.md"
 }
