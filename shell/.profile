@@ -16,8 +16,8 @@
 #umask 022
 
 
- # get the aliases and functions in non-interactive sheels
-. "$HOME/.bashrc"
+# get the aliases and functions in non-interactive sheels
+[[ -f ~/.bashrc ]] && source ~/.bashrc
 
 # CARGO is Rust package manager, this is introduced by
 # uv installation (that needs Rust)

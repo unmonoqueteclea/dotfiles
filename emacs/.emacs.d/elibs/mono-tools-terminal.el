@@ -26,9 +26,8 @@
 
 ;; using bash as default shell
 (setq shell-file-name "/bin/bash")
-;; force shell to be interactive so that we have access to all
-;; functions and aliases
-(setq shell-command-switch "-ic")
+;; force shell to be a login shell so that .profile is sourced
+(setq shell-command-switch "-lc")
 
 (use-package vterm
   :defines

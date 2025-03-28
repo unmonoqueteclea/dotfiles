@@ -2,22 +2,24 @@
 
 # bash configuration file
 
-# almost all content of this file is copied from the default .bashrc
-# file in Ubuntu 22.04. I removed some parts I wasn't using and added
-# the final loop to source all files in .bash folder.
+# set PATH so it includes user local bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
-# from this line, the content is mostly copied from default Ubuntu
-# 22.04 .bashrc file.
+# source all files in .bash folder.
+# files with a filename starting with a dot should be sourced before,
+# as they contain variables and functions needed by the rest of
+# scripts
+for f in ~/.bash/.*.sh; do source $f; done
+for f in ~/.bash/*.sh; do source $f; done
 
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# If not running interactively, don't do anything
+# If not running interactively, don't do anything else
 case $- in
     *i*) ;;
       *) return;;
 esac
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -65,22 +67,23 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# unmonoqueteclea: I have my own configuration in .prompt
-# if [ "$color_prompt" = yes ]; then
-#     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-# else
-#     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-# fi
-# unset color_prompt force_color_prompt
 
-# # If this is an xterm set the title to user@host:dir
-# case "$TERM" in
-# xterm*|rxvt*)
-#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-#     ;;
-# *)
-#     ;;
-# esac
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -110,15 +113,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
  fi
 fi
-
-# set PATH so it includes user local bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# source all files in .bash folder.
-# files with a filename starting with a dot should be sourced before,
-# as they contain variables and functions needed by the rest of
-# scripts
-for f in ~/.bash/.*.sh; do source $f; done
-for f in ~/.bash/*.sh; do source $f; done

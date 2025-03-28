@@ -57,6 +57,8 @@
   (aidermacs-show-diff-after-change t)
   (aidermacs-backend 'vterm)
   (aidermacs-use-architect-mode t)
+  (aidermacs-architect-model "gemini/gemini-2.0-flash-exp")
+  (aidermacs-editor-model "gemini/gemini-2.0-flash-exp")
   (aidermacs-default-model "gemini/gemini-2.0-flash-exp"))
 
 (defun mono/llm-commit-message ()
@@ -67,6 +69,15 @@
    "llm-commit-msg | xclip -selection c"
    :error-autofocus t
    :silent-success t))
+
+(defun mono/llm-denote-ask (prompt)
+  "Execute llm-denote-ask with PROMPT and display the result."
+  (interactive "sPrompt: ")
+  (let ((command (format "llm-denote-ask \"%s\"" prompt)))
+    (dwim-shell-command-on-marked-files
+     "Ask my notes"
+     command
+     :focus-now t )))
 
 (provide 'mono-ai)
 
