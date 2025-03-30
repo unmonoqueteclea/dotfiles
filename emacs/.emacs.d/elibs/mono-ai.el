@@ -66,18 +66,22 @@
   (interactive)
   (dwim-shell-command-on-marked-files
    "Generate git commit message"
-   "llm-commit-msg | xclip -selection c"
-   :error-autofocus t
-   :silent-success t))
+   "llm-commit-msg"
+   :error-autofocus t))
 
-(defun mono/llm-denote-ask (prompt)
-  "Execute llm-denote-ask with PROMPT and display the result."
+(defun mono/llm-note-ask (prompt)
+  "Execute llm-note-ask with PROMPT and display the result."
   (interactive "sPrompt: ")
-  (let ((command (format "llm-denote-ask \"%s\"" prompt)))
+  (let ((command (format "llm-notes-ask \"%s\"" prompt)))
     (dwim-shell-command-on-marked-files
-     "Ask my notes"
-     command
-     :focus-now t )))
+     "Ask my notes" command :focus-now t )))
+
+(defun mono/llm-meeting-ask (prompt)
+  "Execute llm-meeting-ask with PROMPT and display the result."
+  (interactive "sPrompt: ")
+  (let ((command (format "llm-meeting-ask \"%s\"" prompt)))
+    (dwim-shell-command-on-marked-files
+     "Ask my meetings" command :focus-now t )))
 
 (provide 'mono-ai)
 
