@@ -6,25 +6,46 @@ export LLM_MODEL="gemini-2.0-flash"
 # see https://til.simonwillison.net/llms/embed-paragraphs
 export LLM_MODEL_EMBEDDINGS="sentence-transformers/intfloat/e5-large-v2"
 export LLM_COLLECTION_NOTES="notes"
-export LLM_NOTES_DIR="~/Drive/orgmode/denote"
-export LLM_MEETINGS_FOLDER="~/Audio"
+export LLM_COLLECTION_MEETINGS="meetings"
+export LLM_NOTES_DIR="$HOME/Drive/orgmode/denote"
+export LLM_MEETINGS_FOLDER="$HOME/Audio"
+export LLM_MEETINGS_NOTES_FOLDER="$HOME/Audio/notes"
 
 # pipe to this function to visualize nicely markdown
 function llm-md() { glow -s light "$1"; }
 
 # remove the notes collection, useful when I want to recreate it with last changes
-alias llm-notes-clear="llm collections delete $LLM_COLLECTION_NOTES"
+alias llm-note-clear="llm collections delete $LLM_COLLECTION_NOTES"
+alias llm-meeting-clear="llm collections delete $LLM_COLLECTION_MEETINGS"
 
-# recreate notes database
-alias llm-notes-index="llm collections delete $LLM_COLLECTION_NOTES &&\
+# recreate notes and meetings database
+alias llm-note-index="llm collections delete $LLM_COLLECTION_NOTES || \
                        llm embed-multi $LLM_COLLECTION_NOTES \
                                        -m $LLM_MODEL_EMBEDDINGS \
                                         --files $LLM_NOTES_DIR \
                                         '**/*.org' --store"
+
+alias llm-meeting-index="llm collections delete $LLM_COLLECTION_MEETINGS ||\
+                        llm embed-multi $LLM_COLLECTION_MEETINGS \
+                                       -m $LLM_MODEL_EMBEDDINGS \
+                                        --files $LLM_MEETINGS_NOTES_FOLDER \
+                                        '**/*.md' --store"
+
 # ask anything to my notes
-function llm-notes-ask() {
+function llm-note-ask() {
   question=${1:-$(read -p "❓ What do you want to ask? " && echo "$REPLY")}
   llm similar $LLM_COLLECTION_NOTES -n 5 -c "query: $question" | \
+    jq -r '. | "\(.id): \(.content)"' | \
+    llm  "$question" -s "You answer questions, at the end of the response
+                         provide the ids of the documents where you found \
+                         the information (just filename, no link). \
+                         Use markdown syntax." \
+    | llm-md
+}
+
+function llm-meeting-ask() {
+  question=${1:-$(read -p "❓ What do you want to ask? " && echo "$REPLY")}
+  llm similar $LLM_COLLECTION_MEETINGS -n 5 -c "query: $question" | \
     jq -r '. | "\(.id): \(.content)"' | \
     llm  "$question" -s "You answer questions, at the end of the response
                          provide the ids of the documents where you found \
@@ -99,9 +120,8 @@ function llm-meeting-start {
 function llm-meeting-stop {
   new_name=${1:-$(read -p "❓ Name of the meeting? " && echo "$REPLY")}
   audio-recorder -c stop
-  cd $LLM_MEETINGS_AUDIO
-  local file=$(find "$dir" -type f -printf "%T@ %p\n" | sort -n | \
-		  tail -1 | awk '{print $2}')
+  cd $LLM_MEETINGS_FOLDER
+  local file=$(find "$LLM_MEETINGS_FOLDER" -type f -printf "%T@ %p\n" | sort -n | tail -1 | awk '{print $2}')
   local timestamp=$(date +"%Y%m%d%H%M%S")
   local new_file="$(dirname "$file")/$timestamp-$new_name.mp3"
   echo "Renaming $file to $new_file..."
@@ -110,6 +130,6 @@ function llm-meeting-stop {
   llm -s "Write the notes of the meeting. The top topics discussed and the \
           decisions (wwith sub-points showing examples if needed) and next \
 	  actions." \
-      -a "$new_file"  > "notes/$timestamp-$new_name.md"
+      -a "$new_file"  > "$LLM_MEETINGS_NOTES_FOLDER/$timestamp-$new_name.md"
   echo "Notes saved in notes/$timestamp-$new_name.md"
 }
