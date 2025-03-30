@@ -60,7 +60,7 @@
 
 ;; (!) pyvenv is not pyvenv
 ;; For some tasks, I need to use pyvenv instead of pyenv
-(use-package pyvenv :demand t)
+(use-package pyvenv :commands (python-activate python-workon))
 
 ;; some additional functions that complement pyenv-mode
 (defun mono/pyenv-versions ()
