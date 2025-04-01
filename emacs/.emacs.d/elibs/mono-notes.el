@@ -21,11 +21,19 @@
 
 ;;; Code:
 
+(require 'mono-base-definitions)
+
 (use-package denote
   :demand t
   :config
   (setq denote-directory mono-dir-notes)
   (add-hook 'dired-mode-hook #'denote-dired-mode))
+
+(use-package denote-journal  :straight
+  (denote-joutnal :type git :host github :repo "protesilaos/denote-journal")
+  :config
+  (setq denote-journal-directory mono-dir-journal)
+  (setq denote-date-prompt-use-org-read-date t))
 
 (provide 'mono-notes)
 ;;; mono-notes.el ends here

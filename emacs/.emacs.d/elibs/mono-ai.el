@@ -83,6 +83,18 @@
     (dwim-shell-command-on-marked-files
      "Ask my meetings" command :focus-now t )))
 
+(defun mono/llm-replace-region (start end)
+  "Send selected text to shell command with a default prompt to fix errors and replace it with the output."
+  (interactive "r")
+  (let* ((text (buffer-substring-no-properties start end))
+         (default-prompt "Rewrite this text, fixing any kind of error, and return only the rephrased version.")
+         (prompt (read-string "Enter LLM prompt: " default-prompt))
+         (command (format "echo %s | llm -s \"%s\"" (shell-quote-argument text) (shell-quote-argument prompt)))
+         (output (string-trim (shell-command-to-string command))))
+    (delete-region start end)
+    (insert output)))
+
+
 (provide 'mono-ai)
 
 ;;; mono-ai.el ends here

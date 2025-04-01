@@ -54,6 +54,10 @@
   (expand-file-name "denote" mono-dir-org)
   "Directory where notes are stored")
 
+(defconst mono-dir-journal
+  (expand-file-name "journal" mono-dir-org)
+  "Directory where journal notes are stored")
+
 (defconst mono-file-notes-buy
   (expand-file-name "20230313T082232--buy-compras__lifestyle.org" mono-dir-notes)
   "File where I store the things I buy")
