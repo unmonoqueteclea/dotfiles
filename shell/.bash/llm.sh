@@ -127,9 +127,9 @@ function llm-meeting-stop {
   echo "Renaming $file to $new_file..."
   mv "$file" "$new_file"
   echo "Writing summary..."
-  llm -s "Write the notes of the meeting. The top topics discussed and the \
-          decisions (wwith sub-points showing examples if needed) and next \
-	  actions." \
+  llm -s "Write the notes of the meeting, a summary of the meeting structured \
+         in sections. If needed, add one section with decissions and next actions.\
+         Return only the summary, don't add an introduction answering to my question." \
       -a "$new_file"  > "$LLM_MEETINGS_NOTES_FOLDER/$timestamp-$new_name.md"
   echo "Notes saved in notes/$timestamp-$new_name.md"
 }
