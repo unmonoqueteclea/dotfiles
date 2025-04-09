@@ -29,6 +29,9 @@
 (require 'mono-dwim)
 (require 'mono-secret)
 
+(setq gemini-pro "openrouter/google/gemini-2.5-pro-exp-03-25:free")
+(setq gemini-flash "gemini/gemini-2.0-flash")
+
 ;; https://github.com/karthink/gptel
 (use-package gptel
   :config
@@ -52,14 +55,15 @@
   :bind (("C-c s" . aidermacs-transient-menu))
   :config
   (setenv "GEMINI_API_KEY" gemini-api-key)
+  (setenv "OPENROUTER_API_KEY" openrouter-api-key)
   :custom
   (aidermacs-auto-commits nil)
   (aidermacs-show-diff-after-change t)
   (aidermacs-backend 'vterm)
   (aidermacs-use-architect-mode t)
-  (aidermacs-architect-model "gemini/gemini-2.0-flash-exp")
-  (aidermacs-editor-model "gemini/gemini-2.0-flash-exp")
-  (aidermacs-default-model "gemini/gemini-2.0-flash-exp"))
+  (aidermacs-default-model gemini-pro)
+  (aidermacs-architect-model gemini-pro)
+  (aidermacs-editor-model gemini-pro))
 
 (defun mono/llm-commit-message ()
   "Generate a commit-message using LLM and copy it to clipboard."

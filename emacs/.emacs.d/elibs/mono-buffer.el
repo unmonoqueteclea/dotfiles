@@ -49,10 +49,25 @@
   (which-function-mode)
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 50
+  (setq doom-modeline-height 30
         doom-modeline-buffer-encoding nil
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))
+
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (auto-fill-mode 1)
+	    (setq fill-column 80)
+	    (display-fill-column-indicator-mode 1)))
+(add-hook 'markdown-mode-hook
+	  (lambda ()
+	    (auto-fill-mode 1)
+	    (setq fill-column 80)
+	    (display-fill-column-indicator-mode 1)))
+(add-hook 'prog-mode-hook
+	  (lambda ()
+	    (setq fill-column 100)
+	    (display-fill-column-indicator-mode 1)))
 
 
 (provide 'mono-buffer)

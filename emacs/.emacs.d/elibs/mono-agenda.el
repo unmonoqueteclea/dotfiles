@@ -122,10 +122,9 @@
           '((:name "Otras" :discard (:and (:category ("Trabajo")) :habit)))))))))))
 
 
-
 (setq org-capture-templates
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
-	 "* TODO %^{task}"
+	 "* TODO %^{task} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("t" "✏️ Tarea" entry (file+headline mono-agenda-inbox "Inbox")
 	 "* TODO %^{text} \nSCHEDULED: <%<%Y-%m-%d %a>>"
