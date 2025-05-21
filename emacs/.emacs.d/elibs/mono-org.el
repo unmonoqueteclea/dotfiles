@@ -34,26 +34,22 @@
   ;; configure org-crypt to encrypt some org-mode headers you should
   ;; import your public and secret gpg key by doing 'gpg --import
   ;; /path/to/your/gpg/key'
-
-  ;;WARNING: if it suddenly stops working, you may need to update your key
+  ;; WARNING: if it suddenly stops working, you may need to update your key
   (require 'org-crypt)
   (require 'org-archive)
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-  ;; gpg key to use for encryption
-  ;; either the Key ID or set to nil to use symmetric encryption.
+  ;; gpg key to use for encryption either the Key ID or set to nil to use symmetric encryption.
   (setq org-crypt-key "pgonzalezcarrizo@gmail.com")
-  ;; both the state changes and the timer logs are placed inside the
-  ;; drawer
+  ;; both the state changes and the timer logs are placed inside the  drawer
   (setq org-log-into-drawer t)
-  (setq org-log-done t)
-  (setq org-todo-keywords '((sequence "TODO(t)" "PROGRESS(p)" "WAITING(w)" "|" "DONE(d)"))))
+  (setq org-log-done t))
 
 (require 'org-indent)
 (require 'org-element)
 (setq org-element-use-cache nil)
-(require 'org-num)
 
+;; configuration recommended by org-modern
 (setq org-src-fontify-natively t
       org-indent-mode t
       org-startup-indented t
@@ -91,25 +87,16 @@
 (use-package org-modern
   :custom
   (org-modern-hide-stars nil) ; adds extra indentation
-  :hook (org-mode . org-modern-mode)
-  :config
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+  :hook (org-mode . org-modern-mode))
 
 ;; org-modern provides a clean and efficient org style. The blocks
 ;; (e.g. source, example) are particularly nice. But when org-indent
 ;; is enabled, the block "bracket", which uses the fringe area, is
 ;; disabled.  This small package reproduces the block styling of
 ;; org-modern when using org-indent:
-(use-package org-modern-indent
-  :straight (:host github :repo "jdtsmith/org-modern-indent" :branch "main")
-  :hook
-  (org-indent-mode . org-modern-indent-mode))
-
-;; Org-Drill is an extension for Org mode. Org-Drill uses a spaced
-;; repetition algorithm to conduct interactive "drill sessions", using
-;; org files as sources of facts to be memorised.
-(use-package org-drill
-  :config (setq org-drill-learn-fraction 0.25))
+;; (use-package org-modern-indent
+;;   :straight (:host github :repo "jdtsmith/org-modern-indent" :branch "main")
+;;   :hook (org-indent-mode . org-modern-indent-mode))
 
 ;; this package is needed to perform syntax highlight in
 ;; code fragments exported from org-files into html files
@@ -119,17 +106,21 @@
 ;; editor (you will also need the gnuplot system package)
 (use-package gnuplot)
 
-(use-package org-tree-slide
-  :config (setq org-tree-slide-cursor-init nil))
-
-;; configure safe commands that can be executed from org-links without confirmation
-(let ((safe-commands '(org-reset-checkbox-state-subtree)))
-  (setq org-link-elisp-skip-confirm-regexp
-        (mapconcat #'symbol-name safe-commands "\\|")))
+(use-package org-tree-slide :config (setq org-tree-slide-cursor-init nil))
 
 ;; open org-mode links in the same window
-;;(add-to-list 'org-link-frame-setup '(file . find-file))
+(add-to-list 'org-link-frame-setup '(file . find-file))
 
+
+;; multiple lines emphasis:
+;; https://emacs.stackexchange.com/questions/18101/org-mode-multi-line-emphasis-and-bold
+(with-eval-after-load 'org
+  ;; Allow multiple line Org emphasis markup.
+  ;; http://emacs.stackexchange.com/a/13828/115
+  (setcar (nthcdr 4 org-emphasis-regexp-components) 20) ;Up to 20 lines, default is just 1
+  ;; Below is needed to apply the modified `org-emphasis-regexp-components'
+  ;; settings from above.
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
 
 (provide 'mono-org)
 

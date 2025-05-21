@@ -16,11 +16,8 @@
 
 
 ;;; Commentary:
-;;  In the main agenda files, I am using an ARCHIVE entry for each
-;;  header.  To send a finished item to ARCHIVE, use function
-;;  =org-archive-to-archive-sibling=
 
-;; Last full review: 2024-11-03
+;; Last full review: 2025-05-21
 
 ;;; Code:
 
@@ -36,97 +33,41 @@
   (expand-file-name "agenda" mono-dir-org)
   "Directory that contains main agenda files.")
 
-(defconst mono-agenda-work
-  (expand-file-name "trabajo.org" mono-dir-agenda)
-  "Work agenda file.")
+(defconst mono-agenda-routines
+  (expand-file-name "routines.org" mono-dir-agenda)
+  "Routines agenda file.")
 
-(defconst mono-agenda-inbox
-  (expand-file-name "inbox.org" mono-dir-agenda)
-  "Inbox agenda file.")
+(defconst mono-agenda-tasks
+  (expand-file-name "tasks.org" mono-dir-agenda)
+  "Tasks file.")
 
-(defconst mono-agenda-projects
-  (expand-file-name "projects.org" mono-dir-agenda)
-  "Projects file.")
+(setq org-agenda-time-grid nil)
+(setq org-agenda-files (list mono-agenda-routines mono-agenda-tasks))
+(setq org-agenda-overriding-header "📅 Agenda \n")
+(setq org-agenda-current-time-string "---------------------------------------------------- now")
+(setq org-agenda-start-on-weekday 1)
+(customize-set-variable 'org-agenda-prefix-format "%-2i %?-12t%s")  ;;"  %?-2i %t "
+(customize-set-variable 'org-agenda-todo-keyword-format "%-10s")
+(customize-set-variable 'org-agenda-scheduled-leaders '("🕐    " "🕐 %2dd"))
+(customize-set-variable 'org-agenda-deadline-leaders '("❗" "❗ +%2dd" "❗ -%3dd"))
 
-;; everything in the agenda folder should be shown in the agenda
-(setq org-agenda-files `(,mono-dir-agenda))
-
-(setq org-habit-graph-column 120
-      org-habit-show-habits-only-for-today nil
-      org-habit-preceding-days 21
-      org-habit-following-days 3
-      org-agenda-tags-column -160)
-
-(setq org-agenda-overriding-header "⚡ Agenda de hoy \n")
-
-(setq org-refile-targets '((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3)))
-
-;; assign icons to categories
 (setq org-agenda-category-icon-alist
-      `(("Trabajo" ,(list (all-the-icons-material "work")) nil nil :ascent center)
-        ("Rutina" ,(list (all-the-icons-material "watch")) nil nil :ascent center)
-	("Home" ,(list (all-the-icons-faicon "key")) nil nil :ascent center)
-	("Social" ,(list (all-the-icons-material "person")) nil nil :ascent center)
-	("Inbox" ,(list (all-the-icons-faicon "inbox")) nil nil :ascent center)
-	("Emacs" ,(list (all-the-icons-fileicon "emacs")) nil nil :ascent center)
-	("Kaizen" ,(list (all-the-icons-faicon "cogs")) nil nil :ascent center)
-	("Travel" ,(list (all-the-icons-faicon "paper-plane")) nil nil :ascent center)
-        ("Buy" ,(list (all-the-icons-material "shopping_basket")) nil nil :ascent center)
-	("Finances" ,(list (all-the-icons-faicon "money")) nil nil :ascent center)
-	("Blog" ,(list (all-the-icons-faicon "pencil-square")) nil nil :ascent center)
-	("Projects" ,(list (all-the-icons-faicon "th")) nil nil :ascent center)))
+   `(("routines" ,(list (all-the-icons-faicon "spinner" :height 0.8)) nil nil :ascent center)
+     ("tasks" ,(list (all-the-icons-faicon "check-square" :v-adjust 0.005)) nil nil :ascent center)))
 
-;; this package lets you “supercharge” your Org daily/weekly
-;; agenda. The idea is to group items into sections, rather than
-;; having them all in one big list.
-;; See https://github.com/alphapapa/org-super-agenda
-(use-package
-  org-super-agenda
-  :demand t
-  :config
-  (org-super-agenda-mode)
-  (setq
-   org-agenda-time-grid nil
-   org-agenda-current-time-string "⏰ ┈┈┈┈┈┈┈┈┈┈┈ now"
-   org-agenda-compact-blocks nil
-   org-agenda-window-setup 'current-window
-   org-agenda-start-on-weekday 1
-   org-deadline-warning-days 7
-   org-agenda-custom-commands
-   '(
-     ("w" "🖥️ Trabajo"
-      ((agenda
-	""
-	((org-agenda-span 1)  ;; show 1 day by default
-	 (org-super-agenda-groups
-	  '((:name "➰ Rutinas" :habit)
-	    (:name "⚠️ Debería haber terminado..." :scheduled past :deadline past :order 1)
-	    (:name "📅 Tareas para hoy" :date today :order 2)))))
-       (alltodo
-	""
-	((org-agenda-overriding-header "✅ Otras tareas")
-	 (org-super-agenda-groups '((:name "Otras")))))))
-
-     ("o" "☑️ Otras"
-      ((agenda
-	""
-	((org-agenda-span 1)  ;; show 1 day by default
-	 (org-super-agenda-groups
-	  '((:name "➰ Rutinas" :habit)
-	    (:name "⚠️ Debería haber terminado..." :discard (:category ("Trabajo")) :scheduled past :deadline past :order 1)
-	    (:name "📅 Tareas para hoy" :discard (:category ("Trabajo")) :date today :order 2)))))
-       (alltodo
-	""
-	((org-agenda-overriding-header "✅ Otras tareas")
-	 (org-super-agenda-groups
-          '((:name "Otras" :discard (:and (:category ("Trabajo")) :habit)))))))))))
-
+(add-to-list
+ 'org-agenda-custom-commands
+ '("d" "Today's agenda"
+   ((agenda ""
+            ((org-agenda-span 'day)
+             (org-agenda-sorting-strategy
+              '((agenda time-up priority-down category-keep))))))))
 
 (setq org-capture-templates
-      '(("w" "👷 Trabajo" entry (file+headline mono-agenda-work "Inbox")
+      '(("w" "👷 Trabajo" entry (file+headline mono-agenda-tasks "Work")
 	 "* TODO %^{task} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
-	("t" "✏️ Tarea" entry (file+headline mono-agenda-inbox "Inbox")
+	("t" "✏️ Tasks" entry (file+headline mono-agenda-tasks "Inbox")
 	 "* TODO %^{text} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
 	("b" "🧺 Compra" entry (file mono-file-notes-buy)
