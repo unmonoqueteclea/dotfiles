@@ -43,7 +43,7 @@
   (setq org-crypt-key "pgonzalezcarrizo@gmail.com")
   ;; both the state changes and the timer logs are placed inside the  drawer
   (setq org-log-into-drawer t)
-  (setq org-log-done t))
+  (setq org-log-done nil))
 
 (require 'org-indent)
 (require 'org-element)
