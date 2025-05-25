@@ -2,21 +2,27 @@
 
 # aliases and functions to deal with llms
 
+# Last full review: 2025-05-25
+
 export LLM_MODEL="gemini-2.0-flash"
+
+# If embeddings fail: llm install llm-sentence-transformers
 # see https://til.simonwillison.net/llms/embed-paragraphs
+
 export LLM_MODEL_EMBEDDINGS="sentence-transformers/intfloat/e5-large-v2"
 export LLM_COLLECTION_NOTES="notes"
 export LLM_COLLECTION_MEETINGS="meetings"
+# 2025-05-25: I could create a collection for journals
 export LLM_NOTES_DIR="$HOME/Drive/orgmode/denote"
 export LLM_MEETINGS_FOLDER="$HOME/Audio"
 export LLM_MEETINGS_NOTES_FOLDER="$HOME/Audio/notes"
 
+# 2025-05-25: This is still the best way to visualize
+# llm output markdown nicely. I am following a couple issues in the
+# llm repo that could replace this.
+
 # pipe to this function to visualize nicely markdown
 function llm-md() { glow -s light "$1"; }
-
-# remove the notes collection, useful when I want to recreate it with last changes
-alias llm-note-clear="llm collections delete $LLM_COLLECTION_NOTES"
-alias llm-meeting-clear="llm collections delete $LLM_COLLECTION_MEETINGS"
 
 # recreate notes and meetings database
 alias llm-note-index="llm collections delete $LLM_COLLECTION_NOTES || \
@@ -98,7 +104,9 @@ function llm-commit-msg {
     llm -s "Write a succinct commit message. I should consist of a \
       capitalized, short summary, and more detailed explanatory text, \
       if necessary. Do not use markdown, just plain text. Allowed prefixes: \
-      feat, fix, docs, style, refactor test, chore."
+      feat, fix, docs, style, refactor test, chore. Do not capitalize prefixes.
+      Keep lines short, maximum 80 characters. You can use some emojis, but \
+      do not use more than 3. Do not use any other special characters."
 }
 
 # extract all python files and ask LLM to explain them
