@@ -33,10 +33,34 @@
 ;; 2025-05-25: After several issues with OpenRouter integration in gptel (no way to make tool
 ;; use work, HTTP errors 429, etc) I decided to still using Gemini integration that
 ;; works very well with gptel.
+
+;; TODO 2025-05-25: Check tools available in https://github.com/skissue/llm-tool-collection/
+;; TODO 2025-05-25: Integrate tools from https://github.com/karthink/gptel/wiki/Tools-collection
 (use-package gptel
   :config
+  (require 'gptel-integrations)
   (setq gptel-model 'gemini-2.0-flash
 	gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
+
+(use-package mcp
+  :straight (:host github :repo "lizqwerscott/mcp.el")
+  :config (setq mcp-hub-servers
+		`(("brave-search" .
+		   (:command "docker"
+                    :args ("run" "-i" "--rm" "-e" "BRAVE_API_KEY" "mcp/brave-search")
+                    :env (:BRAVE_API_KEY ,secret-brave-api-key)))
+		  ("mcp-altassian" .
+		   (:command "docker"
+		    :args ("run" "-i" "--rm"
+			   "-e" "JIRA_URL" "-e" "JIRA_USERNAME" "-e" "JIRA_API_TOKEN"
+			   "ghcr.io/sooperset/mcp-atlassian:latest")
+                    :env (
+			  :JIRA_URL ,secret-jira-base-url
+			  :JIRA_USERNAME ,secret-jira-username
+			  :JIRA_API_TOKEN ,secret-jira-token
+			  ))))))
+
+
 
 ;; I use very long JSON files and I don't want copilot to interfere with them.
 (defun no-copilot-in-json-mode () (eq major-mode 'json-mode))
