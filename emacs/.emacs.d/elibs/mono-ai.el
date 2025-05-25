@@ -20,7 +20,7 @@
 ;;; Commentary:
 ;;  LLM and other AI-related packages.
 
-;; Last full review: 2024-11-17
+;; Last full review: 2025-05-25
 
 ;;; Code:
 
@@ -29,19 +29,20 @@
 (require 'mono-dwim)
 (require 'mono-secret)
 
-(setq gemini-pro "openrouter/google/gemini-2.5-pro-exp-03-25:free")
-(setq gemini-flash "gemini/gemini-2.0-flash")
-
-;; https://github.com/karthink/gptel
+;; See https://github.com/karthink/gptel
+;; 2025-05-25: After several issues with OpenRouter integration in gptel (no way to make tool
+;; use work, HTTP errors 429, etc) I decided to still using Gemini integration that
+;; works very well with gptel.
 (use-package gptel
   :config
-  (setq gptel-model :gemini-pro
+  (setq gptel-model 'gemini-2.0-flash
 	gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
 
-(defun no-copilot-in-json-mode ()
-   (eq major-mode 'json-mode))
+;; I use very long JSON files and I don't want copilot to interfere with them.
+(defun no-copilot-in-json-mode () (eq major-mode 'json-mode))
 
 ;; https://github.com/copilot-emacs/copilot.el
+;; 2025-05-25: Still no way to chat with copilot or to use a different model
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el")
   :hook (prog-mode . copilot-mode)
@@ -61,10 +62,14 @@
   (aidermacs-show-diff-after-change t)
   (aidermacs-backend 'vterm)
   (aidermacs-use-architect-mode t)
-  (aidermacs-default-model gemini-pro)
-  (aidermacs-architect-model gemini-pro)
-  (aidermacs-editor-model gemini-pro))
+  ;; 2025-05-25: I am starting to love this model and all the reasoning
+  ;; abilities it has.
+  (aidermacs-default-model openrouter/tngtech/deepseek-r1t-chimera:free)
+  (aidermacs-architect-model openrouter/tngtech/deepseek-r1t-chimera:free)
+  (aidermacs-editor-model openrouter/tngtech/deepseek-r1t-chimera:free))
 
+;; 2025-05-25: TODO: When I have a better integration with gptel, it is very likely
+;; that I will be able to remove this.
 (defun mono/llm-commit-message ()
   "Generate a commit-message using LLM and copy it to clipboard."
   (interactive)
@@ -76,28 +81,9 @@
 (defun mono/llm-note-ask (prompt)
   "Execute llm-note-ask with PROMPT and display the result."
   (interactive "sPrompt: ")
-  (let ((command (format "llm-notes-ask \"%s\"" prompt)))
+  (let ((command (format "llm-note-ask \"%s\"" prompt)))
     (dwim-shell-command-on-marked-files
      "Ask my notes" command :focus-now t )))
-
-(defun mono/llm-meeting-ask (prompt)
-  "Execute llm-meeting-ask with PROMPT and display the result."
-  (interactive "sPrompt: ")
-  (let ((command (format "llm-meeting-ask \"%s\"" prompt)))
-    (dwim-shell-command-on-marked-files
-     "Ask my meetings" command :focus-now t )))
-
-(defun mono/llm-replace-region (start end)
-  "Send selected text to shell command with a default prompt to fix errors and replace it with the output."
-  (interactive "r")
-  (let* ((text (buffer-substring-no-properties start end))
-         (default-prompt "Rewrite this text, fixing any kind of error, and return only the rephrased version.")
-         (prompt (read-string "Enter LLM prompt: " default-prompt))
-         (command (format "echo %s | llm -s \"%s\"" (shell-quote-argument text) (shell-quote-argument prompt)))
-         (output (string-trim (shell-command-to-string command))))
-    (delete-region start end)
-    (insert output)))
-
 
 (provide 'mono-ai)
 

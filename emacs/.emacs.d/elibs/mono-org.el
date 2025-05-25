@@ -42,8 +42,10 @@
   ;; gpg key to use for encryption either the Key ID or set to nil to use symmetric encryption.
   (setq org-crypt-key "pgonzalezcarrizo@gmail.com")
   ;; both the state changes and the timer logs are placed inside the  drawer
-  (setq org-log-into-drawer t)
-  (setq org-log-done nil))
+  (setq org-log-done nil)
+  (setq org-log-done-with-time nil)
+  (setq org-log-into-drawer nil)
+  (setq org-log-repeat nil))
 
 (require 'org-indent)
 (require 'org-element)

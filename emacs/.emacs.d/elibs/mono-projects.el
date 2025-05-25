@@ -95,6 +95,13 @@
   :demand t
   :config
   (setq jira-debug nil)
+  (setq jira-status-faces
+	'(("Pull-request" . '((t (:foreground "white" :background "orange" :weight bold))))
+	  ("To do" . 'jira-face-status-todo)))
+  (setq jira-issues-fields-extra
+	'((:center . ((:path . (fields (custom "Cost center")))
+                      (:columns . 10)
+                      (:name . "Center")))))
   (setq jira-base-url secret-jira-base-url))
 
 (provide 'mono-projects)
