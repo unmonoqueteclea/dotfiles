@@ -141,3 +141,12 @@ function llm-meeting-stop {
       -a "$new_file"  > "$LLM_MEETINGS_NOTES_FOLDER/$timestamp-$new_name.md"
   echo "Notes saved in notes/$timestamp-$new_name.md"
 }
+
+function llm-chat-with-sqlite {
+  db_file=${1:-$(read -p "❓ What is the SQLite database file? " && echo "$REPLY")}
+  if [[ ! -f "$db_file" ]]; then
+    echo "File $db_file does not exist."
+    return 1
+  fi
+  llm chat -T "SQLite(\"$db_file\")"
+}

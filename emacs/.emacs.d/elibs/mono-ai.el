@@ -88,9 +88,9 @@
   (aidermacs-use-architect-mode t)
   ;; 2025-05-25: I am starting to love this model and all the reasoning
   ;; abilities it has.
-  (aidermacs-default-model openrouter/tngtech/deepseek-r1t-chimera:free)
-  (aidermacs-architect-model openrouter/tngtech/deepseek-r1t-chimera:free)
-  (aidermacs-editor-model openrouter/tngtech/deepseek-r1t-chimera:free))
+  (aidermacs-default-model "openrouter/tngtech/deepseek-r1t-chimera:free")
+  (aidermacs-architect-model "openrouter/tngtech/deepseek-r1t-chimera:free")
+  (aidermacs-editor-model "openrouter/tngtech/deepseek-r1t-chimera:free"))
 
 ;; 2025-05-25: TODO: When I have a better integration with gptel, it is very likely
 ;; that I will be able to remove this.
