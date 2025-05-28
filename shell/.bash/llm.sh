@@ -9,6 +9,8 @@ export LLM_MODEL="gemini-2.0-flash"
 # If embeddings fail: llm install llm-sentence-transformers
 # see https://til.simonwillison.net/llms/embed-paragraphs
 
+# List of plugins used: llm-tools-sqlite llm-gemini llm-jq llm-sentende-transformers
+
 export LLM_MODEL_EMBEDDINGS="sentence-transformers/intfloat/e5-large-v2"
 export LLM_COLLECTION_NOTES="notes"
 export LLM_COLLECTION_MEETINGS="meetings"
