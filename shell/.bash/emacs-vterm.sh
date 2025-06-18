@@ -29,20 +29,6 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     }
 fi
 
-# With vterm_cmd you can execute Emacs commands directly from the shell.
-# For example, vterm_cmd message "HI" will print "HI".
-# To enable new commands, you have to customize Emacs's variable
-# vterm-eval-cmds.
-vterm_cmd() {
-    local vterm_elisp
-    vterm_elisp=""
-    while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-        shift
-    done
-    vterm_printf "51;E$vterm_elisp"
-}
-
 # Sync directory and host in the shell with Emacs's current directory.
 # You may need to manually specify the hostname instead of $(hostname) in case
 # $(hostname) does not return the correct string to connect to the server.
