@@ -127,6 +127,10 @@
 ;; 2 spaces indentation for bash scripts
 (setq sh-basic-offset 2)
 
+(use-package hurl-mode
+  :straight (:host github :repo "JasZhe/hurl-mode" :branch "main")
+  :config (add-to-list 'auto-mode-alist '("\\.hurl\\'" . hurl-mode)))
+
 
 (provide 'mono-dev-tools)
 
