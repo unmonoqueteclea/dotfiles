@@ -59,8 +59,9 @@
 (require 'mono-ai)
 (require 'mono-blog)
 (require 'mono-tools-browser)
-;(require 'mono-tools-email)
 (require 'mono-keyboard)
+(require 'mono-kenmei) ;; from golem project
+
 
 ;; I don´t have the secret module in all environments
 (when (file-exists-p "elibs/mono-secret.el")

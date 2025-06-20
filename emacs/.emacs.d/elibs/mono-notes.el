@@ -27,6 +27,7 @@
   :demand t
   :config
   (setq denote-directory mono-dir-notes)
+  (setq denote-org-store-link-to-heading t)
   (add-hook 'dired-mode-hook #'denote-dired-mode))
 
 (use-package denote-journal  :straight

@@ -1,0 +1,1 @@
+../../../../golem/elisp/mono-kenmei.el
