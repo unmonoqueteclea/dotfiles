@@ -1,6 +1,18 @@
-GOOSE_MODEL: gpt-4o
-GOOSE_PROVIDER: github_copilot
 extensions:
+  brave-search:
+    args:
+    - -y
+    - '@modelcontextprotocol/server-brave-search'
+    bundled: null
+    cmd: npx
+    description: null
+    enabled: true
+    env_keys:
+    - BRAVE_API_KEY
+    envs: {}
+    name: brave-search
+    timeout: 60
+    type: stdio
   computercontroller:
     bundled: true
     display_name: Computer Controller
@@ -22,3 +34,5 @@ extensions:
     name: memory
     timeout: 300
     type: builtin
+GOOSE_MODEL: gemini-2.0-flash
+GOOSE_PROVIDER: google
