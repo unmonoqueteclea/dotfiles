@@ -31,6 +31,7 @@ export OPENCV_LIBRARY_PATH="/usr/local/lib"
 
 # create a tunnel to a specified port
 # like ngrok but without the need of any client or account
+# another alternative would be https://malai.sh/
 tunnel() {
     echo "Creating a tunnel for localhost port $1"
     ssh -R 80:localhost:$1 localhost.run

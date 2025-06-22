@@ -95,9 +95,13 @@
   :demand t
   :config
   (setq jira-debug nil)
-  (setq jira-status-faces
-	'(("Pull-request" . '((t (:foreground "white" :background "orange" :weight bold))))
-	  ("To do" . 'jira-face-status-todo)))
+
+  (defface jira-face-pr
+  '((t (:foreground "white" :background "orange" :weight bold)))
+  "Face for pull-request status."
+  :group 'jira)
+  (setq jira-status-faces '(("Pull-request" . jira-face-pr)))
+
   (setq jira-issues-fields-extra
 	'((:center . ((:path . (fields (custom "Cost center")))
                       (:columns . 10)

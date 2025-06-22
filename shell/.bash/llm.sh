@@ -4,6 +4,10 @@
 
 # Last full review: 2025-05-25
 
+# main CLI tool: https://github.com/simonw/llm
+# installed with uv and using the following plugins:
+# llm install llm-sentence-transformers llm-gemini
+
 export LLM_MODEL="gemini-2.0-flash"
 
 # If embeddings fail: llm install llm-sentence-transformers
