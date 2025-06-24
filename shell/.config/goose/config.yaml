@@ -1,4 +1,16 @@
 extensions:
+  workspace-mcp:
+    args:
+    - workspace-mcp
+    bundled: null
+    cmd: uvx
+    description: 'Google Workspace MCP'
+    enabled: true
+    env_keys:
+    - GOOGLE_CLIENT_SECRETS
+    name: workspace-mcp
+    timeout: 60
+    type: stdio
   brave-search:
     args:
     - -y
