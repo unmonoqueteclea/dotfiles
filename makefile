@@ -4,6 +4,7 @@ help:
 	@echo " - stow: automatically add soft links for all dotfiles"
 stow:
 	echo "Restowing dotfiles..."
+	cd ../golem/ && stow --target=$$HOME/ --restow config/
 	cd ../golem/ && stow --target=$$HOME/.emacs.d --restow elisp/
 	cd ../golem/ && stow --target=$$HOME/.bash --restow shell/
 
