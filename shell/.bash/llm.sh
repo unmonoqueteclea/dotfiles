@@ -9,6 +9,7 @@
 # llm install llm-sentence-transformers llm-gemini
 
 export LLM_MODEL="gemini-2.0-flash"
+# llm models default $LLM_MODEL
 
 # If embeddings fail: llm install llm-sentence-transformers
 # see https://til.simonwillison.net/llms/embed-paragraphs
