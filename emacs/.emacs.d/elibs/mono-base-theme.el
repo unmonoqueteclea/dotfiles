@@ -50,9 +50,9 @@
 
 ;; See https://github.com/protesilaos/ef-themes
 (use-package ef-themes
-  ;; ef-elea-dark --> My favorite dark theme
+  ;; ef-owl --> My favorite dark theme
   ;; el-light --> My favourite dark theme
-  :demand t :config (ef-themes-select 'ef-light))
+  :demand t :config (ef-themes-select 'ef-owl))
 
 ;; fontaine lets the user specify presets of font configurations and
 ;; set them on demand on graphical Emacs frames. The user option
