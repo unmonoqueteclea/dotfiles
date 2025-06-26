@@ -57,12 +57,12 @@
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (auto-fill-mode 1)
-	    (setq fill-column 80)
+	    (setq fill-column 90)
 	    (display-fill-column-indicator-mode 1)))
 (add-hook 'markdown-mode-hook
 	  (lambda ()
 	    (auto-fill-mode 1)
-	    (setq fill-column 80)
+	    (setq fill-column 90)
 	    (display-fill-column-indicator-mode 1)))
 (add-hook 'prog-mode-hook
 	  (lambda ()
