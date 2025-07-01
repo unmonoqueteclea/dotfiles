@@ -100,7 +100,14 @@
   '((t (:foreground "white" :background "orange" :weight bold)))
   "Face for pull-request status."
   :group 'jira)
-  (setq jira-status-faces '(("Pull-request" . jira-face-pr)))
+
+  (defface jira-face-blocked
+  '((t (:foreground "white" :background "red" :weight bold)))
+  "Face for blocked status."
+  :group 'jira)
+
+  (setq jira-status-faces '(("Pull-request" . jira-face-pr)
+			    ("Blocked" . jira-face-blocked)))
 
   (setq jira-issues-fields-extra
 	'((:center . ((:path . (fields (custom "Cost center")))
