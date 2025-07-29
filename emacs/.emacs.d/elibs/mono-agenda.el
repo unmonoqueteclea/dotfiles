@@ -48,7 +48,7 @@
 (setq org-agenda-start-on-weekday 1)
 (customize-set-variable 'org-agenda-prefix-format "%-2i %?-12t%s")  ;;"  %?-2i %t "
 (customize-set-variable 'org-agenda-todo-keyword-format "%-10s")
-(customize-set-variable 'org-agenda-scheduled-leaders '("🕐    " "🕐 %2dd"))
+(customize-set-variable 'org-agenda-scheduled-leaders '("    " " %2dd "))
 (customize-set-variable 'org-agenda-deadline-leaders '("❗" "❗ +%2dd" "❗ -%3dd"))
 
 (setq org-agenda-category-icon-alist
