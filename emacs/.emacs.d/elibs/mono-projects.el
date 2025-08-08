@@ -106,8 +106,14 @@
   "Face for blocked status."
   :group 'jira)
 
+  (defface jira-face-waiting-deploy
+  '((t (:foreground "white" :background "#004429" :weight bold)))
+  "Face for waiting for deploy status."
+  :group 'jira)
+
   (setq jira-status-faces '(("Pull-request" . jira-face-pr)
-			    ("Blocked" . jira-face-blocked)))
+			    ("Blocked" . jira-face-blocked)
+			    ("Waiting for deploy" . jira-face-waiting-deploy)))
 
   (setq jira-issues-fields-extra
 	'((:center . ((:path . (fields (custom "Cost center")))
