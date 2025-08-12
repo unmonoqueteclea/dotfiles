@@ -62,6 +62,15 @@
 ;; For some tasks, I need to use pyvenv instead of pyenv
 (use-package pyvenv :commands (python-activate python-workon))
 
+(defun mono/auto-activate-venv ()
+  "Automatically activate virtualenv if .venv exists in project root."
+  (let* ((project-root (or (locate-dominating-file default-directory ".venv") default-directory))
+         (venv-path (expand-file-name ".venv" project-root)))
+    (when (file-directory-p venv-path)
+      (message "Activating virtualenv: %s" venv-path)
+      (pyvenv-activate venv-path))))
+
+
 ;; some additional functions that complement pyenv-mode
 (defun mono/pyenv-versions ()
   "Show the list of pyenv versions."
@@ -110,6 +119,7 @@
 (add-hook
  'python-ts-mode-hook
  (lambda ()
+   (mono/auto-activate-venv)
    (eglot-ensure)
    (flymake-mode)
    (local-set-key (kbd "C-$") 'flymake-goto-next-error)
