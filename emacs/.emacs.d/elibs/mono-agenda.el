@@ -67,6 +67,9 @@
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-tasks "Work")
 	 "* TODO %^{task} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
+	("p" "☑️ Pull-Request" entry (file+headline mono-agenda-tasks "Work")
+	 "* TODO ☑️ [[https://bitbucket.org/kenmei-technologies/adele-backend/pull-requests/%^{PR-number}][PR %\\1]]: %^{author} | %^{info} \nSCHEDULED: <%<%Y-%m-%d %a>>"
+	 :empty-lines 1)
 	("t" "✏️ Tasks" entry (file+headline mono-agenda-tasks "Inbox")
 	 "* TODO %^{text} \nSCHEDULED: <%<%Y-%m-%d %a>>"
 	 :empty-lines 1)
