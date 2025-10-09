@@ -134,7 +134,8 @@
   :mode ("\\.hurl\\'" . hurl-mode))
 
 ;; automatically indent code in emacs-lisp-mode
-(use-package aggressive-indent-mode
+(use-package aggressive-indent
+  :straight (:host github :repo "Malabarba/aggressive-indent-mode")
   :demand t
   :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
 
