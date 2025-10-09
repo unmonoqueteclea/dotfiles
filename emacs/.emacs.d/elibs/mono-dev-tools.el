@@ -133,6 +133,11 @@
   :straight (:host github :repo "JasZhe/hurl-mode" :branch "main")
   :mode ("\\.hurl\\'" . hurl-mode))
 
+;; automatically indent code in emacs-lisp-mode
+(use-package aggressive-indent-mode
+  :demand t
+  :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
+
 
 (provide 'mono-dev-tools)
 

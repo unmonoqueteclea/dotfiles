@@ -12,7 +12,7 @@ alias drive-reconnect="rclone config reconnect drive:"
 # we use attr-timeout to cache attributes. We configured a high value, it can cause
 # corruption if files changes on the remote (in my case, that is not likely to happen)
 # see https://rclone.org/commands/rclone_mount/#attribute-caching
-alias drive-mount="rclone mount drive: ${DIR_SYNC}/  --attr-timeout 2m --vfs-cache-mode full --vfs-cache-max-age 5m  --dir-cache-time 5m --poll-interval 1m --file-perms 0600 --vfs-write-back 2m --daemon"
+alias drive-mount="rclone mount drive: ${DIR_SYNC}/  --attr-timeout 1m --vfs-cache-mode full --vfs-cache-max-age 1m  --dir-cache-time 1m --poll-interval 1m --file-perms 0600 --vfs-write-back 1m --daemon"
 alias drive-umount="sudo umount -f ${DIR_SYNC}/"
 
 # folder that stores version-controlled projects

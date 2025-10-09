@@ -52,7 +52,7 @@
 (use-package ef-themes
   ;; ef-owl --> My favorite dark theme
   ;; el-light --> My favourite dark theme
-  :demand t :config (ef-themes-select 'ef-owl))
+  :demand t :config  (modus-themes-load-theme 'ef-winter))
 
 ;; fontaine lets the user specify presets of font configurations and
 ;; set them on demand on graphical Emacs frames. The user option
@@ -72,7 +72,7 @@
   :demand t
   :config
   (setq fontaine-presets
-	`((regular :default-height 94)
+	`((regular :default-height 90)
           (large :default-height 103)
           (presentation :default-height 160)
           (t

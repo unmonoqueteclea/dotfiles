@@ -91,25 +91,25 @@
   (global-treesit-auto-mode))
 
 (use-package jira
-  :straight (:host github :repo "unmonoqueteclea/jira.el")
+  :straight (:host github :repo "unmonoqueteclea/jira.el" :branch "dev")
   :demand t
   :config
   (setq jira-debug nil)
 
   (defface jira-face-pr
-  '((t (:foreground "white" :background "orange" :weight bold)))
-  "Face for pull-request status."
-  :group 'jira)
+    '((t (:foreground "white" :background "orange" :weight bold)))
+    "Face for pull-request status."
+    :group 'jira)
 
   (defface jira-face-blocked
-  '((t (:foreground "white" :background "red" :weight bold)))
-  "Face for blocked status."
-  :group 'jira)
+    '((t (:foreground "white" :background "red" :weight bold)))
+    "Face for blocked status."
+    :group 'jira)
 
   (defface jira-face-waiting-deploy
-  '((t (:foreground "white" :background "#004429" :weight bold)))
-  "Face for waiting for deploy status."
-  :group 'jira)
+    '((t (:foreground "white" :background "#004429" :weight bold)))
+    "Face for waiting for deploy status."
+    :group 'jira)
 
   (setq jira-status-faces '(("Pull-request" . jira-face-pr)
 			    ("Blocked" . jira-face-blocked)
