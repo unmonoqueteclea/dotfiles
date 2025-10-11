@@ -9,6 +9,7 @@ stow:
 	rm -f $$HOME/.gemini/settings.json
 	rm -f $$HOME/.gemini/settings.json.orig
 	cd ../golem/config && stow --target=$$HOME/.gemini --restow .gemini
+	cd ../golem/config && stow --target=$$HOME/.claude --restow .claude
 	cd ../golem/ && stow --target=$$HOME/.emacs.d --restow elisp/
 	cd ../golem/ && stow --target=$$HOME/.bash --restow shell/
 
