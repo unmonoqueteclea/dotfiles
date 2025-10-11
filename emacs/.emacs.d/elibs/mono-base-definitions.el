@@ -38,6 +38,9 @@
 (defconst mono-dir-sync (expand-file-name "~/Drive/")
   "Synchronized folder, mounted on init.")
 
+(defconst mono-dir-sync-local (expand-file-name "~/DriveLocal/")
+  "Local cache folder for `mono-dir-sync`, that is mounted")
+
 (defconst mono-dir-org
   (expand-file-name "orgmode" mono-dir-sync)
   "Directory that contains main `org-mode` files.")

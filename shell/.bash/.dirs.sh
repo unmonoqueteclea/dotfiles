@@ -7,6 +7,9 @@
 
 # google drive folder is usually mounted with crontab on init.
 export DIR_SYNC="${HOME}/Drive"
+# a local copy of the google drive folder, for backup and quick access
+# see (backup-orgmode function below)
+export DIR_SYNC_LOCAL="${HOME}/DriveLocal"
 alias drive-reconnect="rclone config reconnect drive:"
 
 # we use attr-timeout to cache attributes. We configured a high value, it can cause
@@ -26,3 +29,20 @@ export DIR_DOTFILES="${DIR_VC}/dotfiles"
 
 # folder that contains bash configuration files
 export DIR_BASH="${HOME}/.bash"
+
+function backup-orgmode() {
+  # This function backs up the orgmode folder from Google Drive to a local folder.
+  # It uses 'rclone sync', which makes the destination identical to the source,
+  # only transferring new or changed files.
+
+  # The goal is to have a local copy of orgmode files for quick access
+  # and redundancy (e.g. for grep).
+
+  local source="${DIR_SYNC}/orgmode"
+  local destination="${DIR_SYNC_LOCAL}/orgmode"
+
+  echo "Starting backup of orgmode folder..."
+  mkdir -p "${destination}"
+  rclone sync "${source}" "${destination}" --create-empty-src-dirs
+  echo "Backup of orgmode folder completed successfully."
+}

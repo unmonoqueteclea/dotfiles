@@ -61,6 +61,30 @@
   :bind (:map dired-mode-map
               ("C-c C-r" . dired-rsync)))
 
+
+(defun mono-files/check-drive-local-file ()
+  "When opening a file in DriveLocal, ask to open the one in Drive.
+DriveLocal is just a local copy of Drive, but we only want to modify
+the files in Drive folder."
+  (let* ((drive-local-dir (expand-file-name mono-dir-sync-local))
+         (current-file (buffer-file-name)))
+    (when (and current-file (file-in-directory-p current-file drive-local-dir))
+      (let* ((drive-dir (expand-file-name mono-dir-sync))
+             (new-file (replace-regexp-in-string
+                        (regexp-quote drive-local-dir)
+                        drive-dir
+                        current-file)))
+        (if (and (file-exists-p new-file)
+                 (y-or-n-p "File is in DriveLocal. Open existing file in Drive instead? "))
+            (let* ((point (point))
+                   (old-buffer (current-buffer)))
+              (find-file new-file)
+              (when (and old-buffer (buffer-live-p old-buffer))
+                (kill-buffer old-buffer))
+              (goto-char point)))))))
+
+(add-hook 'find-file-hook #'mono-files/check-drive-local-file)
+
 (provide 'mono-files)
 
 ;;; mono-files.el ends here

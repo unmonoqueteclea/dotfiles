@@ -4,7 +4,10 @@ help:
 	@echo " - stow: automatically add soft links for all dotfiles"
 stow:
 	echo "Restowing dotfiles..."
-	cd ../golem/config && stow --target=$$HOME/.config --restow .config
+# gemini tries to rename linked settings.json file to settings.json.orig
+# and create a new settings.json file
+	rm -f $$HOME/.gemini/settings.json
+	rm -f $$HOME/.gemini/settings.json.orig
 	cd ../golem/config && stow --target=$$HOME/.gemini --restow .gemini
 	cd ../golem/ && stow --target=$$HOME/.emacs.d --restow elisp/
 	cd ../golem/ && stow --target=$$HOME/.bash --restow shell/

@@ -120,8 +120,28 @@
    ("C-c f" . consult-focus-lines)
    ("C-c l" . consult-find)
    ("C-c i" . consult-imenu-multi)
-   ("C-c g" . consult-git-grep)
-   ("C-c G" . consult-ripgrep)))
+   ("C-c g" . mono-complete/search-in-project)))
+
+(defun mono-complete/search-in-project ()
+  "Search in the project using consult-git-grep or consult-ripgrep.
+If the current project is a git repository, it uses `consult-git-grep`.
+If the project is in a subfolder of `mono-dir-sync``, it uses `consult-ripgrep`
+ in the corresponding subfolder of `mono-dir-sync-local`.
+Otherwise it uses `consult-ripgrep`."
+  (interactive)
+  (let ((project-root (vc-root-dir)))
+    (if project-root
+        (consult-git-grep)
+      (let ((drive-dir (expand-file-name mono-dir-sync))
+            (drive-local-dir (expand-file-name mono-dir-sync-local)))
+        (if (file-in-directory-p default-directory drive-dir)
+            (let ((default-directory
+                   (replace-regexp-in-string
+                    (regexp-quote drive-dir)
+                    drive-local-dir
+                    default-directory)))
+              (consult-ripgrep))
+          (consult-ripgrep))))))
 
 ;; TODO Check docs and improve configuration of corfu
 
@@ -183,7 +203,6 @@
 ;; [C-c . E]  For executing embark export to see results in a grep buffer
 ;; [C-c C-p] In the new grep buffer to active wgrep
 (use-package wgrep :demand t)
-
 
 (provide 'mono-complete)
 

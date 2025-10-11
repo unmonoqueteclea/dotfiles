@@ -6,3 +6,6 @@
 # --file-perms 0600 is needed so that ssh keys stored
 # in the folder have the right permissions to be used
 @reboot bash -c "rclone mount drive: ${HOME}/Drive/  --vfs-cache-mode full --file-perms 0600 --daemon"
+
+# backup orgmode folder every 15 minutes
+*/15 * * * * bash -c "source /home/unmonoqueteclea/vc/dotfiles/shell/.bash/.dirs.sh && backup-orgmode"
