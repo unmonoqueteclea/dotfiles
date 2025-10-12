@@ -41,8 +41,7 @@
 ;; this package implements hiding or abbreviation of the mode line
 ;; displays (lighters) of minor-modes.
 ;; https://github.com/myrjola/diminish.el
-(use-package diminish
-  :diminish  pyenv-mode)
+(use-package diminish)
 
 (use-package doom-modeline
   :init
