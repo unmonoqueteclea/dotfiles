@@ -63,6 +63,10 @@
              (org-agenda-sorting-strategy
               '((agenda time-up priority-down category-keep))))))))
 
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")))
+
+
 (setq org-capture-templates
       '(("w" "👷 Trabajo" entry (file+headline mono-agenda-tasks "Work")
 	 "* TODO %^{task} \nSCHEDULED: <%<%Y-%m-%d %a>>"
@@ -79,6 +83,9 @@
 	("B" "📚 Libro" entry (file mono-file-notes-books)
 	 "* %^{item} :pending: \n:PROPERTIES:\n:year: %^{year when finished reading}\n:author: %^{author?}\n:rating: %^{rating (1-5)?}\n:END:\n "
 	 :empty-lines 1)))
+
+(setq org-todo-keyword-faces
+      '(("WAITING" . (:inherit org-todo :foreground "orange"))))
 
 (provide 'mono-agenda)
 ;;; mono-agenda.el ends here

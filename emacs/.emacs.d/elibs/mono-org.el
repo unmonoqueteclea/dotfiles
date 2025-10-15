@@ -89,7 +89,9 @@
 (use-package org-modern
   :custom
   (org-modern-hide-stars nil) ; adds extra indentation
-  :hook (org-mode . org-modern-mode))
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-todo-faces '(("WAITING" . (:inherit org-modern-todo :foreground "orange")))))
 
 ;; org-modern provides a clean and efficient org style. The blocks
 ;; (e.g. source, example) are particularly nice. But when org-indent
