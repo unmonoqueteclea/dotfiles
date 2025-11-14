@@ -119,8 +119,11 @@
 	'((:center . ((:path . (fields (custom "Cost center")))
                       (:columns . 10)
                       (:name . "Center")))))
-  (setq jira-base-url secret-jira-base-url))
+  (setq jira-base-url secret-jira-base-url)
+  (setq jira-secondary-urls (list secret-jira-base-url-kenmei))
+  (setq jira-subtask-inherit-fields (list "assignee" "priority"))
+  (setq jira-detail-reuse-buffer t))
 
-(provide 'mono-projects)
+  (provide 'mono-projects)
 
 ;;; mono-projects.el ends here
