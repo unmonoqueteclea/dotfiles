@@ -28,43 +28,14 @@
 (scroll-bar-mode -1)
 (column-number-mode)
 
-
-;; See https://github.com/protesilaos/modus-themes
-;; The overarching objective of this project is to always offer accessible
-;; color combinations. Currently not used, because I prefer some themes
-;; from ef-themes
-;; (use-package emacs
-;;   :defines modus-themes-org-agenda
-;;   :init
-;;   ;; add all your customizations prior to loading the themes
-;;   ;; See mono-agenda for the rest of org-agenda configuration
-;;   (setq modus-themes-org-agenda
-;; 	'((header-block . (variable-pitch semibold 1.1))
-;;           (header-date . (underline-today 1.1))
-;;           (event . (accented varied))
-;;           (scheduled . rainbow)
-;;           (habit . traffic-light)))
-;;   :config
-;;   ;; load the theme of your choice: modus-operandi or modus-vivendi
-;;   (load-theme 'modus-operandi))
-
 ;; See https://github.com/protesilaos/ef-themes
 (use-package ef-themes
-  ;; ef-owl --> My favorite dark theme
-  ;; el-light --> My favourite dark theme
-  :demand t :config  (modus-themes-load-theme 'ef-winter))
+  :demand t :config  (modus-themes-load-theme 'ef-autumn))
 
 ;; fontaine lets the user specify presets of font configurations and
 ;; set them on demand on graphical Emacs frames. The user option
 ;; fontaine-presets holds all such presets.
 ;; (FONTAINE: FONTs Are Irrelevant in Non-graphical Emacs)
-
-;; Presets consist of a list of properties that govern the family,
-;; weight, and height of the faces default, fixed-pitch,
-;; variable-pitch, bold, and italic. Each preset is identified by a
-;; user-defined symbol as the car of a property list.
-;; IMPORTANT Iovseka font can be installed from
-;; https://git.sr.ht/~protesilaos/iosevka-comfy
 (use-package fontaine
   :straight
   (fontaine :type git :host github :repo "protesilaos/fontaine" :branch "main")
@@ -72,27 +43,12 @@
   :demand t
   :config
   (setq fontaine-presets
-	`((regular :default-height 90)
-          (large :default-height 103)
-          (presentation :default-height 160)
-          (t
-           ;; I keep all properties for didactic purposes, but most can be
-           ;; omitted.  See the fontaine manual for the technicalities:
-           ;; <https://protesilaos.com/emacs/fontaine>.
-           :default-family "Monospace"
-           :default-weight regular
-           :default-height 94
-           :fixed-pitch-family nil ; falls back to :default-family
-           :fixed-pitch-weight nil ; falls back to :default-weight
-           :fixed-pitch-height 1.0
-           :variable-pitch-family "Iosevka Comfy Duo"
-           :variable-pitch-weight nil
-           :variable-pitch-height 1.0
-           :bold-family nil ; use whatever the underlying face has
-           :bold-weight bold
-           :italic-family nil
-           :italic-slant italic
-           :line-spacing nil))))
+	'((regular
+           :default-family "Hack Nerd Font"
+           :default-height 92)
+          (large
+           :default-family "Hack Nerd Font"
+           :default-height 110))))
 
   ;; recover last preset or fall back to desired style from
   ;; `fontaine-presets'.
