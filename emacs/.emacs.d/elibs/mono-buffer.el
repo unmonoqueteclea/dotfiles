@@ -48,7 +48,7 @@
   (which-function-mode)
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 40
+  (setq doom-modeline-height 30
         doom-modeline-buffer-encoding nil
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))
