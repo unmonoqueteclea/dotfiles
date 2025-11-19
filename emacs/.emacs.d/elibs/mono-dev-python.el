@@ -44,7 +44,7 @@
 (defun mono/auto-activate-venv ()
   "Automatically activate virtualenv if .venv exists in project root."
   (let* ((project-root (or (locate-dominating-file default-directory ".venv") default-directory))
-         (venv-path (expand-file-name ".venv" project-root)))
+	 (venv-path (expand-file-name ".venv" project-root)))
     (when (file-directory-p venv-path)
       (message "Activating virtualenv: %s" venv-path)
       (pyvenv-activate venv-path))))
@@ -55,8 +55,9 @@
 ;; sadly, eglot doesn't support multiple servers so we cannot use
 ;; ruff-lsp (or similar ones)
 (require 'eglot)
-(add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-
+(add-to-list 'eglot-server-programs
+	     '((python-mode python-ts-mode)
+	       "basedpyright-langserver" "--stdio"))
 
 (defun lint-fix-file-and-revert ()
   (interactive)
@@ -64,21 +65,15 @@
   (shell-command (concat "uv run ruff check --fix --extend-select I " (buffer-file-name)))
   (revert-buffer t t t))
 
-(add-hook
- 'python-ts-mode-hook
- (lambda ()
-   (mono/auto-activate-venv)
-   (eglot-ensure)
-   (flymake-mode)
-   (local-set-key (kbd "C-$") 'flymake-goto-next-error)
-   (eldoc-box-hover-at-point-mode)
-   (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t)))
+(defun mono/python-save-checks ()
+  (mono/auto-activate-venv)
+  (eglot-ensure)
+  (flymake-mode)
+  (local-set-key (kbd "C-$") 'flymake-goto-next-error)
+  (eldoc-box-hover-at-point-mode)
+  (add-hook 'after-save-hook 'lint-fix-file-and-revert nil t))
 
-;; A Django mode for emacs, I mainly use it to run unit tests that are
-;; not using pytest
-(use-package pony-mode
-  :demand t
-  :straight (pony-mode :type git :host github :repo "davidmiller/pony-mode"))
+(add-hook 'python-mode-hook (lambda () (mono/python-save-checks)))
 
 
 ;; IMPORTANT (2024-07-10) After several tests, I wasn't able to make Flymake
