@@ -24,8 +24,6 @@
 
 (require 'mono-base-package)
 
-;; using bash as default shell
-(setq shell-file-name "/bin/bash")
 ;; force shell to be a login shell so that .profile is sourced
 (setq shell-command-switch "-lc")
 
