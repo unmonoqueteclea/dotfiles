@@ -42,40 +42,6 @@
   (setq gptel-model 'gemini-2.0-flash
 	gptel-backend (gptel-make-gemini "Gemini" :key gemini-api-key :stream t)))
 
-(use-package mcp
-  :straight (:host github :repo "lizqwerscott/mcp.el")
-  :config (setq mcp-hub-servers
-		`(("brave-search" .
-		   (:command "docker"
-                    :args ("run" "-i" "--rm" "-e" "BRAVE_API_KEY" "mcp/brave-search")
-                    :env (:BRAVE_API_KEY ,secret-brave-api-key)))
-		  ("mcp-altassian" .
-		   (:command "docker"
-		    :args ("run" "-i" "--rm"
-			   "-e" "JIRA_URL" "-e" "JIRA_USERNAME" "-e" "JIRA_API_TOKEN"
-			   "ghcr.io/sooperset/mcp-atlassian:latest")
-                    :env (
-			  :JIRA_URL ,secret-jira-base-url
-			  :JIRA_USERNAME ,secret-jira-username
-			  :JIRA_API_TOKEN ,secret-jira-token
-			  ))))))
-
-
-
-;; I use very long JSON files and I don't want copilot to interfere with them.
-(defun no-copilot-in-json-mode () (eq major-mode 'json-mode))
-
-;; https://github.com/copilot-emacs/copilot.el
-;; 2025-05-25: Still no way to chat with copilot or to use a different model
-(use-package copilot
-  :straight (:host github :repo "zerolfx/copilot.el")
-  :hook (prog-mode . copilot-mode)
-  :config
-  (add-to-list 'copilot-disable-predicates #'no-copilot-in-json-mode)
-  (setq copilot-indent-offset-warning-disable t)
-  (setq copilot-max-char-warning-disable t)
-  (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion))
-
 
 ;; 2025-05-25: TODO: When I have a better integration with gptel, it is very likely
 ;; that I will be able to remove this.
