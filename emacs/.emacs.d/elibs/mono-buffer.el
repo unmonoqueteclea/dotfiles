@@ -56,17 +56,14 @@
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (auto-fill-mode 1)
-	    (setq fill-column 90)
-	    (display-fill-column-indicator-mode 1)))
+	    (setq fill-column 90)))
 (add-hook 'markdown-mode-hook
 	  (lambda ()
 	    (auto-fill-mode 1)
-	    (setq fill-column 90)
-	    (display-fill-column-indicator-mode 1)))
+	    (setq fill-column 90)))
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (setq fill-column 100)
-	    (display-fill-column-indicator-mode 1)))
+	    (setq fill-column 100)))
 
 
 (provide 'mono-buffer)
