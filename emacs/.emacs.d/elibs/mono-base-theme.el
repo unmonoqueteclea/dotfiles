@@ -43,18 +43,14 @@
   :demand t
   :config
   (setq fontaine-presets
-	'((regular
-           :default-family "Hack Nerd Font"
-           :default-height 92)
-          (large
-           :default-family "Hack Nerd Font"
-           :default-height 110))))
+	'((regular :default-family "Hack Nerd Font" :default-height 125)
+          (large :default-family "Hack Nerd Font" :default-height 160)))
 
   ;; recover last preset or fall back to desired style from
   ;; `fontaine-presets'.
   (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
   ;; The other side of `fontaine-restore-latest-preset'.
-  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset))
 
 (defun add-borders ()
   "Add frame borders and dividers."
@@ -65,6 +61,7 @@
     (face-spec-reset-face face)
     (set-face-foreground face (face-attribute 'default :background)))
   (set-face-background 'fringe (face-attribute 'default :background)))
+
 
 (add-borders)
 (toggle-frame-fullscreen)
