@@ -61,6 +61,8 @@
 (require 'mono-tools-browser)
 (require 'mono-keyboard)
 
+
+(require 'mono-alinia) ;; from golem project
 ;; I don´t have the secret module in all environments
 (when (file-exists-p "elibs/mono-secret.el")
   (require 'mono-secret))
