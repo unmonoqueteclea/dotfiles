@@ -91,16 +91,8 @@
   (org-modern-hide-stars nil) ; adds extra indentation
   :hook (org-mode . org-modern-mode)
   :config
+  (setq org-modern-fold-stars '(("▶" . "▼") ("▷" . "▽") ("⏵" . "⏷") ("▹" . "▿") ("▸" . "▾")))
   (setq org-modern-todo-faces '(("WAITING" . (:inherit org-modern-todo :foreground "orange")))))
-
-;; org-modern provides a clean and efficient org style. The blocks
-;; (e.g. source, example) are particularly nice. But when org-indent
-;; is enabled, the block "bracket", which uses the fringe area, is
-;; disabled.  This small package reproduces the block styling of
-;; org-modern when using org-indent:
-;; (use-package org-modern-indent
-;;   :straight (:host github :repo "jdtsmith/org-modern-indent" :branch "main")
-;;   :hook (org-indent-mode . org-modern-indent-mode))
 
 ;; this package is needed to perform syntax highlight in
 ;; code fragments exported from org-files into html files
