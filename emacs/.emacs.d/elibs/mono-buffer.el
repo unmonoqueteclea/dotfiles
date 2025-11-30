@@ -53,17 +53,18 @@
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))
 
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (auto-fill-mode 1)
-	    (setq fill-column 90)))
-(add-hook 'markdown-mode-hook
-	  (lambda ()
-	    (auto-fill-mode 1)
-	    (setq fill-column 90)))
-(add-hook 'prog-mode-hook
-	  (lambda ()
-	    (setq fill-column 100)))
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 90)))
+(add-hook 'markdown-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 90)))
+(add-hook 'prog-mode-hook (lambda () (setq fill-column 100)))
+
+;; Window splitting behavior:
+;; - Allow vertical splits only when the window is very wide (>= 200 columns).
+;; - Always allow horizontal splits.
+;; Result: Emacs splits vertically only on ultrawide frames; otherwise it defaults to horizontal.
+(setq split-width-threshold 200)
+(setq split-height-threshold nil)
+(setq split-width-threshold 200)
+(setq split-height-threshold nil)
 
 
 (provide 'mono-buffer)
