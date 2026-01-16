@@ -4,3 +4,12 @@
 *.mbsyncrc
 *rclone.conf
 .aider*
+
+emacs/.emacs.d/auto-save-list
+emacs/.emacs.d/cache
+emacs/.emacs.d/fontaine-latest-state.eld
+emacs/.emacs.d/forge-database.sqlite
+emacs/.emacs.d/org-persist/
+emacs/.emacs.d/projects
+emacs/.emacs.d/straight/
+emacs/.emacs.d/transient/

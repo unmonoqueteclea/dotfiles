@@ -1,6 +1,6 @@
 ;;; mono-buffer.el --- Buffers configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022, 2024  Pablo González Carrizo
+;; Copyright (C) 2022, 2024, 2026  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -19,30 +19,31 @@
 
 
 ;;; Commentary:
-;;
+;;  Last full review: 2026-01-16
 
 ;;; Code:
 (require 'mono-base-package)
 
 (setq-default buffer-file-coding-system 'utf-8-unix)
 
-;; don't ask for confirmation when killing buffer
+;; Don't ask for confirmation when killing buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
-;; useful to fold JSON, or other kind of files
-;; I only use the keybinding <C-M-return>
+;; Useful to fold JSON, or other kind of files
 (use-package yafolding
   :hook (prog-mode . yafolding-mode)
   :config
+  ;; I only need the keybinding <C-M-return>
   (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
   (define-key yafolding-mode-map (kbd "<C-M-return>") 'yafolding-toggle-element)
   (define-key yafolding-mode-map (kbd "<C-return>") nil))
 
-;; this package implements hiding or abbreviation of the mode line
+;; This package implements hiding or abbreviation of the mode line
 ;; displays (lighters) of minor-modes.
-;; https://github.com/myrjola/diminish.el
 (use-package diminish)
 
+;; Font nerd-icons is necessary. Then run M-x nerd-icons-install-fonts to
+;; install the resource fonts.
 (use-package doom-modeline
   :init
   (which-function-mode)
@@ -53,7 +54,9 @@
         ;; do not show clocked task in modeline
         org-clock-clocked-in-display nil))
 
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 90)))
+
+;; Default max line size for different modes
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 100)))
 (add-hook 'markdown-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 90)))
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 100)))
 

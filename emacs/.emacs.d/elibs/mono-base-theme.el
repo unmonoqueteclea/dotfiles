@@ -1,6 +1,6 @@
 ;;; mono-base-theme.el --- UI and theme configuration -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022, 2024, 2025  Pablo González Carrizo
+;; Copyright (C) 2022, 2024, 2025, 2026  Pablo González Carrizo
 
 ;; Author: Pablo González Carrizo <pgonzalezcarrizo@gmail.com>
 
@@ -20,6 +20,8 @@
 ;;; Commentary:
 ;;  Some fonts may need to be installed in your system
 
+;;  Last full review: 2026-01-16
+
 ;;; Code:
 (require 'mono-base-package)
 
@@ -28,14 +30,13 @@
 (scroll-bar-mode -1)
 (column-number-mode)
 
-;; See https://github.com/protesilaos/ef-themes
+;; Colorful and legible themes for GNU Emacs.
 (use-package ef-themes
-  :demand t :config  (modus-themes-load-theme 'ef-autumn))
+  :demand t :config  (modus-themes-load-theme 'ef-winter))
 
-;; fontaine lets the user specify presets of font configurations and
-;; set them on demand on graphical Emacs frames. The user option
-;; fontaine-presets holds all such presets.
-;; (FONTAINE: FONTs Are Irrelevant in Non-graphical Emacs)
+;; Fontaine lets the user specify presets of font configurations and
+;; set them on demand on graphical Emacs frames.
+;; FONTAINE: FONTs Are Irrelevant in Non-graphical Emacs
 (use-package fontaine
   :straight
   (fontaine :type git :host github :repo "protesilaos/fontaine" :branch "main")
@@ -43,11 +44,10 @@
   :demand t
   :config
   (setq fontaine-presets
-	'((regular :default-family "Hack Nerd Font" :default-height 125)
-          (large :default-family "Hack Nerd Font" :default-height 160)))
-
-  ;; recover last preset or fall back to desired style from
-  ;; `fontaine-presets'.
+	'((macos :default-family "Hack Nerd Font Mono" :default-height 123)
+	  (regular :default-family "Hack Nerd Font Mono" :default-height 140)
+          (large :default-family "Hack Nerd Font Mono" :default-height 160)))
+  ;; Recover last preset or fall back to desired style from `fontaine-presets'.
   (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
   ;; The other side of `fontaine-restore-latest-preset'.
   (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset))
